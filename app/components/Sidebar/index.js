@@ -8,9 +8,9 @@ function Sidebar() {
   return (
     <Wrapper>
       <ul className="nav">
-        <SidebarLink href="/" text={messages.dashboradPage}/>
-        <SidebarLink href="/profile" text={messages.profilePage}/>
-        <SidebarLink href="/not-found-page" text={messages.notFoundPage}/>
+        <SidebarLink exact href="/" text={messages.dashboradPage}/>
+        <SidebarLink exact href="/profile" text={messages.profilePage}/>
+        <SidebarLink exact href="/not-found-page" text={messages.notFoundPage}/>
       </ul>
     </Wrapper>
   );

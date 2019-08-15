@@ -18,7 +18,7 @@ function SidebarLink(props) {
 
   return (
     <Li>
-      <NavLink exact to={props.href} activeStyle={{
+      <NavLink exact={props.exact} to={props.href} activeStyle={{
         background: "rgb(230, 230, 230)"
       }}>
         <p><FormattedMessage {...props.text} /></p>
@@ -28,8 +28,9 @@ function SidebarLink(props) {
 }
 
 SidebarLink.propTypes = {
-  text: PropTypes.object.isRequired,
-  href: PropTypes.string.isRequired
+  exact: PropTypes.bool,
+  href: PropTypes.string.isRequired,
+  text: PropTypes.object.isRequired
 };
 
 export default SidebarLink;
