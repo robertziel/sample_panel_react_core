@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 function SidebarLink(props) {
@@ -12,14 +12,17 @@ function SidebarLink(props) {
 
     & a {
       text-transform: uppercase;
+      width: 100%;
     }
   `;
 
   return (
     <Li>
-      <Link to={props.href}>
+      <NavLink exact to={props.href} activeStyle={{
+        background: "rgb(230, 230, 230)"
+      }}>
         <p><FormattedMessage {...props.text} /></p>
-      </Link>
+      </NavLink>
     </Li>
   );
 }
