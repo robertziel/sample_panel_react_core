@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import { NavLink, Link } from 'react-router-dom';
 import styled from 'styled-components';
+import FontAwesome from 'react-fontawesome';
 
 function SidebarLink(props) {
   const Li = styled.li`
@@ -21,6 +22,7 @@ function SidebarLink(props) {
       <NavLink exact={props.exact} to={props.href} activeStyle={{
         background: "rgb(230, 230, 230)"
       }}>
+        <i><FontAwesome name={props.fontAwesomeName} /></i>
         <p><FormattedMessage {...props.text} /></p>
       </NavLink>
     </Li>
@@ -29,6 +31,7 @@ function SidebarLink(props) {
 
 SidebarLink.propTypes = {
   exact: PropTypes.bool,
+  fontAwesomeName: PropTypes.string.isRequired,
   href: PropTypes.string.isRequired,
   text: PropTypes.object.isRequired
 };

@@ -1,5 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
+import faStyles from 'font-awesome/css/font-awesome.css'
+
 const GlobalStyle = createGlobalStyle`
   html,
   body {
