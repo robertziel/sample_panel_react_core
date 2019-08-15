@@ -21,8 +21,8 @@ import GlobalStyle from '../../global-styles';
 export default function App() {
   return (
     <div>
-      <Sidebar />
       <Switch>
+        <Sidebar />
         <Route exact path="/" component={HomePage} />
         <Route exact path="/profile" component={ProfilePage} />
         <Route component={NotFoundPage} />

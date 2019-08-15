@@ -6,17 +6,32 @@ import { FormattedMessage } from 'react-intl';
 import FontAwesome from 'react-fontawesome';
 
 import styled from 'styled-components';
+import { matchPath, withRouter } from 'react-router';
 
 import CommonLinkContent from './CommonLinkContent'
 import LinkWrapper from './LinkWrapper';
 
-export default class SidebarCollapseLink extends Component {
+class SidebarCollapseLink extends Component {
   constructor(props) {
     super(props);
 
-    this.toggle = this.toggle.bind(this)
+    this.isSectionActive = this.isSectionActive.bind(this);
+    this.toggle = this.toggle.bind(this);
     this.state = { collapse: true };
   };
+
+  isSectionActive() {
+    var isActive = false;
+
+    this.props.links.map((link, index) => {
+      if (
+        matchPath(this.props.location.pathname, {
+          path: link.href
+        })
+      ) { isActive = true; }
+    })
+    return isActive;
+  }
 
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
@@ -55,10 +70,10 @@ export default class SidebarCollapseLink extends Component {
 
     return (
       <StyledLinkWrapper>
-        <Link to='#' onClick={this.toggle}>
+        <NavLink to='#' onClick={this.toggle} isActive={this.isSectionActive}>
           <CommonLinkContent fontAwesomeName={this.props.fontAwesomeName} text={this.props.text} />
           <FontAwesome name='angle-down' className='collapse-icon' />
-        </Link>
+        </NavLink>
         <CollapseLinks isOpen={this.state.collapse}>
           {
             this.props.links.map((link, index) => {
@@ -80,3 +95,5 @@ SidebarCollapseLink.propTypes = {
   fontAwesomeName: PropTypes.string.isRequired,
   text: PropTypes.object.isRequired
 };
+
+export default withRouter(SidebarCollapseLink);
