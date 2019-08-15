@@ -11,19 +11,42 @@ function SidebarLink(props) {
     display: flex;
     flex-direction: row;
 
-    & a {
+    a {
       text-transform: uppercase;
       width: 100%;
+      color: inherit;
+      height: 50px;
+      text-decoration: none;
+
+      &:hover {
+        background-color: rgb(243, 243, 243);;
+      }
+
+      &.active {
+        background-color: rgb(230, 230, 230);
+      }
+
+      p {
+        height: 50px;
+        font-size: 18px;
+        line-height: 0;
+        font-weight: 300;
+        margin-left: 1rem;
+
+        span::before {
+          margin-right: 10px;
+        }
+      }
     }
   `;
 
   return (
     <Li>
-      <NavLink exact={props.exact} to={props.href} activeStyle={{
-        background: "rgb(230, 230, 230)"
-      }}>
-        <i><FontAwesome name={props.fontAwesomeName} /></i>
-        <p><FormattedMessage {...props.text} /></p>
+      <NavLink exact={props.exact} to={props.href} >
+        <p>
+          <FontAwesome name={props.fontAwesomeName} />
+          <FormattedMessage {...props.text} />
+        </p>
       </NavLink>
     </Li>
   );
