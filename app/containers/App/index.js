@@ -10,7 +10,10 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Sidebar from 'components/Sidebar/index';
+
 import HomePage from 'containers/HomePage/Loadable';
+import ProfilePage from 'containers/ProfilePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
 import GlobalStyle from '../../global-styles';
@@ -18,8 +21,10 @@ import GlobalStyle from '../../global-styles';
 export default function App() {
   return (
     <div>
+      <Sidebar />
       <Switch>
         <Route exact path="/" component={HomePage} />
+        <Route exact path="/profile" component={ProfilePage} />
         <Route component={NotFoundPage} />
       </Switch>
       <GlobalStyle />
