@@ -10,6 +10,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Footer from 'components/Footer/index';
 import Sidebar from 'components/Sidebar/index';
 
 import HomePage from 'containers/HomePage/Loadable';
@@ -27,6 +28,7 @@ export default function App() {
         <Route exact path="/profile" component={ProfilePage} />
         <Route component={NotFoundPage} />
       </Switch>
+      <Footer />
       <GlobalStyle />
     </div>
   );
