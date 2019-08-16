@@ -7,7 +7,7 @@ import SidebarLink from './links/SidebarLink';
 import SidebarCollapseLink from './links/SidebarCollapseLink';
 import Nav from './Nav';
 
-function Sidebar() {
+export default function Sidebar() {
   return (
     <Nav>
       <SidebarLink exact href='/' text={messages.dashboradPage} fontAwesomeName='home'/>
@@ -26,6 +26,4 @@ function Sidebar() {
       <SidebarLink exact href='/not-found-page' text={messages.notFoundPage} fontAwesomeName='exclamation-triangle'/>
     </Nav>
   );
-}
-
-export default Sidebar;
+};

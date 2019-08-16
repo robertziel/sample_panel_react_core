@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Wrapper = styled.footer`
+export default const Wrapper = styled.footer`
   position: fixed;
   bottom: 0px;
   width: 100%;
@@ -18,5 +18,3 @@ const Wrapper = styled.footer`
     }
   }
 `;
-
-export default Wrapper;
