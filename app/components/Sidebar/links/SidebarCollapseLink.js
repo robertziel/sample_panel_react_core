@@ -17,7 +17,7 @@ class SidebarCollapseLink extends Component {
 
     this.isSectionActive = this.isSectionActive.bind(this);
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: true };
+    this.state = { collapse: this.isSectionActive() };
   };
 
   isSectionActive() {
