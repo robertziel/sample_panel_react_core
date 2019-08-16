@@ -62,6 +62,7 @@ module.exports = {
     'no-console': 1,
     'no-unused-vars': 2,
     'no-use-before-define': 0,
+    'prefer-object-spread': 0,
     'prefer-template': 2,
     'react/destructuring-assignment': 0,
     'react-hooks/rules-of-hooks': 'error',
@@ -70,11 +71,24 @@ module.exports = {
     'react/jsx-first-prop-new-line': [2, 'multiline'],
     'react/jsx-filename-extension': 0,
     'react/jsx-no-target-blank': 0,
+    "react/jsx-props-no-spreading": [
+      2,
+      {
+        exceptions: [
+          'FormattedMessage',
+          'WrappedComponent',
+          'ComponentWithSaga',
+          'ComponentWithReducer',
+          'LazyComponent',
+        ]
+      }
+    ],
     'react/jsx-uses-vars': 2,
     'react/require-default-props': 0,
     'react/require-extension': 0,
     'react/self-closing-comp': 0,
     'react/sort-comp': 0,
+    'react/static-property-placement': 0,
     'redux-saga/no-yield-in-race': 2,
     'redux-saga/yield-effects': 2,
     'require-yield': 0,

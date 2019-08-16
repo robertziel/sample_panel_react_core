@@ -9,10 +9,10 @@ export default function CommonLinkContent(props) {
       <FontAwesome name={props.fontAwesomeName} />
       <FormattedMessage {...props.text} />
     </div>
-  )
+  );
 }
 
 CommonLinkContent.propTypes = {
   fontAwesomeName: PropTypes.string.isRequired,
-  text: PropTypes.object.isRequired
+  text: PropTypes.object.isRequired,
 };

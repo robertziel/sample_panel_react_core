@@ -14,7 +14,7 @@ export default styled.div`
     font-weight: 300;
 
     &:hover {
-      background-color: rgb(243, 243, 243);;
+      background-color: rgb(243, 243, 243);
     }
 
     &.active {
@@ -22,7 +22,7 @@ export default styled.div`
     }
   }
 
-  &>a {
+  & > a {
     height: 50px;
     font-size: 18px;
     line-height: 50px;

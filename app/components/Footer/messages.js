@@ -2,7 +2,7 @@ import { defineMessages } from 'react-intl';
 
 export const scope = 'app.components.Footer';
 
-export default defineMessages({
+const messages = defineMessages({
   authorMessage: {
     id: `${scope}.author.message`,
     defaultMessage: `
@@ -10,3 +10,5 @@ export default defineMessages({
     `,
   },
 });
+
+export default messages;

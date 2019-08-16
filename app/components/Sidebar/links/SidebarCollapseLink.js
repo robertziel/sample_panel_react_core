@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link, NavLink } from 'react-router-dom';
-import { Collapse } from 'reactstrap'
+import { NavLink } from 'react-router-dom';
+import { Collapse } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import FontAwesome from 'react-fontawesome';
 
 import styled from 'styled-components';
 import { matchPath, withRouter } from 'react-router';
 
-import CommonLinkContent from './CommonLinkContent'
+import CommonLinkContent from './CommonLinkContent';
 import LinkWrapper from './LinkWrapper';
 
 class SidebarCollapseLink extends Component {
@@ -18,24 +18,29 @@ class SidebarCollapseLink extends Component {
     this.isSectionActive = this.isSectionActive.bind(this);
     this.toggle = this.toggle.bind(this);
     this.state = { collapse: this.isSectionActive() };
-  };
+  }
+
+  linkMatchPath(link) {
+    return matchPath(this.props.location.pathname, {
+      path: link.href,
+    });
+  }
 
   isSectionActive() {
-    var isActive = false;
-
-    this.props.links.map((link, index) => {
-      if (
-        matchPath(this.props.location.pathname, {
-          path: link.href
-        })
-      ) { isActive = true; }
-    })
-    return isActive;
+    return this.props.links.some(link => this.linkMatchPath(link));
   }
 
   toggle() {
     this.setState(state => ({ collapse: !state.collapse }));
-  };
+  }
+
+  renderLink(link, index) {
+    return (
+      <NavLink key={index} exact={link.exact} to={link.href}>
+        <div>{<FormattedMessage {...link.text} />}</div>
+      </NavLink>
+    );
+  }
 
   render() {
     const CollapseLinks = styled(Collapse)`
@@ -70,30 +75,26 @@ class SidebarCollapseLink extends Component {
 
     return (
       <StyledLinkWrapper>
-        <NavLink to='#' onClick={this.toggle} isActive={this.isSectionActive}>
-          <CommonLinkContent fontAwesomeName={this.props.fontAwesomeName} text={this.props.text} />
-          <FontAwesome name='angle-down' className='collapse-icon' />
+        <NavLink to="#" onClick={this.toggle} isActive={this.isSectionActive}>
+          <CommonLinkContent
+            fontAwesomeName={this.props.fontAwesomeName}
+            text={this.props.text}
+          />
+          <FontAwesome name="angle-down" className="collapse-icon" />
         </NavLink>
         <CollapseLinks isOpen={this.state.collapse}>
-          {
-            this.props.links.map((link, index) => {
-              return (
-                <NavLink key={index} exact={link.exact} to={link.href}>
-                  <div>{<FormattedMessage {...link.text} />}</div>
-                </NavLink>
-              )
-            })
-          }
+          {this.props.links.map((link, index) => this.renderLink(link, index))}
         </CollapseLinks>
       </StyledLinkWrapper>
     );
-  };
+  }
 }
 
 SidebarCollapseLink.propTypes = {
-  links: PropTypes.array.isRequired,
   fontAwesomeName: PropTypes.string.isRequired,
-  text: PropTypes.object.isRequired
+  links: PropTypes.array.isRequired,
+  location: PropTypes.object.isRequired,
+  text: PropTypes.object.isRequired,
 };
 
 export default withRouter(SidebarCollapseLink);
