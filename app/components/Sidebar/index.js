@@ -12,13 +12,13 @@ function Sidebar() {
     <Nav>
       <SidebarLink exact href='/' text={messages.dashboradPage} fontAwesomeName='home'/>
       <SidebarLink exact href='/profile' text={messages.profilePage} fontAwesomeName='user'/>
-      <SidebarCollapseLink text={messages.multipleChoice} fontAwesomeName='user' links={
+      <SidebarCollapseLink text={messages.multipleChoice} fontAwesomeName='folder' links={
         [
           { exact: true, href: '/one-page', text: messages.onePage },
           { exact: true, href: '/two-page', text: messages.twoPage }
         ]
       } />
-      <SidebarCollapseLink text={messages.multipleChoice} fontAwesomeName='user' links={
+      <SidebarCollapseLink text={messages.multipleChoice} fontAwesomeName='folder' links={
         [
           { exact: true, href: '/one-page', text: messages.onePage }
         ]
