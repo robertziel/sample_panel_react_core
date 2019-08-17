@@ -1,7 +1,7 @@
 import { createGlobalStyle } from 'styled-components';
 
 import 'font-awesome/css/font-awesome.css';
-import 'roboto-fontface';
+import 'roboto-fontface/css/roboto/roboto-fontface.css';
 
 const GlobalStyle = createGlobalStyle`
   html,

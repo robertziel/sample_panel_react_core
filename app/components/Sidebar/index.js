@@ -2,7 +2,7 @@ import React from 'react';
 
 import messages from './messages';
 import SidebarLink from './links/SidebarLink';
-import SidebarCollapseLink from './links/SidebarCollapseLink';
+import SidebarCollapseLinks from './links/SidebarCollapseLinks';
 import Nav from './Nav';
 
 export default function Sidebar() {
@@ -20,7 +20,7 @@ export default function Sidebar() {
         text={messages.profilePage}
         fontAwesomeName="user"
       />
-      <SidebarCollapseLink
+      <SidebarCollapseLinks
         text={messages.multipleChoice}
         fontAwesomeName="folder"
         links={[
@@ -28,10 +28,10 @@ export default function Sidebar() {
           { exact: true, href: '/two-page', text: messages.twoPage },
         ]}
       />
-      <SidebarCollapseLink
+      <SidebarCollapseLinks
         text={messages.multipleChoice}
         fontAwesomeName="folder"
-        links={[{ exact: true, href: '/one-page', text: messages.onePage }]}
+        links={[{ exact: true, href: '/three-page', text: messages.onePage }]}
       />
       <SidebarLink
         exact

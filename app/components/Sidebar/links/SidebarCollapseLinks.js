@@ -11,11 +11,10 @@ import { matchPath, withRouter } from 'react-router';
 import CommonLinkContent from './CommonLinkContent';
 import LinkWrapper from './LinkWrapper';
 
-class SidebarCollapseLink extends Component {
+class SidebarCollapseLinks extends Component {
   constructor(props) {
     super(props);
 
-    this.isSectionActive = this.isSectionActive.bind(this);
     this.toggle = this.toggle.bind(this);
     this.state = { collapse: this.isSectionActive() };
   }
@@ -36,7 +35,12 @@ class SidebarCollapseLink extends Component {
 
   renderLink(link, index) {
     return (
-      <NavLink key={index} exact={link.exact} to={link.href}>
+      <NavLink
+        key={index}
+        exact={link.exact}
+        to={link.href}
+        className="sidebar-link"
+      >
         <div>{<FormattedMessage {...link.text} />}</div>
       </NavLink>
     );
@@ -73,15 +77,19 @@ class SidebarCollapseLink extends Component {
       }
     `;
 
+    const buttonActiveClassName = this.isSectionActive() ? ' active' : '';
+
+    const buttonClassName = `main-sidebar-link sidebar-link ${buttonActiveClassName}`;
+
     return (
       <StyledLinkWrapper>
-        <NavLink to="#" onClick={this.toggle} isActive={this.isSectionActive}>
+        <button type="button" onClick={this.toggle} className={buttonClassName}>
           <CommonLinkContent
             fontAwesomeName={this.props.fontAwesomeName}
             text={this.props.text}
           />
           <FontAwesome name="angle-down" className="collapse-icon" />
-        </NavLink>
+        </button>
         <CollapseLinks isOpen={this.state.collapse}>
           {this.props.links.map((link, index) => this.renderLink(link, index))}
         </CollapseLinks>
@@ -90,11 +98,11 @@ class SidebarCollapseLink extends Component {
   }
 }
 
-SidebarCollapseLink.propTypes = {
+SidebarCollapseLinks.propTypes = {
   fontAwesomeName: PropTypes.string.isRequired,
   links: PropTypes.array.isRequired,
   location: PropTypes.object.isRequired,
   text: PropTypes.object.isRequired,
 };
 
-export default withRouter(SidebarCollapseLink);
+export default withRouter(SidebarCollapseLinks);

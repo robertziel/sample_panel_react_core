@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Footer /> should render and match the snapshot 1`] = `
+<ForwardRef(Wrapper)>
+  <section>
+    <div
+      className="message"
+    >
+      <FormattedMessage
+        defaultMessage="
+      Made by {author}.
+    "
+        id="app.components.Footer.author.message"
+        values={
+          Object {
+            "author": <a
+              href="https://robertz.co"
+              target="_blank"
+            >
+              Robert Zieliński
+            </a>,
+          }
+        }
+      />
+    </div>
+  </section>
+</ForwardRef(Wrapper)>
+`;

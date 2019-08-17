@@ -8,7 +8,11 @@ import LinkWrapper from './LinkWrapper';
 export default function SidebarLink(props) {
   return (
     <LinkWrapper>
-      <NavLink exact={props.exact} to={props.href}>
+      <NavLink
+        exact={props.exact}
+        to={props.href}
+        className="main-sidebar-link sidebar-link"
+      >
         <CommonLinkContent
           fontAwesomeName={props.fontAwesomeName}
           text={props.text}

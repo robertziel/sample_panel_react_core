@@ -3,7 +3,9 @@ import styled from 'styled-components';
 export default styled.div`
   box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px;
 
-  a {
+  a,
+  button {
+    border: none;
     display: flex;
     flex-direction: row;
     position: relative;
@@ -12,6 +14,8 @@ export default styled.div`
     color: inherit;
     text-decoration: none;
     font-weight: 300;
+    background-color: white;
+    cursor: pointer;
 
     &:hover {
       background-color: rgb(243, 243, 243);
@@ -22,7 +26,7 @@ export default styled.div`
     }
   }
 
-  & > a {
+  .main-sidebar-link {
     height: 50px;
     font-size: 18px;
     line-height: 50px;
