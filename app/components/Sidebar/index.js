@@ -31,7 +31,7 @@ export default function Sidebar() {
       <SidebarCollapseLinks
         text={messages.multipleChoice}
         fontAwesomeName="folder"
-        links={[{ exact: true, href: '/three-page', text: messages.onePage }]}
+        links={[{ exact: true, href: '/three-page', text: messages.threePage }]}
       />
       <SidebarLink
         exact

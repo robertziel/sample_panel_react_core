@@ -1,3 +1,13 @@
 {
-  "app.components.Sidebar.links.profilePage": "Profile"
+  "app.components.Footer.author.message": "Made by {author}.",
+  "app.components.Sidebar.links.dashboardPage": "Dashboard",
+  "app.components.Sidebar.links.multipleChoice": "Multiple choice",
+  "app.components.Sidebar.links.notFoundPage": "Not found page",
+  "app.components.Sidebar.links.onePage": "One page",
+  "app.components.Sidebar.links.profilePage": "Profile",
+  "app.components.Sidebar.links.threePage": "Page Three",
+  "app.components.Sidebar.links.twoPage": "Two page",
+  "app.containers.HomePage.header": "This is the HomePage container!",
+  "app.containers.NotFoundPage.header": "This is the NotFoundPage container!",
+  "app.containers.ProfilePage.header": "Profile page!"
 }

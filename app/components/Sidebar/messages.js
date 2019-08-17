@@ -17,11 +17,15 @@ export default defineMessages({
   },
   onePage: {
     id: `${scope}.links.onePage`,
-    defaultMessage: 'One page',
+    defaultMessage: 'Page One',
   },
   twoPage: {
     id: `${scope}.links.twoPage`,
-    defaultMessage: 'Two page',
+    defaultMessage: 'Page Two',
+  },
+  threePage: {
+    id: `${scope}.links.threePage`,
+    defaultMessage: 'Page Three',
   },
   profilePage: {
     id: `${scope}.links.profilePage`,
