@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #app {
-    background-color: #fafafa;
+    background-color: #f1f4f6;
     min-height: 100%;
     min-width: 100%;
     padding-left: 260px;
@@ -29,6 +29,10 @@ const GlobalStyle = createGlobalStyle`
   a {
     text-decoration: none;
     color: black;
+  }
+
+  h1, h2, h3 {
+    font-weight: 400;
   }
 `;
 

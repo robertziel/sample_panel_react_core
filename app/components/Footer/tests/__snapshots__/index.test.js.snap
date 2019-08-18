@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<Footer /> should render and match the snapshot 1`] = `
-"<footer class=\\"Wrapper-wcfdfo-0 cbfuuT\\"><section><div class=\\"message\\"><span>
+"<footer class=\\"Wrapper-wcfdfo-0 bzeFoT\\"><section><div class=\\"message\\"><span>
       Made by <a href=\\"https://robertz.co\\" target=\\"_blank\\">Robert Zieliński</a>.
     </span></div></section></footer>"
 `;

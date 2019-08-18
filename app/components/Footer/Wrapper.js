@@ -4,8 +4,8 @@ const Wrapper = styled.footer`
   position: fixed;
   bottom: 0px;
   width: 100%;
-  background-color: #f3f3f3;
-  border-top: 1px solid #666;
+  background-color: #ffffff;
+  border-top: rgba(0, 0, 0, 0.02) solid 1px;
   padding: 10px;
 
   .message {
