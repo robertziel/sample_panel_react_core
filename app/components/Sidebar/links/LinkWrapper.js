@@ -11,7 +11,6 @@ export default styled.div`
     position: relative;
     text-transform: uppercase;
     color: #495057;
-    text-decoration: none;
     font-weight: 300;
     background-color: transparent;
     cursor: pointer;

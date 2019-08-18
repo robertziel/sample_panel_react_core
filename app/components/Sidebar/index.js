@@ -2,12 +2,14 @@ import React from 'react';
 
 import messages from './messages';
 import SidebarLink from './links/SidebarLink';
+import SidebarLogo from './SidebarLogo';
 import SidebarCollapseLinks from './links/SidebarCollapseLinks';
 import Nav from './Nav';
 
 export default function Sidebar() {
   return (
     <Nav>
+      <SidebarLogo href="https://robertz.co" />
       <SidebarLink
         exact
         href="/"

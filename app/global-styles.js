@@ -25,6 +25,11 @@ const GlobalStyle = createGlobalStyle`
   label {
     line-height: 1.5em;
   }
+
+  a {
+    text-decoration: none;
+    color: black;
+  }
 `;
 
 export default GlobalStyle;
