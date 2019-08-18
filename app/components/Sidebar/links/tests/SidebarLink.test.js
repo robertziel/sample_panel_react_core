@@ -25,30 +25,30 @@ function mountWrapper(path) {
 }
 
 describe('<SidebarLink />', () => {
+  let wrapper;
+
   context('current path not exact as link', () => {
-    const path = '/';
+    beforeEach(() => {
+      wrapper = mountWrapper('/');
+    });
 
     it('should not be active', () => {
-      const wrapper = mountWrapper(path);
       expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(0);
-      wrapper.unmount();
     });
 
     it('should change to active after click on link', () => {
-      const wrapper = mountWrapper(path);
       wrapper.find('a[href="/path"]').simulate('click', { button: 0 });
       expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(1);
-      wrapper.unmount();
     });
   });
 
   context('current path exact as link', () => {
-    const path = '/path';
+    beforeEach(() => {
+      wrapper = mountWrapper('/path');
+    });
 
     it('should be active', () => {
-      const wrapper = mountWrapper(path);
       expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(1);
-      wrapper.unmount();
     });
   });
 });

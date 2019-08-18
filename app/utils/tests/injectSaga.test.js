@@ -4,8 +4,7 @@
 
 import { memoryHistory } from 'react-router-dom';
 import { put } from 'redux-saga/effects';
-import renderer from 'react-test-renderer';
-import { render } from '@testing-library/react';
+import { mount } from 'enzyme';
 import React from 'react';
 import { Provider } from 'react-redux';
 
@@ -45,7 +44,7 @@ describe('injectSaga decorator', () => {
 
   it('should inject given saga, mode, and props', () => {
     const props = { test: 'test' };
-    renderer.create(
+    mount(
       <Provider store={store}>
         <ComponentWithSaga {...props} />
       </Provider>,
@@ -61,12 +60,12 @@ describe('injectSaga decorator', () => {
 
   it('should eject on unmount with a correct saga key', () => {
     const props = { test: 'test' };
-    const renderedComponent = renderer.create(
+    const wrapper = mount(
       <Provider store={store}>
         <ComponentWithSaga {...props} />
       </Provider>,
     );
-    renderedComponent.unmount();
+    wrapper.unmount();
 
     expect(injectors.ejectSaga).toHaveBeenCalledTimes(1);
     expect(injectors.ejectSaga).toHaveBeenCalledWith('test');
@@ -81,14 +80,12 @@ describe('injectSaga decorator', () => {
 
   it('should propagate props', () => {
     const props = { testProp: 'test' };
-    const renderedComponent = renderer.create(
+    const wrapper = mount(
       <Provider store={store}>
         <ComponentWithSaga {...props} />
       </Provider>,
     );
-    const {
-      props: { children },
-    } = renderedComponent.getInstance();
+    const { children } = wrapper.props();
     expect(children.props).toEqual(props);
   });
 });
@@ -121,7 +118,7 @@ describe('useInjectSaga hook', () => {
 
   it('should inject given saga and mode', () => {
     const props = { test: 'test' };
-    render(
+    mount(
       <Provider store={store}>
         <ComponentWithSaga {...props} />
       </Provider>,
@@ -136,12 +133,13 @@ describe('useInjectSaga hook', () => {
 
   it('should eject on unmount with a correct saga key', () => {
     const props = { test: 'test' };
-    const { unmount } = render(
+    const wrapper = mount(
       <Provider store={store}>
         <ComponentWithSaga {...props} />
       </Provider>,
     );
-    unmount();
+
+    wrapper.unmount();
 
     expect(injectors.ejectSaga).toHaveBeenCalledTimes(1);
     expect(injectors.ejectSaga).toHaveBeenCalledWith('test');

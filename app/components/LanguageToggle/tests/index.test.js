@@ -34,10 +34,6 @@ describe('<LocaleToggle />', () => {
       wrapper = mountWrapper();
     });
 
-    afterAll(() => {
-      wrapper.unmount();
-    });
-
     it('should match the snapshot', () => {
       expect(wrapper.html()).toMatchSnapshot();
     });

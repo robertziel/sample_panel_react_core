@@ -41,10 +41,6 @@ describe('<Toggle />', () => {
       store = configureStore({}, browserHistory);
     });
 
-    afterAll(() => {
-      wrapper.unmount();
-    });
-
     it('should contain default text', () => {
       wrapper = mountWrapper(['en', 'pl']);
       expect(wrapper.html()).toMatchSnapshot();

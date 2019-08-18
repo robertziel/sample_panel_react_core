@@ -1,14 +1,12 @@
 import React from 'react';
-import ShallowRenderer from 'react-test-renderer/shallow';
+import { shallow } from 'enzyme';
+import toJson from 'enzyme-to-json';
 
 import App from '../index';
 
-const renderer = new ShallowRenderer();
-
 describe('<App />', () => {
   it('should render and match the snapshot', () => {
-    renderer.render(<App />);
-    const renderedOutput = renderer.getRenderOutput();
-    expect(renderedOutput).toMatchSnapshot();
+    const wrapper = shallow(<App />);
+    expect(toJson(wrapper)).toMatchSnapshot();
   });
 });

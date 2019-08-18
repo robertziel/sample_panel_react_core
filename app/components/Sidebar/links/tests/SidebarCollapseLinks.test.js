@@ -33,53 +33,47 @@ function mountWrapper(path) {
 }
 
 describe('<SidebarCollapseLinks />', () => {
+  let wrapper;
+
   context('current path not included in any link', () => {
-    const path = '/';
+    beforeEach(() => {
+      wrapper = mountWrapper('/');
+    });
 
     it('should not be active', () => {
-      const wrapper = mountWrapper(path);
       expect(wrapper.find(`${buttonSelector}.active`)).toHaveLength(0);
       expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(0);
-      wrapper.unmount();
     });
 
     it('should change to active after click on link', () => {
-      const wrapper = mountWrapper(path);
       wrapper.find(buttonSelector).simulate('click');
       wrapper.find('a[href="/route-1"]').simulate('click', { button: 0 });
       expect(wrapper.find(`${buttonSelector}.active`)).toHaveLength(1);
       expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(1);
-      wrapper.unmount();
     });
 
-    context('should not be collapsed', () => {
-      const wrapper = mountWrapper(path);
+    it('should not be collapsed', () => {
       expect(wrapper.find(`div.collapse.show`)).toHaveLength(0);
-      wrapper.unmount();
     });
 
     it('should change to collapsed after click on button', () => {
-      const wrapper = mountWrapper(path);
       wrapper.find(buttonSelector).simulate('click');
       expect(wrapper.find(`div.collapse.show`)).toHaveLength(1);
-      wrapper.unmount();
     });
   });
 
   context('current path exact to any link', () => {
-    const path = '/route-1';
-
-    it('should be active', () => {
-      const wrapper = mountWrapper(path);
-      expect(wrapper.find(`${buttonSelector}.active`)).toHaveLength(1);
-      expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(1);
-      wrapper.unmount();
+    beforeEach(() => {
+      wrapper = mountWrapper('/route-1');
     });
 
-    context('should be collapsed', () => {
-      const wrapper = mountWrapper(path);
+    it('should be active', () => {
+      expect(wrapper.find(`${buttonSelector}.active`)).toHaveLength(1);
+      expect(wrapper.find(`${linkSelector}.active`)).toHaveLength(1);
+    });
+
+    it('should be collapsed', () => {
       expect(wrapper.find(`div.collapse.show`)).toHaveLength(1);
-      wrapper.unmount();
     });
   });
 });

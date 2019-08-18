@@ -5,8 +5,7 @@
 import { memoryHistory } from 'react-router-dom';
 import React from 'react';
 import { Provider } from 'react-redux';
-import renderer from 'react-test-renderer';
-import { render } from '@testing-library/react';
+import { mount } from 'enzyme';
 
 import configureStore from '../../configureStore';
 import injectReducer, { useInjectReducer } from '../injectReducer';
@@ -36,7 +35,7 @@ describe('injectReducer decorator', () => {
   });
 
   it('should inject a given reducer', () => {
-    renderer.create(
+    mount(
       <Provider store={store}>
         <ComponentWithReducer />
       </Provider>,
@@ -55,14 +54,12 @@ describe('injectReducer decorator', () => {
 
   it('should propagate props', () => {
     const props = { testProp: 'test' };
-    const renderedComponent = renderer.create(
+    const wrapper = mount(
       <Provider store={store}>
         <ComponentWithReducer {...props} />
       </Provider>,
     );
-    const {
-      props: { children },
-    } = renderedComponent.getInstance();
+    const { children } = wrapper.props();
 
     expect(children.props).toEqual(props);
   });
@@ -86,7 +83,7 @@ describe('useInjectReducer hook', () => {
   });
 
   it('should inject a given reducer', () => {
-    render(
+    mount(
       <Provider store={store}>
         <ComponentWithReducer />
       </Provider>,

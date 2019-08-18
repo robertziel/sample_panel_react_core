@@ -64,6 +64,5 @@ describe('<Sidebar />', () => {
     expect(link1(wrapper).hasClass('active')).not.toBeTruthy();
     expect(button2(wrapper).hasClass('active')).toBeTruthy();
     expect(link2(wrapper).hasClass('active')).toBeTruthy();
-    wrapper.unmount();
   });
 });
