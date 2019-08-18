@@ -1,6 +1,5 @@
 import React from 'react';
 
-import LanguageToggle from 'components/LanguageToggle/index';
 import messages from './messages';
 import SidebarLink from './links/SidebarLink';
 import SidebarCollapseLinks from './links/SidebarCollapseLinks';
@@ -40,9 +39,6 @@ export default function Sidebar() {
         text={messages.notFoundPage}
         fontAwesomeName="exclamation-triangle"
       />
-      <div className="language-settings">
-        <LanguageToggle />
-      </div>
     </Nav>
   );
 }

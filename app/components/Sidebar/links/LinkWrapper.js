@@ -1,7 +1,8 @@
 import styled from 'styled-components';
 
 export default styled.div`
-  box-shadow: rgba(0, 0, 0, 0.5) 0px 1px 1px;
+  background: white;
+  box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
   a,
   button {

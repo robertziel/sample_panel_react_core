@@ -10,6 +10,7 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 
+import Navbar from 'components/Navbar/index';
 import Footer from 'components/Footer/index';
 import Sidebar from 'components/Sidebar/index';
 
@@ -22,6 +23,7 @@ import GlobalStyle from '../../global-styles';
 export default function App() {
   return (
     <div>
+      <Navbar />
       <Sidebar />
       <Switch>
         <Route exact path="/" component={HomePage} />
