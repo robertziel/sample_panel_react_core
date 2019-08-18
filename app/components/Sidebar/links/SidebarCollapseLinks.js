@@ -58,13 +58,16 @@ class SidebarCollapseLinks extends Component {
 
       a {
         height: 40px;
+        width: calc(100% - 20px);
+        margin: 10px;
+        border-radius: 5px;
 
         div {
           margin-left: 30px;
           padding-left: 10px;
           font-size: 17px;
           line-height: 41px;
-          border-left: 2px solid blue;
+          border-left: 3px solid #e0f3ff;
         }
       }
     `;

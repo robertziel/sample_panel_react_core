@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export default styled.div`
   background: white;
-  box-shadow: 7px 0 60px rgba(0, 0, 0, 0.05);
 
   a,
   button {
@@ -11,19 +10,17 @@ export default styled.div`
     flex-direction: row;
     position: relative;
     text-transform: uppercase;
-    width: 100%;
-    color: inherit;
+    color: #495057;
     text-decoration: none;
     font-weight: 300;
-    background-color: white;
+    background-color: transparent;
     cursor: pointer;
+    outline: none;
 
-    &:hover {
-      background-color: rgb(243, 243, 243);
-    }
-
+    &:hover,
     &.active {
-      background-color: rgb(230, 230, 230);
+      background-color: #e0f3ff;
+      color: #3f6ad8;
     }
   }
 
@@ -32,6 +29,12 @@ export default styled.div`
     font-size: 18px;
     line-height: 50px;
     padding-left: 1rem;
+    width: 100%;
+    margin-top: 10px;
+
+    .fa {
+      color: rgb(211, 213, 215);
+    }
 
     span::before {
       margin-right: 10px;
