@@ -32,7 +32,7 @@ export default styled.div`
     margin-top: 10px;
 
     .fa {
-      color: rgb(211, 213, 215);
+      color: #3f6ad8;
     }
 
     span::before {
