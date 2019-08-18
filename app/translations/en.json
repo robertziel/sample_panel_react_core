@@ -1,5 +1,7 @@
 {
   "app.components.Footer.author.message": "Made by {author}.",
+  "app.components.LocaleToggle.en": "English",
+  "app.components.LocaleToggle.pl": "Polski",
   "app.components.Sidebar.links.dashboardPage": "Dashboard",
   "app.components.Sidebar.links.multipleChoice": "Multiple choice",
   "app.components.Sidebar.links.notFoundPage": "Not found page",

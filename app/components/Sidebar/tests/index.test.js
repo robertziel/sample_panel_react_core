@@ -1,7 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter } from 'react-router-dom';
+import { MemoryRouter, browserHistory } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import configureStore from '../../../configureStore';
 
 import Sidebar from '../index';
 
@@ -26,12 +28,20 @@ function link2(wrapper) {
 function mountWrapper(path) {
   return mount(
     <IntlProvider locale="en">
-      <MemoryRouter initialEntries={[path]}>
-        <Sidebar />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[path]}>
+          <Sidebar />
+        </MemoryRouter>
+      </Provider>
     </IntlProvider>,
   );
 }
+
+let store;
+
+beforeAll(() => {
+  store = configureStore({}, browserHistory);
+});
 
 describe('<Sidebar />', () => {
   const path = '/';
