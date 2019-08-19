@@ -11,7 +11,7 @@ export default class Sidebar extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: true };
+    this.state = { collapse: false };
   }
 
   toggle() {

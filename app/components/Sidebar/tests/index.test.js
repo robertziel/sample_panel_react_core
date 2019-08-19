@@ -69,11 +69,19 @@ describe('<Sidebar />', () => {
   it('should toggle sidebar', () => {
     const wrapper = mountWrapper(path);
 
-    wrapper.find('div.hamburger').simulate('click');
+    const hamburger = 'div.hamburger';
+    const collapse = 'div.sidebar-collapse';
 
-    expect(wrapper.find('div.hamburger').hasClass('open')).not.toBeTruthy();
-    expect(
-      wrapper.find('div.sidebar-collapse').hasClass('show'),
-    ).not.toBeTruthy();
+    wrapper.find(hamburger).simulate('click');
+
+    setTimeout(() => {
+      expect(wrapper.find(hamburger).hasClass('open')).toBeTruthy();
+      expect(wrapper.find(collapse).hasClass('show')).toBeTruthy();
+    }, 100);
+
+    wrapper.find(hamburger).simulate('click');
+
+    expect(wrapper.find(hamburger).hasClass('open')).not.toBeTruthy();
+    expect(wrapper.find(collapse).hasClass('show')).not.toBeTruthy();
   });
 });
