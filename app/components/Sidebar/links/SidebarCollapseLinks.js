@@ -39,35 +39,44 @@ class SidebarCollapseLinks extends Component {
         key={index}
         exact={link.exact}
         to={link.href}
-        className="sidebar-link"
+        className="sidebar-link sidebar-collapse-link"
       >
-        <div>{<FormattedMessage {...link.text} />}</div>
+        <div className="line"></div>
+        <div className="evaporating">{<FormattedMessage {...link.text} />}</div>
       </NavLink>
     );
   }
 
   render() {
     const CollapseLinks = styled(Collapse)`
-      transition: width 600ms ease-out, height 600ms ease-out;
-
       &:not(.show) {
         width: 200px;
         height: 0px;
         overflow: hidden;
       }
 
-      a {
+      .sidebar-collapse-link {
+        position: relative;
         height: 40px;
         width: calc(100% - 20px);
         margin: 10px;
         border-radius: 5px;
 
-        div {
+        .line {
+          background: #e0f3ff;
+          border-radius: 5px;
+          width: 6px;
+          height: 40px;
+          position: absolute;
+          left: 20px;
+          transition: left 100ms linear;
+        }
+
+        span {
           margin-left: 30px;
           padding-left: 10px;
           font-size: 17px;
           line-height: 41px;
-          border-left: 3px solid #e0f3ff;
         }
       }
     `;
@@ -91,7 +100,10 @@ class SidebarCollapseLinks extends Component {
             fontAwesomeName={this.props.fontAwesomeName}
             text={this.props.text}
           />
-          <FontAwesome name="angle-down" className="collapse-icon" />
+          <FontAwesome
+            name="angle-down"
+            className="collapse-icon evaporating"
+          />
         </button>
         <CollapseLinks isOpen={this.state.collapse}>
           {this.props.links.map((link, index) => this.renderLink(link, index))}

@@ -12,7 +12,7 @@ export default styled.div`
     text-transform: uppercase;
     color: #495057;
     font-weight: 300;
-    background-color: transparent;
+    background-color: inherit;
     cursor: pointer;
     outline: none;
 
@@ -27,12 +27,34 @@ export default styled.div`
     height: 50px;
     font-size: 18px;
     line-height: 50px;
-    padding-left: 1rem;
+    padding-left: 40px;
     width: 100%;
     margin-top: 10px;
 
-    .fa {
-      color: #3f6ad8;
+    .sidebarlink-container {
+      background: inherit;
+
+      .sidebarlink-icon {
+        width: 60px;
+        left: 0px;
+        position: fixed;
+        text-align: center;
+        transition: padding 200ms ease-out;
+        z-index: 2;
+
+        .fa {
+          transition: font-size 200ms ease-out;
+        }
+      }
+
+      .mask {
+        position: fixed;
+        left: 0px;
+        background: inherit;
+        height: 50px;
+        width: 35px;
+        z-index: 1;
+      }
     }
 
     span::before {

@@ -5,9 +5,14 @@ import { FormattedMessage } from 'react-intl';
 
 export default function CommonLinkContent(props) {
   return (
-    <div>
-      <FontAwesome name={props.fontAwesomeName} />
-      <FormattedMessage {...props.text} />
+    <div className="sidebarlink-container">
+      <div className="mask"></div>
+      <div className="sidebarlink-icon">
+        <FontAwesome name={props.fontAwesomeName} />
+      </div>
+      <div className="evaporating">
+        <FormattedMessage {...props.text} />
+      </div>
     </div>
   );
 }

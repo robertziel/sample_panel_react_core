@@ -65,4 +65,15 @@ describe('<Sidebar />', () => {
     expect(button2(wrapper).hasClass('active')).toBeTruthy();
     expect(link2(wrapper).hasClass('active')).toBeTruthy();
   });
+
+  it('should toggle sidebar', () => {
+    const wrapper = mountWrapper(path);
+
+    wrapper.find('div.hamburger').simulate('click');
+
+    expect(wrapper.find('div.hamburger').hasClass('open')).not.toBeTruthy();
+    expect(
+      wrapper.find('div.sidebar-collapse').hasClass('show'),
+    ).not.toBeTruthy();
+  });
 });
