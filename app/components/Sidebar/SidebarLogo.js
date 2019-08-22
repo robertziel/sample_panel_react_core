@@ -1,9 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { createSelector } from 'reselect';
+
 import styled from 'styled-components';
 import Hamburger from 'components/Hamburger/index';
+import { toggleSidebar } from './actions';
+import { sidebarSelector } from './selectors';
 
-export default function SidebarLogo(props) {
+function SidebarLogo(props) {
   const Div = styled.div`
     height: 60px;
     background: #fafbfc;
@@ -64,3 +69,24 @@ SidebarLogo.propTypes = {
   onHamburgerClick: PropTypes.func.isRequired,
   href: PropTypes.string.isRequired,
 };
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onHamburgerClick: () => dispatch(toggleSidebar()),
+    dispatch,
+  };
+}
+
+function mapStateToProps() {
+  return createSelector(
+    sidebarSelector(),
+    isHamburgerOpen => ({
+      isHamburgerOpen,
+    }),
+  );
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SidebarLogo);
