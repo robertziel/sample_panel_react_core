@@ -3,10 +3,9 @@
  */
 
 import produce from 'immer';
-import { memoryHistory } from 'react-router-dom';
 import identity from 'lodash/identity';
 
-import configureStore from '../../configureStore';
+import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import getInjectors, { injectReducerFactory } from '../reducerInjectors';
 
@@ -28,11 +27,11 @@ describe('reducer injectors', () => {
   let store;
   let injectReducer;
 
-  describe('getInjectors', () => {
-    beforeEach(() => {
-      store = configureStore({}, memoryHistory);
-    });
+  beforeEach(() => {
+    store = new ConfigureTestStore().store;
+  });
 
+  describe('getInjectors', () => {
     it('should return injectors', () => {
       expect(getInjectors(store)).toEqual(
         expect.objectContaining({
@@ -50,7 +49,6 @@ describe('reducer injectors', () => {
 
   describe('injectReducer helper', () => {
     beforeEach(() => {
-      store = configureStore({}, memoryHistory);
       injectReducer = injectReducerFactory(store, true);
     });
 

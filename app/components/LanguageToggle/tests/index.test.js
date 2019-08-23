@@ -1,11 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router-dom';
 import { mount } from 'enzyme';
 
 import { changeLocale } from 'containers/LanguageProvider/actions';
 import LanguageProvider from 'containers/LanguageProvider';
-import configureStore from 'configureStore';
+import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import { translationMessages } from 'i18n';
 
 import LocaleToggle, { mapDispatchToProps } from '../index';
@@ -24,7 +23,7 @@ describe('<LocaleToggle />', () => {
   }
 
   beforeAll(() => {
-    store = configureStore({}, browserHistory);
+    store = new ConfigureTestStore().store;
   });
 
   describe('render', () => {

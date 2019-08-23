@@ -2,8 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider, defineMessages } from 'react-intl';
 import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router-dom';
-import configureStore from '../../../configureStore';
+import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import Toggle from '../index';
 
@@ -38,7 +37,7 @@ describe('<Toggle />', () => {
     }
 
     beforeAll(() => {
-      store = configureStore({}, browserHistory);
+      store = new ConfigureTestStore().store;
     });
 
     it('should contain default text', () => {

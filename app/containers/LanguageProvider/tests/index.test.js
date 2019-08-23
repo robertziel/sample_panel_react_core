@@ -2,12 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { FormattedMessage, defineMessages } from 'react-intl';
 import { Provider } from 'react-redux';
-import { browserHistory } from 'react-router-dom';
+
+import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
+import { translationMessages } from 'i18n';
 
 import ConnectedLanguageProvider, { LanguageProvider } from '../index';
-import configureStore from '../../../configureStore';
-
-import { translationMessages } from '../../../i18n';
 
 const messages = defineMessages({
   someMessage: {
@@ -33,7 +32,7 @@ describe('<ConnectedLanguageProvider />', () => {
   let store;
 
   beforeAll(() => {
-    store = configureStore({}, browserHistory);
+    store = new ConfigureTestStore().store;
   });
 
   it('should render the default language messages', () => {

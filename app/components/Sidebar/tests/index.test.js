@@ -1,9 +1,9 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import { IntlProvider } from 'react-intl';
-import { MemoryRouter, browserHistory } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import configureStore from '../../../configureStore';
+import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import Sidebar from '../index';
 
@@ -40,7 +40,7 @@ function mountWrapper(path) {
 let store;
 
 beforeAll(() => {
-  store = configureStore({}, browserHistory);
+  store = new ConfigureTestStore().store;
 });
 
 describe('<Sidebar />', () => {
