@@ -3,10 +3,10 @@ import { initialState } from './reducer';
 
 const sidebarState = state => state.sidebar || initialState;
 
-const sidebarSelector = () =>
+const sidebarToggleSelector = () =>
   createSelector(
     sidebarState,
     state => state.collapse,
   );
 
-export { sidebarSelector };
+export { sidebarToggleSelector };

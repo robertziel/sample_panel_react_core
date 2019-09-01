@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import { sidebarSelector } from './selectors';
+import { sidebarToggleSelector } from './selectors';
 import messages from './messages';
 import SidebarLink from './links/SidebarLink';
 import SidebarLogo from './SidebarLogo';
@@ -55,7 +55,7 @@ Sidebar.propTypes = {
 
 function mapStateToProps() {
   return createSelector(
-    sidebarSelector(),
+    sidebarToggleSelector(),
     collapse => ({
       collapse,
     }),

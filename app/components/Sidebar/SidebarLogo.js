@@ -6,7 +6,7 @@ import { createSelector } from 'reselect';
 import styled from 'styled-components';
 import Hamburger from 'components/Hamburger/index';
 import { toggleSidebar } from './actions';
-import { sidebarSelector } from './selectors';
+import { sidebarToggleSelector } from './selectors';
 
 function SidebarLogo(props) {
   const Div = styled.div`
@@ -79,7 +79,7 @@ function mapDispatchToProps(dispatch) {
 
 function mapStateToProps() {
   return createSelector(
-    sidebarSelector(),
+    sidebarToggleSelector(),
     isHamburgerOpen => ({
       isHamburgerOpen,
     }),
