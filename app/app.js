@@ -20,7 +20,7 @@ import 'sanitize.css/sanitize.css';
 // Import root app
 import App from 'containers/App';
 
-// Import Language Provider
+import BackendApiConnector from 'containers/BackendApiConnector/index';
 import LanguageProvider from 'containers/LanguageProvider';
 
 // Load the favicon and the .htaccess file
@@ -45,7 +45,9 @@ const render = messages => {
       <PersistGate loading={null} persistor={persistor}>
         <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>
-            <App />
+            <BackendApiConnector>
+              <App />
+            </BackendApiConnector>
           </ConnectedRouter>
         </LanguageProvider>
       </PersistGate>
