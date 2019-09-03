@@ -6,15 +6,21 @@
  *
  */
 
+import StoreAccessor from './StoreAccessor';
 import { BACKEND_API_URL } from './constants';
 
-function apiFetch(method, path, params, afterSuccess) {
-  fetch(`${BACKEND_API_URL}${path}`, {
+function getAuthenticationToken() {
+  return StoreAccessor.store.getState().backendApiConnector.authenticationToken;
+}
+
+function apiFetch(method, config) {
+  fetch(`${BACKEND_API_URL}${config.path}`, {
     method,
-    body: JSON.stringify(params),
+    body: JSON.stringify(config.body),
     headers: {
       'Content-Type': 'application/json',
       Accept: 'application/json',
+      'Authentication-Token': getAuthenticationToken(),
     },
   })
     .then(result => result.json())
@@ -22,7 +28,7 @@ function apiFetch(method, path, params, afterSuccess) {
       result => {
         // TO DO: Internet connection error (set noInternet: false)
         // TO DO: Wrong AccessToken response - render sign in form
-        afterSuccess(result);
+        config.afterSuccess(result);
       },
       // (error) => {
       //   // TO DO: Internet connection error (set noInternet: true)
@@ -31,10 +37,10 @@ function apiFetch(method, path, params, afterSuccess) {
     );
 }
 
-export function apiGet(path, params, afterSuccess) {
-  apiFetch('GET', path, params, afterSuccess);
+export function apiGet(config) {
+  apiFetch('GET', config);
 }
 
-export function apiPost(path, params, afterSuccess) {
-  apiFetch('POST', path, params, afterSuccess);
+export function apiPost(config) {
+  apiFetch('POST', config);
 }

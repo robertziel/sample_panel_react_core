@@ -1,6 +1,10 @@
 import produce from 'immer';
 
-import { SET_AUTHENTICATION_TOKEN } from './constants';
+import {
+  NULLIFY_AUTHENTICATION_CREDENTIALS,
+  SET_AUTHENTICATION_TOKEN,
+  SET_CURRENT_USER,
+} from './constants';
 
 export const initialState = {
   authenticationToken: null,
@@ -11,8 +15,15 @@ export const initialState = {
 const backendApiConnectorReducer = (state = initialState, action) =>
   produce(state, draft => {
     switch (action.type) {
+      case NULLIFY_AUTHENTICATION_CREDENTIALS:
+        draft.authenticationToken = null;
+        draft.currentUser = null;
+        break;
       case SET_AUTHENTICATION_TOKEN:
-        draft.authenticationToken = action.locale;
+        draft.authenticationToken = action.token;
+        break;
+      case SET_CURRENT_USER:
+        draft.currentUser = action.currentUser;
         break;
     }
   });

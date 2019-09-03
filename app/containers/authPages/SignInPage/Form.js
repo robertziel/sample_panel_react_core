@@ -25,20 +25,20 @@ class Form extends Component {
   onSubmit(event) {
     event.preventDefault();
 
-    apiPost(
-      '/auth/sign_in',
-      {
+    apiPost({
+      path: '/auth/sign_in',
+      body: {
         email: this.state.email,
         password: this.state.password,
       },
-      result => {
+      afterSuccess: result => {
         this.setState({ errorMessage: result.error_message });
 
         if (result.authentication_token) {
           this.props.onSignInSuccess(result.authentication_token);
         }
       },
-    );
+    });
   }
 
   render() {

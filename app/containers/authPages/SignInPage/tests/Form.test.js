@@ -39,6 +39,7 @@ beforeAll(() => {
 describe('<Form />', () => {
   context('when sign in succeeded', () => {
     loadApiFetchMock({
+      method: 'POST',
       path: submitPath,
       requestBody: { email, password },
       responseBody: { authentication_token: authenticationToken },
@@ -65,6 +66,7 @@ describe('<Form />', () => {
 
   context('when sign in not succeeded', () => {
     loadApiFetchMock({
+      method: 'POST',
       path: submitPath,
       requestBody: { email, password },
       responseBody: { error_message: errorMessage },

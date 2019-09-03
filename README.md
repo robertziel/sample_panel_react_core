@@ -31,7 +31,7 @@ npm start
       * when authenticationToken is null SignInPage is rendered `app/containers/BackendApiConnector/index.js`
 
 #### API fetchers
-* I made a simple fetching methods so that only path, params and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
+* I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 * Available fetchers:
-  * `apiGet(path, params, afterSuccess)`
-  * `apiPost(path, params, afterSuccess)`
+  * `apiGet(options: { path, afterSuccess })`
+  * `apiPost(options: { path, body, afterSuccess })`

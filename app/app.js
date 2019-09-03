@@ -45,7 +45,7 @@ const render = messages => {
       <PersistGate loading={null} persistor={persistor}>
         <LanguageProvider messages={messages}>
           <ConnectedRouter history={history}>
-            <BackendApiConnector>
+            <BackendApiConnector store={store}>
               <App />
             </BackendApiConnector>
           </ConnectedRouter>

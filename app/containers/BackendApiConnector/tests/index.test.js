@@ -3,6 +3,7 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
+import { act } from 'react-dom/test-utils';
 
 import { mount } from 'enzyme';
 
@@ -10,6 +11,13 @@ import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import BackendApiConnector from '../index';
 import { setAuthenticationToken } from '../actions';
+
+// Mock CurrentUserLoader required by BackendApiConnector
+/* eslint-disable react/prop-types */
+jest.mock('containers/BackendApiConnector/CurrentUserLoader', () => props => (
+  <div>{props.children}</div>
+));
+/* eslint-enable */
 
 const token = 'a token';
 
@@ -19,9 +27,13 @@ function expectToRenderProperContent(options) {
 }
 
 function changeAuthenticationToken(options) {
-  store.dispatch(setAuthenticationToken(options.fromValue));
+  act(() => {
+    store.dispatch(setAuthenticationToken(options.fromValue));
+  });
   wrapper.update();
-  store.dispatch(setAuthenticationToken(options.toValue));
+  act(() => {
+    store.dispatch(setAuthenticationToken(options.toValue));
+  });
   wrapper.update();
 }
 
@@ -29,7 +41,7 @@ function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
       <Provider store={store}>
-        <BackendApiConnector>
+        <BackendApiConnector store={store}>
           <div className="authorized-content"></div>
         </BackendApiConnector>
       </Provider>

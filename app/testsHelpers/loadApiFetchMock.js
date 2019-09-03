@@ -1,5 +1,5 @@
 /*
- * config: { path, requestBody, responseBody, status }
+ * config: { method, path, requestBody, responseBody, status }
  *
  */
 
@@ -8,10 +8,11 @@ import { BACKEND_API_URL } from 'containers/BackendApiConnector/constants';
 
 export default function loadApiFetchMock(config) {
   beforeAll(() => {
-    fetchMock.post(
+    fetchMock.mock(
       (url, opts) =>
         url === `${BACKEND_API_URL}${config.path}` &&
-        opts.body === JSON.stringify(config.requestBody),
+        opts.body === JSON.stringify(config.requestBody) &&
+        opts.method === config.method,
       {
         status: config.status,
         body: config.responseBody,

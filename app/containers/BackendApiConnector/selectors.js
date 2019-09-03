@@ -9,3 +9,9 @@ export const authenticationTokenSelector = () =>
     backendApiConnectorState,
     state => state.authenticationToken,
   );
+
+export const currentUserSelector = () =>
+  createSelector(
+    backendApiConnectorState,
+    state => state.currentUser,
+  );
