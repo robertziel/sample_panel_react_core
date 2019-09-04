@@ -28,13 +28,22 @@ function apiFetch(method, config) {
       result => {
         // TO DO: Internet connection error (set noInternet: false)
         // TO DO: Wrong AccessToken response - render sign in form
-        config.afterSuccess(result);
+        if (typeof config.afterSuccess === 'function') {
+          config.afterSuccess(result);
+        }
       },
-      // (error) => {
-      //   // TO DO: Internet connection error (set noInternet: true)
-      //   // TO DO: Fetch failed 'Error while connecting to server'
-      // },
+      error => {
+        // TO DO: Internet connection error (set noInternet: true)
+        // TO DO: Fetch failed 'Error while connecting to server'
+        if (typeof config.afterError === 'function') {
+          config.afterError(error);
+        }
+      },
     );
+}
+
+export function apiDelete(config) {
+  apiFetch('DELETE', config);
 }
 
 export function apiGet(config) {

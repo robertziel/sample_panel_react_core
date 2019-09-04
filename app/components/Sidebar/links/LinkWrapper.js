@@ -19,7 +19,7 @@ export default styled.div`
     &:hover,
     &.active {
       background-color: #e0f3ff;
-      color: #3f6ad8;
+      color: #00a9ff;
     }
   }
 
