@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
+import styled from 'styled-components';
 
 import {
   nullifyAuthenticationCredentials,
@@ -10,6 +12,23 @@ import {
 import { apiGet } from 'containers/BackendApiConnector/fetchers';
 
 import { currentUserSelector } from './selectors';
+
+const SpinnerWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  position: fixed;
+
+  div {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    max-width: 100%;
+    max-height: 100%;
+  }
+`;
 
 class CurrentUserLoader extends Component {
   constructor(props) {
@@ -35,7 +54,11 @@ class CurrentUserLoader extends Component {
     if (this.props.currentUser) {
       return React.Children.only(this.props.children);
     }
-    return <h1>Loading...</h1>;
+    return (
+      <SpinnerWrapper>
+        <FulfillingBouncingCircleSpinner color="#00a9ff" size={80} />
+      </SpinnerWrapper>
+    );
   }
 }
 
