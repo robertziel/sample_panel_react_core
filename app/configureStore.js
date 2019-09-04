@@ -5,6 +5,7 @@
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'connected-react-router';
 import { persistStore, persistReducer } from 'redux-persist';
+import { createBlacklistFilter } from 'redux-persist-transform-filter';
 import storage from 'redux-persist/lib/storage';
 import createSagaMiddleware from 'redux-saga';
 import createReducer from './reducers';
@@ -38,9 +39,15 @@ export default function configureStore(initialState = {}, history) {
 
   const enhancers = [applyMiddleware(...middlewares)];
 
+  const filterBackendApiConnector = createBlacklistFilter(
+    'backendApiConnector',
+    ['currentUser'],
+  );
+
   const persistConfig = {
     key: 'root',
     storage,
+    transforms: [filterBackendApiConnector],
   };
 
   const persistedReducer = persistReducer(persistConfig, createReducer());

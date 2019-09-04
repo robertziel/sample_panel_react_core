@@ -93,6 +93,7 @@
     "reactstrap": "^8.0.1",
     "redux": "4.0.4",
     "redux-persist": "^5.10.0",
+    "redux-persist-transform-filter": "0.0.18",
     "redux-saga": "1.0.5",
     "reselect": "4.0.0",
     "roboto-fontface": "^0.10.0",
