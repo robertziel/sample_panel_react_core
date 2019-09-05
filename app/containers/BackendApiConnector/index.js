@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
-import SignInPage from 'containers/authPages/SignInPage/Loadable';
+import SignInPage from 'containers/_authPages/SignInPage/Loadable';
 
 import CurrentUserLoader from './CurrentUserLoader';
 import { authenticationTokenSelector } from './selectors';

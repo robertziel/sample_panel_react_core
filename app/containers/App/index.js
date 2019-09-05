@@ -14,9 +14,9 @@ import Navbar from 'components/Navbar/index';
 import Footer from 'components/Footer/index';
 import Sidebar from 'components/Sidebar/index';
 
-import HomePage from 'containers/HomePage/Loadable';
-import ProfilePage from 'containers/ProfilePage/Loadable';
-import NotFoundPage from 'containers/NotFoundPage/Loadable';
+import HomePage from 'containers/_pages/HomePage/Loadable';
+import ProfilePage from 'containers/_pages/ProfilePage/Loadable';
+import NotFoundPage from 'containers/_pages/NotFoundPage/Loadable';
 
 export default function App() {
   return (

@@ -18,7 +18,7 @@ npm start
 ```
 
 #### How authentication works?
-* all authentication related containers are kept in `app/containers/authPages`
+* all authentication related containers are kept in `app/containers/_authPages`
 * `app/containers/BackendApiConnector` is responsible for:
   * handling all requests to API
     * API URL is set in `app/containers/BackendApiConnector/constants.js` as `BACKEND_API_URL`
