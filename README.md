@@ -35,3 +35,7 @@ npm start
 * Available fetchers:
   * `apiGet(options: { path, afterSuccess })`
   * `apiPost(options: { path, body, afterSuccess })`
+
+#### Notifications
+* Based on https://github.com/igorprado/react-notification-system
+* `notificationSystem` reference can be accessed from `app/containers/NotificationsSystem`

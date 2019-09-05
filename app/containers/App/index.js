@@ -18,8 +18,6 @@ import HomePage from 'containers/HomePage/Loadable';
 import ProfilePage from 'containers/ProfilePage/Loadable';
 import NotFoundPage from 'containers/NotFoundPage/Loadable';
 
-import GlobalStyle from '../../global-styles';
-
 export default function App() {
   return (
     <div>
@@ -31,7 +29,6 @@ export default function App() {
         <Route component={NotFoundPage} />
       </Switch>
       <Footer />
-      <GlobalStyle />
     </div>
   );
 }

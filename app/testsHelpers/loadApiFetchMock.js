@@ -16,6 +16,7 @@ export default function loadApiFetchMock(config) {
       {
         status: config.status,
         body: config.responseBody,
+        throws: config.throws,
       },
     );
   });
