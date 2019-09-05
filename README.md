@@ -39,3 +39,4 @@ npm start
 #### Notifications
 * Based on https://github.com/igorprado/react-notification-system
 * `notificationSystem` reference can be accessed from `app/containers/NotificationsSystem`
+* notification functions should be defined in `notifications.js` files, with following name format `function *Notify()` like `function randomNameNotify()`

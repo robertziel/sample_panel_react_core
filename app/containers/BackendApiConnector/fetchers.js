@@ -6,25 +6,13 @@
  *
  */
 
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-
-import { notificationSystem } from 'containers/NotificationsSystem';
+import { connectionRefusedNotify } from './notifications';
 
 import StoreAccessor from './StoreAccessor';
 import { BACKEND_API_URL } from './constants';
-import messages from './messages';
 
 function getAuthenticationToken() {
   return StoreAccessor.store.getState().backendApiConnector.authenticationToken;
-}
-
-function errorConnectionRefused() {
-  notificationSystem.current.addNotification({
-    autoDismiss: 0,
-    message: <FormattedMessage {...messages.errorConnectionRefused} />,
-    level: 'error',
-  });
 }
 
 function apiFetch(method, config) {
@@ -48,7 +36,7 @@ function apiFetch(method, config) {
       },
       error => {
         // TO DO: Internet connection error (set noInternet: true)
-        errorConnectionRefused();
+        connectionRefusedNotify();
         if (typeof config.afterError === 'function') {
           config.afterError(error);
         }

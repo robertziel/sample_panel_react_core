@@ -4,6 +4,7 @@ import React from 'react';
 import { IntlProvider } from 'react-intl';
 
 import { mount } from 'enzyme';
+import waitForExpect from 'wait-for-expect';
 
 import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
@@ -44,9 +45,11 @@ describe('apiFetch()', () => {
     });
 
     it('should notify that cannot connect to the server', async () => {
-      expect(wrapper.text()).toContain(
-        messages.errorConnectionRefused.defaultMessage,
-      );
+      await waitForExpect(() => {
+        expect(wrapper.text()).toContain(
+          messages.connectionRefusedNotify.defaultMessage,
+        );
+      });
     });
   });
 });

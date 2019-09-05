@@ -3,8 +3,8 @@ import { defineMessages } from 'react-intl';
 export const scope = 'app.containers.BackendApiConnector';
 
 const messages = defineMessages({
-  errorConnectionRefused: {
-    id: `${scope}.fetchers.notifications.errorConnectionRefused`,
+  connectionRefusedNotify: {
+    id: `${scope}.fetchers.notifications.connectionRefusedNotify`,
     defaultMessage: `
       Cannot connect to the server.
     `,
