@@ -12,7 +12,9 @@ import SidebarCollapse from './SidebarCollapse';
 
 export function Sidebar(props) {
   return (
-    <SidebarCollapse className="sidebar-collapse" isOpen={props.collapse}>
+    <SidebarCollapse
+      className={`sidebar-collapse ${props.collapse ? ' collapsed' : ''}`}
+    >
       <SidebarLogo href="https://robertz.co" />
       <SidebarLink
         exact

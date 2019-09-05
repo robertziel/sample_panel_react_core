@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { Collapse } from 'reactstrap';
 
-export default styled(Collapse)`
+export default styled.div`
   position: fixed;
   top: 0;
   bottom: 0;
@@ -15,7 +14,7 @@ export default styled(Collapse)`
     transition: opacity 200ms ease-out;
   }
 
-  &:not(.show):not(:hover) {
+  &:not(.collapsed):not(:hover) {
     left: -200px;
 
     .evaporating {

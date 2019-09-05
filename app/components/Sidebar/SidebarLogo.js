@@ -21,9 +21,9 @@ function SidebarLogo(props) {
         .logo {
           position: relative;
           height: 100%;
-          color: black;
+          color: #000000;
           font-size: 30px;
-          font-weight: 200;
+          font-weight: 300;
           padding-left: 15px;
           padding-top: 8px;
 
@@ -32,7 +32,8 @@ function SidebarLogo(props) {
             position: absolute;
             top: 40px;
             left: 129px;
-            color: #565d63;
+            color: #00a9ff;
+            font-weight: 300;
           }
         }
       }

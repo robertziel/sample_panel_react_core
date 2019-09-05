@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { Collapse } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import FontAwesome from 'react-fontawesome';
 
@@ -16,7 +15,7 @@ class SidebarCollapseLinks extends Component {
     super(props);
 
     this.toggle = this.toggle.bind(this);
-    this.state = { collapse: this.isSectionActive() };
+    this.state = { collapsed: this.isSectionActive() };
   }
 
   linkMatchPath(link) {
@@ -30,7 +29,7 @@ class SidebarCollapseLinks extends Component {
   }
 
   toggle() {
-    this.setState(state => ({ collapse: !state.collapse }));
+    this.setState(state => ({ collapsed: !state.collapsed }));
   }
 
   renderLink(link, index) {
@@ -48,7 +47,7 @@ class SidebarCollapseLinks extends Component {
   }
 
   render() {
-    const CollapseLinks = styled(Collapse)`
+    const CollapseLinks = styled.div`
       &:not(.show) {
         width: 200px;
         height: 0px;
@@ -93,6 +92,10 @@ class SidebarCollapseLinks extends Component {
 
     const buttonClassName = `main-sidebar-link sidebar-link ${buttonActiveClassName}`;
 
+    const collapseLinksClassName = `collapse ${
+      this.state.collapsed ? 'show' : ''
+    }`;
+
     return (
       <StyledLinkWrapper>
         <button type="button" onClick={this.toggle} className={buttonClassName}>
@@ -105,7 +108,7 @@ class SidebarCollapseLinks extends Component {
             className="collapse-icon evaporating"
           />
         </button>
-        <CollapseLinks isOpen={this.state.collapse}>
+        <CollapseLinks className={collapseLinksClassName}>
           {this.props.links.map((link, index) => this.renderLink(link, index))}
         </CollapseLinks>
       </StyledLinkWrapper>

@@ -92,7 +92,6 @@
     "react-notification-system": "^0.2.17",
     "react-redux": "7.1.0",
     "react-router-dom": "5.0.1",
-    "reactstrap": "^8.0.1",
     "redux": "4.0.4",
     "redux-persist": "^5.10.0",
     "redux-persist-transform-filter": "0.0.18",

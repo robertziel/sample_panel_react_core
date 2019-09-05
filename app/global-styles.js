@@ -10,6 +10,11 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
   }
 
+  * {
+    margin: 0;
+    padding: 0;
+  }
+
   body {
     font-family: Roboto, Times, 'Times New Roman', serif;
   }
@@ -18,7 +23,6 @@ const GlobalStyle = createGlobalStyle`
     background-color: #f1f4f6;
     min-height: 100%;
     min-width: 100%;
-    padding-left 60px;
   }
 
   p,
