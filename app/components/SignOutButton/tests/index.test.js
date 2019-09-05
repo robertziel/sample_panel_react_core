@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
 
+import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
@@ -15,7 +16,9 @@ import {
   setAuthenticationToken,
   setCurrentUser,
 } from 'containers/BackendApiConnector/actions';
+
 import SignOutButton from '../index';
+import messages from '../messages';
 
 const authenticationToken = 'a token';
 const currentUser = { name: 'User' };
@@ -25,10 +28,15 @@ function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
       <Provider store={store}>
+        <NotificationSystem />
         <SignOutButton />
       </Provider>
     </IntlProvider>,
   );
+}
+
+function clickButton() {
+  wrapper.find('div.sign-out').simulate('click');
 }
 
 let store;
@@ -54,7 +62,7 @@ describe('<SignOutButton />', () => {
       });
 
       it('should nullify backendApiConnector credentials', async () => {
-        wrapper.find('div.sign-out').simulate('click');
+        clickButton();
 
         await waitForExpect(() => {
           expect(
@@ -62,6 +70,16 @@ describe('<SignOutButton />', () => {
           ).toEqual(null);
           expect(store.getState().backendApiConnector.currentUser).toEqual(
             null,
+          );
+        });
+      });
+
+      it('should add signed out notification', async () => {
+        clickButton();
+
+        await waitForExpect(() => {
+          expect(wrapper.text()).toContain(
+            messages.signedOutNotify.defaultMessage,
           );
         });
       });

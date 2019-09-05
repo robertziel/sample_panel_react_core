@@ -7,6 +7,7 @@ import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector
 
 import { apiDelete } from 'containers/BackendApiConnector/fetchers';
 
+import { signedOutNotify } from './notifications';
 import Wrapper from './Wrapper';
 
 class SignOutButton extends Component {
@@ -27,6 +28,7 @@ class SignOutButton extends Component {
       path: '/auth/sign_out',
       afterSuccess: () => {
         this.props.onSignOutSuccess();
+        signedOutNotify();
       },
       afterError: () => {
         this.setState({ processing: false });
