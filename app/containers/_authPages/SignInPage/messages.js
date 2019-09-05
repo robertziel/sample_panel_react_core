@@ -19,4 +19,8 @@ export default defineMessages({
     id: `${scope}.form.button`,
     defaultMessage: 'Sign in',
   },
+  signedInNotify: {
+    id: `${scope}.notifications.signedInNotify`,
+    defaultMessage: 'You are signed in!',
+  },
 });

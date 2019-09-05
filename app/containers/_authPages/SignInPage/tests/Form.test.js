@@ -7,10 +7,12 @@ import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
 
+import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import Form from '../Form';
+import messages from '../messages';
 
 const authenticationToken = 'a token';
 const errorMessage = 'Error message';
@@ -22,16 +24,28 @@ function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
       <Provider store={store}>
+        <NotificationSystem />
         <Form />
       </Provider>
     </IntlProvider>,
   );
 }
 
+function fillInAndSubmitForm() {
+  wrapper
+    .find('input[name="email"]')
+    .simulate('change', { target: { value: email } });
+  wrapper
+    .find('input[name="password"]')
+    .simulate('change', { target: { value: password } });
+
+  wrapper.find('button[type="submit"]').simulate('submit');
+}
+
 let store;
 let wrapper;
 
-beforeAll(() => {
+beforeEach(() => {
   store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
 });
@@ -47,19 +61,22 @@ describe('<Form />', () => {
     });
 
     it('should save new authenticationToken in redux store', async () => {
-      wrapper
-        .find('input[name="email"]')
-        .simulate('change', { target: { value: email } });
-      wrapper
-        .find('input[name="password"]')
-        .simulate('change', { target: { value: password } });
-
-      wrapper.first('button[type="submit"]').simulate('submit');
+      fillInAndSubmitForm();
 
       await waitForExpect(() => {
         expect(
           store.getState().backendApiConnector.authenticationToken,
         ).toEqual(authenticationToken);
+      });
+    });
+
+    it('should add signed in notification', async () => {
+      fillInAndSubmitForm();
+
+      await waitForExpect(() => {
+        expect(wrapper.text()).toContain(
+          messages.signedInNotify.defaultMessage,
+        );
       });
     });
   });
@@ -74,14 +91,7 @@ describe('<Form />', () => {
     });
 
     it('should render an error message', async () => {
-      wrapper
-        .find('input[name="email"]')
-        .simulate('change', { target: { value: email } });
-      wrapper
-        .find('input[name="password"]')
-        .simulate('change', { target: { value: password } });
-
-      wrapper.first('button[type="submit"]').simulate('submit');
+      fillInAndSubmitForm();
 
       await waitForExpect(() => {
         wrapper.update();

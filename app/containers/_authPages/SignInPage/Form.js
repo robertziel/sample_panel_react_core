@@ -8,6 +8,7 @@ import { setAuthenticationToken } from 'containers/BackendApiConnector/actions';
 import { apiPost } from 'containers/BackendApiConnector/fetchers';
 
 import messages from './messages';
+import { signedInNotify } from './notifications';
 
 class Form extends Component {
   constructor(props) {
@@ -24,7 +25,6 @@ class Form extends Component {
 
   onSubmit(event) {
     event.preventDefault();
-
     apiPost({
       path: '/auth/sign_in',
       body: {
@@ -36,6 +36,7 @@ class Form extends Component {
 
         if (result.authentication_token) {
           this.props.onSignInSuccess(result.authentication_token);
+          signedInNotify();
         }
       },
     });
