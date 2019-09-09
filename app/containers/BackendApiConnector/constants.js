@@ -1,4 +1,4 @@
-export const BACKEND_API_URL = 'http://localhost:8080/api';
+export const { BACKEND_API_URL } = process.env;
 
 export const NULLIFY_AUTHENTICATION_CREDENTIALS =
   'app/BackendApiConnector/NULLIFY';

@@ -5,6 +5,8 @@
 const path = require('path');
 const webpack = require('webpack');
 
+require('dotenv').config({ path: path.resolve(process.cwd(), '.env') });
+
 module.exports = options => ({
   mode: options.mode,
   entry: options.entry,
@@ -113,6 +115,8 @@ module.exports = options => ({
     // drop any unreachable code.
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'development',
+      BACKEND_API_URL:
+        process.env.BACKEND_API_URL || 'http://localhost:8080/api',
     }),
   ]),
   resolve: {

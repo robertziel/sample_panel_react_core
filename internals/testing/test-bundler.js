@@ -7,3 +7,5 @@ import Adapter from 'enzyme-adapter-react-16';
 configure({ adapter: new Adapter() });
 
 global.context = describe;
+
+process.env.BACKEND_API_URL = 'http://test.dev';
