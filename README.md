@@ -5,6 +5,8 @@
 
 # SIMPLE PANEL REACT CLIENT
 
+Staging: https://simple-panel-react-client.robertz.co
+
 RAILS API:
 https://github.com/robertziel/simple_panel_rails_backend
 
@@ -21,7 +23,7 @@ npm start
 * all authentication related containers are kept in `app/containers/_authPages`
 * `app/containers/BackendApiConnector` is responsible for:
   * handling all requests to API
-    * API URL is set in `app/containers/BackendApiConnector/constants.js` as `BACKEND_API_URL`
+    * API URL is set in `.env` as `BACKEND_API_URL`
   * keeping signed in currentUser data and authenticationToken:
     * User data are not saved in cookies and application asks API to access them each time it initializes before render proper content
     * authenticationToken is saved in cookies
