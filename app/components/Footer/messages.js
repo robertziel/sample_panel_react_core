@@ -6,7 +6,7 @@ const messages = defineMessages({
   authorMessage: {
     id: `${scope}.author.message`,
     defaultMessage: `
-      Made by {author}.
+      Designed by {author}.
     `,
   },
 });

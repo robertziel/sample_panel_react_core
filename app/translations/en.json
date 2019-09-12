@@ -1,5 +1,5 @@
 {
-  "app.components.Footer.author.message": "Made by {author}.",
+  "app.components.Footer.author.message": "Designed by {author}.",
   "app.components.LocaleToggle.en": "English",
   "app.components.LocaleToggle.pl": "Polski",
   "app.components.Sidebar.links.dashboardPage": "Dashboard",
@@ -10,6 +10,6 @@
   "app.components.Sidebar.links.threePage": "Page Three",
   "app.components.Sidebar.links.twoPage": "Two page",
   "app.containers.HomePage.header": "This is the HomePage container!",
-  "app.containers.NotFoundPage.header": "This is the NotFoundPage container!",
+  "app.containers.NotFoundPage.header": "404 Not found!",
   "app.containers.ProfilePage.header": "Profile page!"
 }

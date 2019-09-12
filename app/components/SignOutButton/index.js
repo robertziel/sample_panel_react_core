@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { SwappingSquaresSpinner } from 'react-epic-spinners';
 import FontAwesome from 'react-fontawesome';
-import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
 
+import { colors } from 'styles/constants';
+
+import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
 import { apiDelete } from 'containers/BackendApiConnector/fetchers';
 
 import { signedOutNotify } from './notifications';
@@ -42,7 +44,7 @@ class SignOutButton extends Component {
     return (
       <Wrapper onClick={this.signOut} className={className}>
         {this.state.processing ? (
-          <SwappingSquaresSpinner color="#00a9ff" size={40} />
+          <SwappingSquaresSpinner color={colors.main} size={40} />
         ) : (
           <FontAwesome name="power-off" />
         )}

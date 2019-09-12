@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from 'styles/constants';
+
 export default styled.div`
   background: white;
 
@@ -18,8 +20,8 @@ export default styled.div`
 
     &:hover,
     &.active {
-      background-color: #e0f3ff;
-      color: #00a9ff;
+      background-color: ${colors.lightMain};
+      color: ${colors.main};
     }
   }
 

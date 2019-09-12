@@ -3,16 +3,16 @@ import React from 'react';
 import LanguageToggle from 'components/LanguageToggle/index';
 import SignOutButton from 'components/SignOutButton/index';
 
-import Nav from './Nav';
+import Wrapper from './Wrapper';
 
 function Navbar() {
   return (
-    <Nav>
+    <Wrapper>
       <div className="navbar-right">
         <SignOutButton />
         <LanguageToggle />
       </div>
-    </Nav>
+    </Wrapper>
   );
 }
 

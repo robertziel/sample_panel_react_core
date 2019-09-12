@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 import FontAwesome from 'react-fontawesome';
+import { FormattedMessage } from 'react-intl';
+import { matchPath, withRouter } from 'react-router';
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import styled from 'styled-components';
-import { matchPath, withRouter } from 'react-router';
+import { colors } from 'styles/constants';
 
 import CommonLinkContent from './CommonLinkContent';
 import LinkWrapper from './LinkWrapper';
@@ -62,7 +63,7 @@ class SidebarCollapseLinks extends Component {
         border-radius: 5px;
 
         .line {
-          background: #e0f3ff;
+          background: ${colors.lightMain};
           border-radius: 5px;
           width: 6px;
           height: 40px;

@@ -24,7 +24,7 @@ import BackendApiConnector from 'containers/BackendApiConnector';
 import LanguageProvider from 'containers/LanguageProvider';
 import NotificationSystem from 'containers/NotificationsSystem';
 
-import GlobalStyle from './global-styles';
+import GlobalStyle from 'styles/global-styles';
 
 // Load the favicon and the .htaccess file
 /* eslint-disable import/no-unresolved, import/extensions */

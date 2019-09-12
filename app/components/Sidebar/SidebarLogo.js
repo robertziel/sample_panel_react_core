@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 
 import styled from 'styled-components';
+import { colors } from 'styles/constants';
+
 import Hamburger from 'components/Hamburger/index';
 import { toggleSidebar } from './actions';
 import { sidebarToggleSelector } from './selectors';
@@ -32,7 +34,7 @@ function SidebarLogo(props) {
             position: absolute;
             top: 40px;
             left: 129px;
-            color: #00a9ff;
+            color: ${colors.main};
             font-weight: 300;
           }
         }

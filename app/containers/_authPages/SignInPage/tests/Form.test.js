@@ -95,9 +95,7 @@ describe('<Form />', () => {
 
       await waitForExpect(() => {
         wrapper.update();
-        expect(wrapper.find('.error-message').contains(errorMessage)).toEqual(
-          true,
-        );
+        expect(wrapper.contains(errorMessage)).toEqual(true);
       });
     });
   });

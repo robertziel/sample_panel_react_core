@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from 'styles/constants';
+
 const Wrapper = styled.footer`
   position: fixed;
   bottom: 0px;
@@ -12,7 +14,7 @@ const Wrapper = styled.footer`
     text-transform: uppercase;
 
     a {
-      color: #00a9ff;
+      color: ${colors.main};
       text-decoration: none;
       font-weight: 600;
     }

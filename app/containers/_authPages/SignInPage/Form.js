@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Button, TextField } from '@material-ui/core';
+import { Button, Note, Grid, TextField } from 'components/_ui-elements';
 
 import { setAuthenticationToken } from 'containers/BackendApiConnector/actions';
 import { apiPost } from 'containers/BackendApiConnector/fetchers';
@@ -45,28 +45,32 @@ class Form extends Component {
   render() {
     return (
       <form onSubmit={this.onSubmit}>
-        <div className="error-message">{this.state.errorMessage}</div>
-        <div className="field-line">
+        <Grid>
+          <Note error message={this.state.errorMessage} />
+        </Grid>
+        <Grid>
           <TextField
             label={<FormattedMessage {...messages.formEmail} />}
             type="email"
             name="email"
             onChange={event => this.setState({ email: event.target.value })}
-            variant="filled"
+            variant="outlined"
           />
-        </div>
-        <div className="field-line">
+        </Grid>
+        <Grid>
           <TextField
             label={<FormattedMessage {...messages.formPassword} />}
             type="password"
             name="password"
             onChange={event => this.setState({ password: event.target.value })}
-            variant="filled"
+            variant="outlined"
           />
-        </div>
-        <Button type="submit" variant="outlined">
-          <FormattedMessage {...messages.formButton} />
-        </Button>
+        </Grid>
+        <Grid>
+          <Button type="submit" variant="outlined">
+            <FormattedMessage {...messages.formButton} />
+          </Button>
+        </Grid>
       </form>
     );
   }

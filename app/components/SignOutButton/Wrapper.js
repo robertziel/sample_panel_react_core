@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 
+import { colors } from 'styles/constants';
+
 const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
@@ -17,10 +19,10 @@ const Wrapper = styled.div`
 
   &:hover,
   &.active {
-    background: #e0f3ff;
+    background: ${colors.lightMain};
 
     span {
-      color: #00a9ff;
+      color: ${colors.main};
     }
   }
 `;

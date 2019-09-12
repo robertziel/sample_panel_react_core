@@ -1,10 +1,13 @@
 import styled from 'styled-components';
 
-const HamburgerContainer = styled.div`
+import { colors } from 'styles/constants';
+
+const Wrapper = styled.div`
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 100ms linear;
 
   .hamburger-container {
     position: relative;
@@ -35,7 +38,7 @@ const HamburgerContainer = styled.div`
   }
 
   &:hover {
-    background: #e0f3ff;
+    background: ${colors.lightMain};
   }
 
   &.open {
@@ -57,4 +60,4 @@ const HamburgerContainer = styled.div`
   }
 `;
 
-export default HamburgerContainer;
+export default Wrapper;
