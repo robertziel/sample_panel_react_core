@@ -15,6 +15,10 @@ function getAuthenticationToken() {
   return StoreAccessor.store.getState().backendApiConnector.authenticationToken;
 }
 
+function getLanguageLocale() {
+  return StoreAccessor.store.getState().language.locale;
+}
+
 function apiFetch(method, config) {
   fetch(`${BACKEND_API_URL}${config.path}`, {
     method,
@@ -23,6 +27,7 @@ function apiFetch(method, config) {
       'Content-Type': 'application/json',
       Accept: 'application/json',
       'Authentication-Token': getAuthenticationToken(),
+      'Language-Locale': getLanguageLocale(),
     },
   })
     .then(result => result.json())
