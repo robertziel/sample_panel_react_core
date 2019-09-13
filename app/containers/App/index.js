@@ -26,21 +26,18 @@ import NotFoundPage from 'containers/_pages/NotFoundPage/Loadable';
 import ContentWrapper from './ContentWrapper';
 
 function App(props) {
+  const marginLeft = props.sidebarCollapsed ? 260 : 60;
   return (
-    <div>
+    <ContentWrapper marginLeft={marginLeft}>
       <Navbar />
-      <ContentWrapper
-        className={props.sidebarCollapsed ? 'sidebar-collapsed' : ''}
-      >
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/profile" component={ProfilePage} />
-          <Route component={NotFoundPage} />
-        </Switch>
-        <Footer />
-      </ContentWrapper>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/profile" component={ProfilePage} />
+        <Route component={NotFoundPage} />
+      </Switch>
+      <Footer marginLeft={marginLeft} />
       <Sidebar />
-    </div>
+    </ContentWrapper>
   );
 }
 

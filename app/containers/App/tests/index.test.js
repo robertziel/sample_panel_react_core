@@ -35,8 +35,12 @@ describe('<App />', () => {
       wrapper.setProps({ sidebarCollapsed: true });
     });
 
-    it('should add class to <ContentWrapper />', () => {
-      expect(wrapper.exists('.sidebar-collapsed')).toBe(true);
+    it('should set marginLeft to <ContentWrapper />', () => {
+      expect(wrapper.find('ContentWrapper').prop('marginLeft')).toBe(260);
+    });
+
+    it('should set marginLeft to <Footer />', () => {
+      expect(wrapper.find('Footer').prop('marginLeft')).toBe(260);
     });
   });
 });

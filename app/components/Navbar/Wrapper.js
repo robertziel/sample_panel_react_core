@@ -9,6 +9,9 @@ const Wrapper = styled.nav`
 
   .navbar-right {
     float: right;
+    width: 60px;
+    height: 60px;
+    margin-right: 10px;
   }
 `;
 

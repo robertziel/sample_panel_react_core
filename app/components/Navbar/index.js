@@ -10,6 +10,8 @@ function Navbar() {
     <Wrapper>
       <div className="navbar-right">
         <SignOutButton />
+      </div>
+      <div className="navbar-right">
         <LanguageToggle />
       </div>
     </Wrapper>

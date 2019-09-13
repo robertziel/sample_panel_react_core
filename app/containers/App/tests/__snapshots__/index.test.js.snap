@@ -1,28 +1,28 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`<App /> should match snapshot 1`] = `
-<div>
+<ContentWrapper
+  marginLeft={60}
+>
   <Navbar />
-  <ContentWrapper
-    className=""
-  >
-    <Switch>
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/"
-      />
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/profile"
-      />
-      <Route
-        component={[Function]}
-      />
-    </Switch>
-    <Footer />
-  </ContentWrapper>
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/profile"
+    />
+    <Route
+      component={[Function]}
+    />
+  </Switch>
+  <Footer
+    marginLeft={60}
+  />
   <Connect(Sidebar) />
-</div>
+</ContentWrapper>
 `;

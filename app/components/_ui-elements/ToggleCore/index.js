@@ -15,13 +15,19 @@ function Toggle(props) {
   }
 
   return (
-    <Select value={props.value} onChange={props.onToggle} input={<InputBase />}>
+    <Select
+      className={props.className}
+      value={props.value}
+      onChange={props.onToggle}
+      input={<InputBase />}
+    >
       {options}
     </Select>
   );
 }
 
 Toggle.propTypes = {
+  className: PropTypes.string,
   onToggle: PropTypes.func,
   values: PropTypes.array,
   value: PropTypes.string,
