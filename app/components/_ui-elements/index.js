@@ -6,3 +6,4 @@ export * from './Grid';
 export * from './H1';
 export * from './Paper';
 export * from './TextField';
+export * from './Toggle';

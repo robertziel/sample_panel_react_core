@@ -4,23 +4,23 @@ import { IntlProvider, defineMessages } from 'react-intl';
 import { Provider } from 'react-redux';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
-import Toggle from '../index';
+import ToggleCore from '../index';
 
 const defaultEnMessage = 'someContent';
 const defaultPlMessage = 'someOtherContent';
 
 const messages = defineMessages({
   en: {
-    id: 'app.components.LocaleToggle.en',
+    id: 'en',
     defaultMessage: defaultEnMessage,
   },
   pl: {
-    id: 'app.components..LocaleToggle.en',
+    id: 'en',
     defaultMessage: defaultPlMessage,
   },
 });
 
-describe('<Toggle />', () => {
+describe('<ToggleCore />', () => {
   let store;
 
   describe('render', () => {
@@ -30,7 +30,7 @@ describe('<Toggle />', () => {
       return mount(
         <Provider store={store}>
           <IntlProvider locale="en">
-            <Toggle values={values} messages={messages} />
+            <ToggleCore values={values} messages={messages} />
           </IntlProvider>
         </Provider>,
       );
@@ -45,15 +45,9 @@ describe('<Toggle />', () => {
       expect(wrapper.html()).toMatchSnapshot();
     });
 
-    it('should not have ToggleOptions if props.values is not defined', () => {
+    it('should not have ToggleCoreOptions if props.values is not defined', () => {
       wrapper = mountWrapper(null);
-      expect(wrapper.find('option')).toHaveLength(1);
-      expect(
-        wrapper
-          .find('option')
-          .first()
-          .text(),
-      ).toEqual('--');
+      expect(wrapper.find('.MuiList')).toHaveLength(0);
     });
   });
 });
