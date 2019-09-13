@@ -1,7 +1,9 @@
 /* global context */
 
 import React from 'react';
+import { act } from 'react-dom/test-utils';
 import { IntlProvider } from 'react-intl';
+import { Provider } from 'react-redux';
 
 import { mount } from 'enzyme';
 import fetchMock from 'fetch-mock';
@@ -11,26 +13,29 @@ import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
+import { setAuthenticationToken } from '../actions';
 import { apiGet } from '../fetchers';
 import messages from '../messages';
 
 const locale = 'en';
 const path = '/';
+const token = 'a token';
 
 function mountWrapper() {
   return mount(
     <IntlProvider locale={locale}>
-      <NotificationSystem />
+      <Provider store={store}>
+        <NotificationSystem />
+      </Provider>
     </IntlProvider>,
   );
 }
 
+let store;
 let wrapper;
 
 beforeEach(() => {
-  /* eslint-disable no-new */
-  new ConfigureTestStore();
-  /* eslint-enable no-new */
+  store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
 });
 
@@ -39,6 +44,20 @@ describe('apiFetch()', () => {
     fetchMock.mock((url, opts) => opts.headers['Language-Locale'] === locale, {
       status: 200,
     });
+    apiGet({ path });
+    fetchMock.restore();
+  });
+
+  it('Authentication-Token header must be included', () => {
+    act(() => {
+      store.dispatch(setAuthenticationToken(token));
+    });
+    fetchMock.mock(
+      (url, opts) => opts.headers['Authentication-Token'] === token,
+      {
+        status: 200,
+      },
+    );
     apiGet({ path });
     fetchMock.restore();
   });
