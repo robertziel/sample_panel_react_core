@@ -3,7 +3,7 @@ import waitForExpect from 'wait-for-expect';
 
 export default function shouldDisableFormAfterSubmit(
   formComponentName,
-  options,
+  methods,
 ) {
   function checkButtonDisabled(wrapper, value) {
     expect(wrapper.find('button[type="submit"]').props().disabled).toBe(value);
@@ -16,17 +16,17 @@ export default function shouldDisableFormAfterSubmit(
     loadApiFetchMock(response);
 
     it('should disable submit when waiting for response', () => {
-      const wrapper = options.configure();
+      const wrapper = methods.configure();
       wrapper.find(formComponentName).instance().enable = () => {};
-      options.fillInAndSubmitForm();
+      methods.fillInAndSubmitForm();
 
       wrapper.update();
       checkButtonDisabled(wrapper, true);
     });
 
     it('should enable submit after response received', async () => {
-      const wrapper = options.configure();
-      options.fillInAndSubmitForm();
+      const wrapper = methods.configure();
+      methods.fillInAndSubmitForm();
 
       await waitForExpect(() => {
         wrapper.update();

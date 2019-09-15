@@ -50,12 +50,12 @@ Component:
   * fetcher will call `form.disable()` before and `form.enable()` after AJAX call
   * `state.disabled` is used in submit button as `disabled={this.state.disabled}` to prevent from double submit
 Test:
-* `shouldDisableFormAfterSubmit(formComponentName, options: { configure, fillInAndSubmitForm })`
+* `shouldDisableFormAfterSubmit(formComponentName, methods: { configure, fillInAndSubmitForm })`
   * Include `import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';` and call in your tests
   * parameters
     * `formComponentName` - component name as string like `'Form'`, is used to find component in wrapper
-    * `options: { configure }` - function which should call enzyme mock and return wrapper containing tested form component
-    * `fillInAndSubmitForm` - function which fills in and submit form with valid data
+    * `methods: { configure }` - function which should call enzyme mock and return wrapper containing tested form component
+    * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
 
 #### Notifications
 * Based on https://github.com/igorprado/react-notification-system
