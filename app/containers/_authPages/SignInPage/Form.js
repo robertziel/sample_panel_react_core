@@ -87,7 +87,11 @@ class Form extends Component {
             disabled={this.state.disabled}
           >
             {this.state.disabled ? (
-              <HollowDotsSpinner color={colors.main} size={24} />
+              <HollowDotsSpinner
+                color={colors.main}
+                size={24}
+                animationDelay={-100}
+              />
             ) : (
               <FormattedMessage {...messages.formButton} />
             )}
