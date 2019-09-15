@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
+
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
+
 import styled from 'styled-components';
+import { colors } from 'styles/constants';
+import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
 
 import {
   nullifyAuthenticationCredentials,
@@ -56,7 +59,7 @@ class CurrentUserLoader extends Component {
     }
     return (
       <SpinnerWrapper>
-        <FulfillingBouncingCircleSpinner color="#00a9ff" size={80} />
+        <FulfillingBouncingCircleSpinner color={colors.main} size={80} />
       </SpinnerWrapper>
     );
   }

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+
 import { Button, Note, Grid, TextField } from 'components/_ui-elements';
+import { HollowDotsSpinner } from 'react-epic-spinners';
+import { colors } from 'styles/constants';
 
 import { setAuthenticationToken } from 'containers/BackendApiConnector/actions';
 import { apiPost } from 'containers/BackendApiConnector/fetchers';
@@ -18,14 +21,25 @@ class Form extends Component {
       errorMessage: null,
       email: null,
       password: null,
+      disabled: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  disable() {
+    this.setState({ disabled: true });
+  }
+
+  enable() {
+    this.setState({ disabled: false });
+  }
+
   onSubmit(event) {
     event.preventDefault();
+
     apiPost({
+      form: this,
       path: '/auth/sign_in',
       body: {
         email: this.state.email,
@@ -67,8 +81,16 @@ class Form extends Component {
           />
         </Grid>
         <Grid>
-          <Button type="submit" variant="outlined">
-            <FormattedMessage {...messages.formButton} />
+          <Button
+            type="submit"
+            variant="outlined"
+            disabled={this.state.disabled}
+          >
+            {this.state.disabled ? (
+              <HollowDotsSpinner color={colors.main} size={24} />
+            ) : (
+              <FormattedMessage {...messages.formButton} />
+            )}
           </Button>
         </Grid>
       </form>

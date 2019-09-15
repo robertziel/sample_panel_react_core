@@ -8,8 +8,9 @@ import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
 
 import NotificationSystem from 'containers/NotificationsSystem';
-import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
+import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
+import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';
 
 import Form from '../Form';
 import messages from '../messages';
@@ -20,6 +21,9 @@ const email = 'test@gmail.com';
 const password = '12345678';
 const submitPath = '/auth/sign_in';
 
+let store;
+let wrapper;
+
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
@@ -29,6 +33,12 @@ function mountWrapper() {
       </Provider>
     </IntlProvider>,
   );
+}
+
+function configure() {
+  store = new ConfigureTestStore().store;
+  wrapper = mountWrapper();
+  return wrapper;
 }
 
 function fillInAndSubmitForm() {
@@ -42,15 +52,13 @@ function fillInAndSubmitForm() {
   wrapper.find('button[type="submit"]').simulate('submit');
 }
 
-let store;
-let wrapper;
-
 beforeEach(() => {
-  store = new ConfigureTestStore().store;
-  wrapper = mountWrapper();
+  configure();
 });
 
 describe('<Form />', () => {
+  shouldDisableFormAfterSubmit('Form', { configure, fillInAndSubmitForm });
+
   context('when sign in succeeded', () => {
     loadApiFetchMock({
       method: 'POST',

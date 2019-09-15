@@ -3,6 +3,8 @@
  * All settings like BACKEND_API_URL, authenticationToken, error response handling etc.
  * are handled under the hood here so that anywhere else in the project can be
  * used one of simple functions requiring path, params, and afterSuccess callback.
+ * config: { form } is used to pass component whith not required defined
+ * disable and enable methods to call them on start and stop fetching
  *
  */
 
@@ -20,6 +22,8 @@ function getLanguageLocale() {
 }
 
 function apiFetch(method, config) {
+  config.form && config.form.disable(); // eslint-disable-line no-unused-expressions
+
   fetch(`${BACKEND_API_URL}${config.path}`, {
     method,
     body: JSON.stringify(config.body),
@@ -33,6 +37,8 @@ function apiFetch(method, config) {
     .then(result => result.json())
     .then(
       result => {
+        config.form && config.form.enable(); // eslint-disable-line no-unused-expressions
+
         // TO DO: Internet connection error (set noInternet: false)
         // TO DO: Wrong AccessToken response - render sign in form
         if (typeof config.afterSuccess === 'function') {
@@ -40,6 +46,8 @@ function apiFetch(method, config) {
         }
       },
       error => {
+        config.form && config.form.enable(); // eslint-disable-line no-unused-expressions
+
         // TO DO: Internet connection error (set noInternet: true)
         connectionRefusedNotify();
         if (typeof config.afterError === 'function') {

@@ -10,9 +10,10 @@ export default function loadApiFetchMock(config) {
   beforeAll(() => {
     fetchMock.mock(
       (url, opts) =>
-        url === `${BACKEND_API_URL}${config.path}` &&
-        opts.body === JSON.stringify(config.requestBody) &&
-        opts.method === config.method,
+        (!config.path || url === `${BACKEND_API_URL}${config.path}`) &&
+        (!config.requestBody ||
+          opts.body === JSON.stringify(config.requestBody)) &&
+        (!config.method || opts.method === config.method),
       {
         status: config.status,
         body: config.responseBody,

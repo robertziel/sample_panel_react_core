@@ -22,10 +22,10 @@ npm start
 #### API fetchers
 * I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 * Available fetchers:
-  * `apiGet(options: { path, afterSuccess })`
-  * `apiPost(options: { path, body, afterSuccess })`
+  * `apiGet(options: { form, path, afterSuccess })`
+  * `apiPost(options: { form, path, body, afterSuccess })`
 
-#### How authentication works?
+#### AUTHENTICATION
 * all authentication related containers are kept in `app/containers/_authPages`
 * `app/containers/BackendApiConnector` is responsible for:
   * handling all requests to API
@@ -37,6 +37,25 @@ npm start
       * authenticationToken is set to null
       * currentUser is set to null
       * when authenticationToken is null SignInPage is rendered `app/containers/BackendApiConnector/index.js`
+
+#### FORMS
+It's hard to make forms DRY, but we can adopt some conventions.
+Example form can be found in `containers/_authPages/SignInPage/Form.js`
+Component:
+* keeps all form params in state and updates them on input's onChange event
+* `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch (check section API fetchers)
+* when using API fetcher:
+  * define `state.disabled`
+  * you should pass `form: this` to fetcher
+  * fetcher will call `form.disable()` before and `form.enable()` after AJAX call
+  * `state.disabled` is used in submit button as `disabled={this.state.disabled}` to prevent from double submit
+Test:
+* `shouldDisableFormAfterSubmit(formComponentName, options: { configure, fillInAndSubmitForm })`
+  * Include `import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';` and call in your tests
+  * parameters
+    * `formComponentName` - component name as string like `'Form'`, is used to find component in wrapper
+    * `options: { configure }` - function which should call enzyme mock and return wrapper containing tested form component
+    * `fillInAndSubmitForm` - function which fills in and submit form with valid data
 
 #### Notifications
 * Based on https://github.com/igorprado/react-notification-system
