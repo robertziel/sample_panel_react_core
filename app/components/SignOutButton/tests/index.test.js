@@ -11,7 +11,7 @@ import waitForExpect from 'wait-for-expect';
 import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
-import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';
+import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
 import {
   setAuthenticationToken,
@@ -39,7 +39,7 @@ function mountWrapper() {
   );
 }
 
-function configure() {
+function configureWrapper() {
   store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
   return wrapper;
@@ -50,7 +50,7 @@ function clickButton() {
 }
 
 beforeEach(() => {
-  configure();
+  configureWrapper();
   act(() => {
     store.dispatch(setCurrentUser(currentUser));
     store.dispatch(setAuthenticationToken(authenticationToken));
@@ -59,10 +59,14 @@ beforeEach(() => {
 
 describe('<SignOutButton />', () => {
   context('onClick', () => {
-    shouldDisableFormAfterSubmit('SignOutButton', {
-      configure,
-      fillInAndSubmitForm: clickButton,
-    });
+    shouldDisableFormWhileProcessing(
+      'SignOutButton',
+      '.swapping-squares-spinner',
+      {
+        configureWrapper,
+        fillInAndSubmitForm: clickButton,
+      },
+    );
 
     context('when fetch succeeded', () => {
       loadApiFetchMock({

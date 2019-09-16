@@ -10,7 +10,7 @@ import waitForExpect from 'wait-for-expect';
 import NotificationSystem from 'containers/NotificationsSystem';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
-import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';
+import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
 import Form from '../Form';
 import messages from '../messages';
@@ -35,7 +35,7 @@ function mountWrapper() {
   );
 }
 
-function configure() {
+function configureWrapper() {
   store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
   return wrapper;
@@ -53,11 +53,14 @@ function fillInAndSubmitForm() {
 }
 
 beforeEach(() => {
-  configure();
+  configureWrapper();
 });
 
 describe('<Form />', () => {
-  shouldDisableFormAfterSubmit('Form', { configure, fillInAndSubmitForm });
+  shouldDisableFormWhileProcessing('Form', '.hollow-dots-spinner', {
+    configureWrapper,
+    fillInAndSubmitForm,
+  });
 
   context('when sign in succeeded', () => {
     loadApiFetchMock({

@@ -21,9 +21,24 @@ npm start
 
 #### API fetchers
 * I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
-* Available fetchers:
+* **Available fetchers:**
   * `apiGet(options: { form, path, afterSuccess })`
   * `apiPost(options: { form, path, body, afterSuccess })`
+* **Processing** - in order to have access to fetching processing status use following rules:
+  * define `state.processing` in component
+  * you should pass `component: this` to fetcher
+  * fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
+  * processing state can be used to render spinner, disable submit form etc.
+* **Testing:**
+  * testing common examples using **_processing_** state:
+    * `shouldDisableFormWhileProcessing(formComponentName, methods: { configureWrapper, fillInAndSubmitForm })`
+      * Include `import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';` and call in your tests
+      * parameters
+        * `formComponentName` - component name as css selector, is used to find component in wrapper
+        * `spinnerSelector` - spinner name css selector, is used to identify spinner
+        * `methods: { configureWrapper }` - function which should call enzyme mock and return wrapper containing tested form component
+        * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
+
 
 #### AUTHENTICATION
 * all authentication related containers are kept in `app/containers/_authPages`
@@ -41,21 +56,17 @@ npm start
 #### FORMS
 It's hard to make forms DRY, but we can adopt some conventions.
 Example form can be found in `containers/_authPages/SignInPage/Form.js`
-Component:
-* keeps all form params in state and updates them on input's onChange event
-* `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch (check section API fetchers)
-* when using API fetcher:
-  * define `state.processing`
-  * you should pass `form: this` to fetcher
-  * fetcher will call `form.setStateProcessing()` before and `form.unsetStateProcessing()` after AJAX call
-  * `state.processing` is used in submit button as `disabled={this.state.processing}` to prevent from double submit
-Test:
-* `shouldDisableFormAfterSubmit(formComponentName, methods: { configure, fillInAndSubmitForm })`
-  * Include `import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';` and call in your tests
-  * parameters
-    * `formComponentName` - component name as string like `'Form'`, is used to find component in wrapper
-    * `methods: { configure }` - function which should call enzyme mock and return wrapper containing tested form component
-    * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
+* **Component:**
+  * keeps all form params in state and updates them on input's onChange event
+  * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch (check section API fetchers)
+  * when using API fetcher:
+    * define `state.processing` in component
+    * you should pass `form: this` to fetcher
+    * fetcher will call `form.setStateProcessing()` before and `form.unsetStateProcessing()` after AJAX call
+    * `state.processing` is used in submit button as `disabled={this.state.processing}` to prevent from double submit
+* **Tests:**
+  * Keep tests DRY and use shared examples:
+    * `shouldDisableFormWhileProcessing()` - check in **_API fetchers_** section
 
 #### Notifications
 * Based on https://github.com/igorprado/react-notification-system

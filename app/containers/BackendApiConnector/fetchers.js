@@ -3,8 +3,8 @@
  * All settings like BACKEND_API_URL, authenticationToken, error response handling etc.
  * are handled under the hood here so that anywhere else in the project can be
  * used one of simple functions requiring path, params, and afterSuccess callback.
- * config: { form } is used to pass component whith not required defined
- * disable and enable methods to call them on start and stop fetching
+ * config: { component } is used to pass component with defined
+ * setStateProcessing and unsetStateProcessing functions to call them when start and stop fetching
  *
  */
 
@@ -22,7 +22,7 @@ function getLanguageLocale() {
 }
 
 function apiFetch(method, config) {
-  config.form && config.form.setStateProcessing(); // eslint-disable-line no-unused-expressions
+  config.component && config.component.setStateProcessing(); // eslint-disable-line no-unused-expressions
 
   fetch(`${BACKEND_API_URL}${config.path}`, {
     method,
@@ -37,16 +37,16 @@ function apiFetch(method, config) {
     .then(result => result.json())
     .then(
       result => {
-        config.form && config.form.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
+        config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 
         // TO DO: Internet connection error (set noInternet: false)
-        // TO DO: Wrong AccessToken response - render sign in form
+        // TO DO: Wrong AccessToken response - render sign in component
         if (typeof config.afterSuccess === 'function') {
           config.afterSuccess(result);
         }
       },
       error => {
-        config.form && config.form.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
+        config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 
         // TO DO: Internet connection error (set noInternet: true)
         connectionRefusedNotify();

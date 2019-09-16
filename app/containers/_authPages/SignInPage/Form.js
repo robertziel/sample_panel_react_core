@@ -37,7 +37,7 @@ class Form extends Component {
     event.preventDefault();
 
     apiPost({
-      form: this,
+      component: this,
       path: '/auth/sign_in',
       body: {
         email: this.state.email,

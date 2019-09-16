@@ -36,7 +36,7 @@ class SignOutButton extends Component {
     event.preventDefault();
 
     apiDelete({
-      form: this,
+      component: this,
       path: '/auth/sign_out',
       afterSuccess: () => {
         this.props.onSignOutSuccess();
