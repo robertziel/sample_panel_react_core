@@ -19,7 +19,7 @@ npm run setup
 npm start
 ```
 
-#### API fetchers
+#### API FETCHERS
 * I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 * **Available fetchers:**
   * `apiGet(options: { form, path, afterSuccess })`
@@ -58,17 +58,14 @@ It's hard to make forms DRY, but we can adopt some conventions.
 Example form can be found in `containers/_authPages/SignInPage/Form.js`
 * **Component:**
   * keeps all form params in state and updates them on input's onChange event
-  * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch (check section API fetchers)
+  * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch [(check section API fetchers)](#api-fetchers)
   * when using API fetcher:
-    * define `state.processing` in component
-    * you should pass `form: this` to fetcher
-    * fetcher will call `form.setStateProcessing()` before and `form.unsetStateProcessing()` after AJAX call
-    * `state.processing` is used in submit button as `disabled={this.state.processing}` to prevent from double submit
+    * Please check [**_API fetchers / Processing_**](#api-fetchers) section
 * **Tests:**
   * Keep tests DRY and use shared examples:
-    * `shouldDisableFormWhileProcessing()` - check in **_API fetchers_** section
+    * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section
 
-#### Notifications
+#### NOTIFICATIONS
 * Based on https://github.com/igorprado/react-notification-system
 * `notificationSystem` reference can be accessed from `app/containers/NotificationsSystem`
 * notification functions should be defined in `notifications.js` files, with following name format `function *Notify()` like `function randomNameNotify()`
