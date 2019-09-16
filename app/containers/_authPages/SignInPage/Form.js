@@ -3,9 +3,7 @@ import { FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { Button, Note, Grid, TextField } from 'components/_ui-elements';
-import { HollowDotsSpinner } from 'react-epic-spinners';
-import { colors } from 'styles/constants';
+import { SubmitButton, Note, Grid, TextField } from 'components/_ui-elements';
 
 import { setAuthenticationToken } from 'containers/BackendApiConnector/actions';
 import { apiPost } from 'containers/BackendApiConnector/fetchers';
@@ -81,21 +79,13 @@ class Form extends Component {
           />
         </Grid>
         <Grid>
-          <Button
+          <SubmitButton
             type="submit"
             variant="outlined"
             disabled={this.state.disabled}
           >
-            {this.state.disabled ? (
-              <HollowDotsSpinner
-                color={colors.main}
-                size={24}
-                animationDelay={-100}
-              />
-            ) : (
-              <FormattedMessage {...messages.formButton} />
-            )}
-          </Button>
+            <FormattedMessage {...messages.formButton} />
+          </SubmitButton>
         </Grid>
       </form>
     );

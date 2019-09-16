@@ -5,5 +5,6 @@ export * from './Note';
 export * from './Grid';
 export * from './H1';
 export * from './Paper';
+export * from './SubmitButton';
 export * from './TextField';
 export * from './Toggle';
