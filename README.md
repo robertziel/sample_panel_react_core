@@ -5,7 +5,7 @@
 
 # SIMPLE PANEL REACT CLIENT
 
-Staging: https://simple-panel-react-client.robertz.co
+Staging: https://simple-panel-react-client.robertz.co (server based in Poland, app may be asleep and take time to wake up)
 
 RAILS API:
 https://github.com/robertziel/simple_panel_rails_backend
@@ -83,3 +83,10 @@ Test:
       }
     ```
     So that style version (in that case named `topLine`) can be used in element by adding it to props `<Div topLine />`
+
+
+##### TO DO:
+* fix styles, make sure mobile UI is working well
+* Add Users page with actions (show, new, edit, delete)
+* Implement User roles system
+* Add simple Profile page (show, edit)
