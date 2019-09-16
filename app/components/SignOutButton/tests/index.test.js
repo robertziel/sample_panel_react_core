@@ -11,6 +11,7 @@ import waitForExpect from 'wait-for-expect';
 import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
+import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';
 
 import {
   setAuthenticationToken,
@@ -24,6 +25,9 @@ const authenticationToken = 'a token';
 const currentUser = { name: 'User' };
 const submitPath = '/auth/sign_out';
 
+let store;
+let wrapper;
+
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
@@ -35,16 +39,18 @@ function mountWrapper() {
   );
 }
 
-function clickButton() {
-  wrapper.find('div.sign-out').simulate('click');
-}
-
-let store;
-let wrapper;
-
-beforeEach(() => {
+function configure() {
   store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
+  return wrapper;
+}
+
+function clickButton() {
+  wrapper.find('button[type="submit"]').simulate('submit');
+}
+
+beforeEach(() => {
+  configure();
   act(() => {
     store.dispatch(setCurrentUser(currentUser));
     store.dispatch(setAuthenticationToken(authenticationToken));
@@ -53,6 +59,11 @@ beforeEach(() => {
 
 describe('<SignOutButton />', () => {
   context('onClick', () => {
+    shouldDisableFormAfterSubmit('SignOutButton', {
+      configure,
+      fillInAndSubmitForm: clickButton,
+    });
+
     context('when fetch succeeded', () => {
       loadApiFetchMock({
         method: 'DELETE',

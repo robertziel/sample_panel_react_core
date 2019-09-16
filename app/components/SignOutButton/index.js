@@ -5,6 +5,7 @@ import { SwappingSquaresSpinner } from 'react-epic-spinners';
 import FontAwesome from 'react-fontawesome';
 
 import { colors } from 'styles/constants';
+import { SubmitButton } from 'components/_ui-elements';
 
 import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
 import { apiDelete } from 'containers/BackendApiConnector/fetchers';
@@ -23,31 +24,40 @@ class SignOutButton extends Component {
     this.signOut = this.signOut.bind(this);
   }
 
-  signOut() {
+  setStateProcessing() {
     this.setState({ processing: true });
+  }
+
+  unsetStateProcessing() {
+    this.setState({ processing: false });
+  }
+
+  signOut(event) {
+    event.preventDefault();
 
     apiDelete({
+      form: this,
       path: '/auth/sign_out',
       afterSuccess: () => {
         this.props.onSignOutSuccess();
         signedOutNotify();
       },
-      afterError: () => {
-        this.setState({ processing: false });
-      },
     });
   }
 
   render() {
-    const className = `sign-out${this.state.processing ? ' active' : ''}`;
-
     return (
-      <Wrapper onClick={this.signOut} className={className}>
-        {this.state.processing ? (
-          <SwappingSquaresSpinner color={colors.main} size={40} />
-        ) : (
-          <FontAwesome name="power-off" />
-        )}
+      <Wrapper>
+        <form onSubmit={this.signOut}>
+          <SubmitButton
+            navbar
+            onSubmit={this.signOut}
+            processing={this.state.processing}
+            spinner={<SwappingSquaresSpinner color={colors.main} size={40} />}
+          >
+            <FontAwesome name="power-off" />
+          </SubmitButton>
+        </form>
       </Wrapper>
     );
   }

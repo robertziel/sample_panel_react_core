@@ -45,10 +45,10 @@ Component:
 * keeps all form params in state and updates them on input's onChange event
 * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch (check section API fetchers)
 * when using API fetcher:
-  * define `state.disabled`
+  * define `state.processing`
   * you should pass `form: this` to fetcher
-  * fetcher will call `form.disable()` before and `form.enable()` after AJAX call
-  * `state.disabled` is used in submit button as `disabled={this.state.disabled}` to prevent from double submit
+  * fetcher will call `form.setStateProcessing()` before and `form.unsetStateProcessing()` after AJAX call
+  * `state.processing` is used in submit button as `disabled={this.state.processing}` to prevent from double submit
 Test:
 * `shouldDisableFormAfterSubmit(formComponentName, methods: { configure, fillInAndSubmitForm })`
   * Include `import shouldDisableFormAfterSubmit from 'testsHelpers/shouldDisableFormAfterSubmit';` and call in your tests

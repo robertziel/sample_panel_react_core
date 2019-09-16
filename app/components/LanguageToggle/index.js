@@ -15,7 +15,7 @@ export function LanguageToggle(props) {
   return (
     <Wrapper>
       <Toggle
-        navStyle
+        navbar
         value={props.locale}
         values={appLocales}
         onToggle={props.onLanguageToggle}

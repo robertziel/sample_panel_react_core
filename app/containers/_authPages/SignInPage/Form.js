@@ -19,18 +19,18 @@ class Form extends Component {
       errorMessage: null,
       email: null,
       password: null,
-      disabled: false,
+      processing: false,
     };
 
     this.onSubmit = this.onSubmit.bind(this);
   }
 
-  disable() {
-    this.setState({ disabled: true });
+  setStateProcessing() {
+    this.setState({ processing: true });
   }
 
-  enable() {
-    this.setState({ disabled: false });
+  unsetStateProcessing() {
+    this.setState({ processing: false });
   }
 
   onSubmit(event) {
@@ -79,11 +79,7 @@ class Form extends Component {
           />
         </Grid>
         <Grid>
-          <SubmitButton
-            type="submit"
-            variant="outlined"
-            disabled={this.state.disabled}
-          >
+          <SubmitButton processing={this.state.processing}>
             <FormattedMessage {...messages.formButton} />
           </SubmitButton>
         </Grid>

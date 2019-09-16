@@ -22,7 +22,7 @@ function getLanguageLocale() {
 }
 
 function apiFetch(method, config) {
-  config.form && config.form.disable(); // eslint-disable-line no-unused-expressions
+  config.form && config.form.setStateProcessing(); // eslint-disable-line no-unused-expressions
 
   fetch(`${BACKEND_API_URL}${config.path}`, {
     method,
@@ -37,7 +37,7 @@ function apiFetch(method, config) {
     .then(result => result.json())
     .then(
       result => {
-        config.form && config.form.enable(); // eslint-disable-line no-unused-expressions
+        config.form && config.form.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 
         // TO DO: Internet connection error (set noInternet: false)
         // TO DO: Wrong AccessToken response - render sign in form
@@ -46,7 +46,7 @@ function apiFetch(method, config) {
         }
       },
       error => {
-        config.form && config.form.enable(); // eslint-disable-line no-unused-expressions
+        config.form && config.form.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 
         // TO DO: Internet connection error (set noInternet: true)
         connectionRefusedNotify();

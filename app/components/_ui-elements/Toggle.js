@@ -1,12 +1,11 @@
 import styled, { css } from 'styled-components';
 
 import { colors } from 'styles/constants';
-
 import ToggleCore from './ToggleCore';
 
 const Toggle = styled(ToggleCore)`
-  ${({ navStyle }) =>
-    navStyle &&
+  ${({ navbar }) =>
+    navbar &&
     css`
       &.MuiInputBase-root {
         cursor: pointer;
