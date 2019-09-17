@@ -10,7 +10,9 @@
 
 import queryString from 'query-string';
 
-import { connectionRefusedNotify } from './notifications';
+import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
+
+import { connectionRefusedNotify, unauthorizedNotify } from './notifications';
 
 import StoreAccessor from './StoreAccessor';
 import { BACKEND_API_URL } from './constants';
@@ -23,6 +25,10 @@ function getLanguageLocale() {
   return StoreAccessor.store.getState().language.locale;
 }
 
+function signOut() {
+  StoreAccessor.store.dispatch(nullifyAuthenticationCredentials());
+}
+
 export function fullUrl(path, params) {
   return `${BACKEND_API_URL}${path}${stringifyParams(params)}`;
 }
@@ -31,6 +37,7 @@ function stringifyParams(params) {
   return params ? `?${queryString.stringify(params)}` : '';
 }
 
+/* eslint-disable default-case */
 function apiFetch(method, config) {
   config.component && config.component.setStateProcessing(); // eslint-disable-line no-unused-expressions
 
@@ -44,7 +51,15 @@ function apiFetch(method, config) {
       'Language-Locale': getLanguageLocale(),
     },
   })
-    .then(result => result.json())
+    .then(result => {
+      switch (result.status) {
+        case 401:
+          unauthorizedNotify();
+          signOut();
+          break;
+      }
+      return result.json();
+    })
     .then(
       result => {
         config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions

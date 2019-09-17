@@ -7,10 +7,7 @@ import { createSelector } from 'reselect';
 import { colors } from 'styles/constants';
 import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
 
-import {
-  nullifyAuthenticationCredentials,
-  setCurrentUser,
-} from 'containers/BackendApiConnector/actions';
+import { setCurrentUser } from 'containers/BackendApiConnector/actions';
 import { apiGet } from 'containers/BackendApiConnector/fetchers';
 import FetchedContent from 'containers/FetchedContent';
 
@@ -27,10 +24,6 @@ class CurrentUserLoader extends Component {
     apiGet({
       path: '/current_user',
       afterSuccess: result => {
-        if (result.error) {
-          this.props.onLoadFail();
-          return;
-        }
         this.props.onLoadSuccess(result);
       },
     });
@@ -61,7 +54,6 @@ function mapStateToProps() {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoadFail: () => dispatch(nullifyAuthenticationCredentials()),
     onLoadSuccess: currentUser => dispatch(setCurrentUser(currentUser)),
     dispatch,
   };
@@ -70,7 +62,6 @@ function mapDispatchToProps(dispatch) {
 CurrentUserLoader.propTypes = {
   children: PropTypes.element.isRequired,
   currentUser: PropTypes.object,
-  onLoadFail: PropTypes.func.isRequired,
   onLoadSuccess: PropTypes.func.isRequired,
 };
 

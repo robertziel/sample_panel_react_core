@@ -11,3 +11,11 @@ export function connectionRefusedNotify() {
     level: 'error',
   });
 }
+
+export function unauthorizedNotify() {
+  notificationSystem.current.addNotification({
+    autoDismiss: 0,
+    message: <FormattedMessage {...messages.unauthorizedNotify} />,
+    level: 'info',
+  });
+}

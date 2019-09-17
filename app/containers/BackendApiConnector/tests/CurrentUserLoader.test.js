@@ -15,7 +15,6 @@ import { setAuthenticationToken } from '../actions';
 import CurrentUserLoader from '../CurrentUserLoader';
 
 const authenticationToken = 'a token';
-const errorMessage = 'error message';
 const currentUser = { name: 'User' };
 const submitPath = '/current_user';
 
@@ -66,25 +65,6 @@ describe('<CurrentUserLoader />', () => {
       await waitForExpect(() => {
         wrapper.update();
         expect(wrapper.exists('.application')).toBe(true);
-      });
-    });
-  });
-
-  context('when GET /current_user not succeeded', () => {
-    loadApiFetchMock({
-      method: 'GET',
-      path: submitPath,
-      responseBody: { error: errorMessage },
-      status: 401,
-    });
-
-    it('should set authenticationToken to null', async () => {
-      wrapper = mountWrapper();
-
-      await waitForExpect(() => {
-        expect(
-          store.getState().backendApiConnector.authenticationToken,
-        ).toEqual(null);
       });
     });
   });

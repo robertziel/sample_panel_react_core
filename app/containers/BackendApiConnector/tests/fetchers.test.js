@@ -81,4 +81,31 @@ describe('apiFetch()', () => {
       });
     });
   });
+
+  context('when fetch unauthorized', () => {
+    loadApiFetchMock({
+      status: 401,
+    });
+
+    beforeEach(() => {
+      apiGet({ path });
+    });
+
+    it('should nullify backendApiConnector credentials', async () => {
+      await waitForExpect(() => {
+        expect(
+          store.getState().backendApiConnector.authenticationToken,
+        ).toEqual(null);
+        expect(store.getState().backendApiConnector.currentUser).toEqual(null);
+      });
+    });
+
+    it('should notify', async () => {
+      await waitForExpect(() => {
+        expect(wrapper.text()).toContain(
+          messages.unauthorizedNotify.defaultMessage,
+        );
+      });
+    });
+  });
 });

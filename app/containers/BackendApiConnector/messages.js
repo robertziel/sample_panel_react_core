@@ -9,6 +9,12 @@ const messages = defineMessages({
       Cannot connect to the server.
     `,
   },
+  unauthorizedNotify: {
+    id: `${scope}.fetchers.notifications.unauthorizedNotify`,
+    defaultMessage: `
+      Please sign in to continue.
+    `,
+  },
 });
 
 export default messages;
