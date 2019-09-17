@@ -4,22 +4,31 @@ exports[`<App /> should match snapshot 1`] = `
 <ContentWrapper
   marginLeft={60}
 >
-  <Navbar />
-  <Switch>
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/profile"
-    />
-    <Route
-      component={[Function]}
-    />
-  </Switch>
+  <Navbar
+    marginLeft={60}
+  />
+  <Scroll>
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/profile"
+      />
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/users"
+      />
+      <Route
+        component={[Function]}
+      />
+    </Switch>
+  </Scroll>
   <Footer
     marginLeft={60}
   />

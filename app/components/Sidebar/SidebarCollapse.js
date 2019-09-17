@@ -9,6 +9,7 @@ const SidebarCollapse = styled.div`
   background: #fff;
   box-shadow: 0 8px 10px -5px rgba(0, 0, 0, 0.2);
   transition: left 200ms ease-out;
+  z-index: 9;
 
   .evaporating {
     transition: opacity 200ms ease-out;

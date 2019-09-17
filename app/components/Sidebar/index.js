@@ -28,6 +28,12 @@ export function Sidebar(props) {
         text={messages.profilePage}
         fontAwesomeName="user"
       />
+      <SidebarLink
+        exact
+        href="/users"
+        text={messages.usersPage}
+        fontAwesomeName="users"
+      />
       <SidebarCollapseLinks
         text={messages.multipleChoice}
         fontAwesomeName="folder"

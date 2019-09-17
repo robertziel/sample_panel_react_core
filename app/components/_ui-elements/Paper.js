@@ -18,6 +18,20 @@ const Paper = styled(PaperCore)`
     css`
       border-top: 4px solid ${colors.main};
     `}
+
+  ${({ fullHeight }) =>
+    fullHeight &&
+    css`
+      height: 100%;
+    `}
+
+  ${({ noPadding }) =>
+    noPadding &&
+    css`
+      &.MuiPaper-root {
+        padding: 0px;
+      }
+    `}
 `;
 
 export { Paper };

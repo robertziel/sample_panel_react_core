@@ -31,4 +31,8 @@ export default defineMessages({
     id: `${scope}.links.profilePage`,
     defaultMessage: 'Profile',
   },
+  usersPage: {
+    id: `${scope}.links.usersPage`,
+    defaultMessage: 'Users',
+  },
 });

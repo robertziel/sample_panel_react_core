@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
 
-import styled from 'styled-components';
 import { colors } from 'styles/constants';
 import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
 
@@ -13,25 +12,9 @@ import {
   setCurrentUser,
 } from 'containers/BackendApiConnector/actions';
 import { apiGet } from 'containers/BackendApiConnector/fetchers';
+import FetchedContent from 'containers/FetchedContent';
 
 import { currentUserSelector } from './selectors';
-
-const SpinnerWrapper = styled.div`
-  width: 100%;
-  height: 100%;
-  position: fixed;
-
-  div {
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    max-width: 100%;
-    max-height: 100%;
-  }
-`;
 
 class CurrentUserLoader extends Component {
   constructor(props) {
@@ -54,13 +37,15 @@ class CurrentUserLoader extends Component {
   }
 
   render() {
-    if (this.props.currentUser) {
-      return React.Children.only(this.props.children);
-    }
     return (
-      <SpinnerWrapper>
-        <FulfillingBouncingCircleSpinner color={colors.main} size={80} />
-      </SpinnerWrapper>
+      <FetchedContent
+        processing={!this.props.currentUser}
+        spinner={
+          <FulfillingBouncingCircleSpinner color={colors.main} size={80} />
+        }
+      >
+        {React.Children.only(this.props.children)}
+      </FetchedContent>
     );
   }
 }
