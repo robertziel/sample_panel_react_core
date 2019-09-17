@@ -4,13 +4,13 @@
  */
 
 import fetchMock from 'fetch-mock';
-import { BACKEND_API_URL } from 'containers/BackendApiConnector/constants';
+import { fullUrl } from 'containers/BackendApiConnector/fetchers';
 
 export default function loadApiFetchMock(config) {
   beforeAll(() => {
     fetchMock.mock(
       (url, opts) =>
-        (!config.path || url === `${BACKEND_API_URL}${config.path}`) &&
+        (!config.path || url === fullUrl(config.path, config.params)) &&
         (!config.requestBody ||
           opts.body === JSON.stringify(config.requestBody)) &&
         (!config.method || opts.method === config.method),

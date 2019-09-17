@@ -32,6 +32,14 @@ const Paper = styled(PaperCore)`
         padding: 0px;
       }
     `}
+
+  ${({ pagination }) =>
+    pagination &&
+    css`
+      &.MuiPaper-root {
+        padding-bottom: 55px;
+      }
+    `}
 `;
 
 export { Paper };

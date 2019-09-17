@@ -8,6 +8,8 @@
  *
  */
 
+import queryString from 'query-string';
+
 import { connectionRefusedNotify } from './notifications';
 
 import StoreAccessor from './StoreAccessor';
@@ -21,10 +23,18 @@ function getLanguageLocale() {
   return StoreAccessor.store.getState().language.locale;
 }
 
+export function fullUrl(path, params) {
+  return `${BACKEND_API_URL}${path}${stringifyParams(params)}`;
+}
+
+function stringifyParams(params) {
+  return params ? `?${queryString.stringify(params)}` : '';
+}
+
 function apiFetch(method, config) {
   config.component && config.component.setStateProcessing(); // eslint-disable-line no-unused-expressions
 
-  fetch(`${BACKEND_API_URL}${config.path}`, {
+  fetch(fullUrl(config.path, config.params), {
     method,
     body: JSON.stringify(config.body),
     headers: {

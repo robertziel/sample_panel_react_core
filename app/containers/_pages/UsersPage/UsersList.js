@@ -8,6 +8,7 @@ import {
   TableBody,
   TableCell,
   TableHead,
+  TablePagination,
   TableRow,
 } from 'components/_ui-elements';
 
@@ -23,8 +24,14 @@ class UsersList extends Component {
     this.state = {
       processing: true,
       users: [],
+
+      count: 0,
+      page: 0,
+      rowsPerPage: 10,
     };
 
+    this.changePage = this.changePage.bind(this);
+    this.changeRowsPerPage = this.changeRowsPerPage.bind(this);
     this.fetchData();
   }
 
@@ -36,19 +43,38 @@ class UsersList extends Component {
     this.setState({ processing: false });
   }
 
+  changePage(event, newPage) {
+    this.setState({ page: newPage }, () => {
+      this.fetchData();
+    });
+  }
+
+  changeRowsPerPage(event) {
+    this.setState({ page: 0, rowsPerPage: event.target.value }, () => {
+      this.fetchData();
+    });
+  }
+
   fetchData() {
     apiGet({
       component: this,
       path: '/users',
+      params: {
+        page: this.state.page + 1,
+        per_page: this.state.rowsPerPage,
+      },
       afterSuccess: result => {
-        this.setState({ users: result });
+        this.setState({
+          count: result.count,
+          users: result.users,
+        });
       },
     });
   }
 
   render() {
     return (
-      <Paper fullHeight noPadding>
+      <Paper fullHeight noPadding pagination>
         <Scroll>
           <Table stickyHeader>
             <TableHead>
@@ -73,6 +99,21 @@ class UsersList extends Component {
             </TableBody>
           </Table>
         </Scroll>
+        <TablePagination
+          rowsPerPageOptions={[10, 15, 25]}
+          component="div"
+          count={this.state.count}
+          rowsPerPage={this.state.rowsPerPage}
+          page={this.state.page}
+          backIconButtonProps={{
+            'aria-label': 'previous page',
+          }}
+          nextIconButtonProps={{
+            'aria-label': 'next page',
+          }}
+          onChangePage={this.changePage}
+          onChangeRowsPerPage={this.changeRowsPerPage}
+        />
       </Paper>
     );
   }
