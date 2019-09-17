@@ -65,7 +65,6 @@ function apiFetch(method, config) {
         config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 
         // TO DO: Internet connection error (set noInternet: false)
-        // TO DO: Wrong AccessToken response - render sign in component
         if (typeof config.afterSuccess === 'function') {
           config.afterSuccess(result);
         }
