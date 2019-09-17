@@ -79,7 +79,7 @@ class UsersList extends Component {
           <Table stickyHeader>
             <TableHead>
               <TableRow>
-                <TableCell>
+                <TableCell width="200px">
                   <FormattedMessage {...messages.labelUsername} />
                 </TableCell>
                 <TableCell>
