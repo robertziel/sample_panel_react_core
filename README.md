@@ -19,6 +19,12 @@ npm run setup
 npm start
 ```
 
+Sample user:
+* email: `hello@robertz.co`
+* password: `12345678`
+
+Just sign in implemented. Other authentication features like registrations, password remind, lockable can be quickly added but I omitted them as someone may accidentally block sample account on staging :)
+
 #### API FETCHERS
 * I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 * **Available fetchers:**
@@ -51,7 +57,7 @@ npm start
     * when any API request has authentication problem then:
       * authenticationToken is set to null
       * currentUser is set to null
-      * when authenticationToken is null SignInPage is rendered `app/containers/BackendApiConnector/index.js`
+      * when authenticationToken is null SignInPage is rendered ( handled in `app/containers/BackendApiConnector/index.js` )
 
 #### FORMS
 It's hard to make forms DRY, but we can adopt some conventions.
