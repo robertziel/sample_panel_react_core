@@ -12,6 +12,7 @@ import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
+import backendApiConnectorMessages from 'containers/BackendApiConnector/messages';
 import Form from '../Form';
 import messages from '../messages';
 
@@ -101,12 +102,17 @@ describe('<Form />', () => {
       status: 401,
     });
 
-    it('should render an error message', async () => {
+    it('should render an error message without unauthorized notification', async () => {
       fillInAndSubmitForm();
 
       await waitForExpect(() => {
         wrapper.update();
         expect(wrapper.contains(errorMessage)).toEqual(true);
+        expect(
+          wrapper.contains(
+            backendApiConnectorMessages.unauthorizedNotify.defaultMessage,
+          ),
+        ).toEqual(false);
       });
     });
   });

@@ -54,6 +54,9 @@ function apiFetch(method, config) {
     .then(result => {
       switch (result.status) {
         case 401:
+          if (config.signIn) {
+            break;
+          }
           unauthorizedNotify();
           signOut();
           break;

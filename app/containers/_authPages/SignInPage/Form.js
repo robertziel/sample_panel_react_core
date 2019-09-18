@@ -38,6 +38,7 @@ class Form extends Component {
 
     apiPost({
       component: this,
+      signIn: true,
       path: '/auth/sign_in',
       body: {
         email: this.state.email,

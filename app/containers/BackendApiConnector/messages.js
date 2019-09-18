@@ -15,6 +15,12 @@ const messages = defineMessages({
       Please sign in to continue.
     `,
   },
+  unauthorizedNotifyTitle: {
+    id: `${scope}.fetchers.notifications.unauthorizedNotifyTitle`,
+    defaultMessage: `
+      Unauthorized
+    `,
+  },
 });
 
 export default messages;

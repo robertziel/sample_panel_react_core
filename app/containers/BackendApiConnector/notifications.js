@@ -14,7 +14,7 @@ export function connectionRefusedNotify() {
 
 export function unauthorizedNotify() {
   notificationSystem.current.addNotification({
-    autoDismiss: 0,
+    title: <FormattedMessage {...messages.unauthorizedNotifyTitle} />,
     message: <FormattedMessage {...messages.unauthorizedNotify} />,
     level: 'info',
   });
