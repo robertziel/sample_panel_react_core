@@ -32,6 +32,9 @@ class UsersList extends Component {
 
     this.changePage = this.changePage.bind(this);
     this.changeRowsPerPage = this.changeRowsPerPage.bind(this);
+  }
+
+  componentDidMount() {
     this.fetchData();
   }
 
