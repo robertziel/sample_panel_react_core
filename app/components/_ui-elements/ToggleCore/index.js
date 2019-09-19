@@ -17,7 +17,7 @@ function Toggle(props) {
   return (
     <Select
       className={props.className}
-      value={props.value}
+      value={props.value || ''}
       onChange={props.onToggle}
       input={<InputBase />}
     >
