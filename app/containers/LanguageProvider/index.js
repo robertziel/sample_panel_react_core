@@ -29,7 +29,7 @@ export function LanguageProvider(props) {
 LanguageProvider.propTypes = {
   locale: PropTypes.string,
   messages: PropTypes.object,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
 const mapStateToProps = createSelector(

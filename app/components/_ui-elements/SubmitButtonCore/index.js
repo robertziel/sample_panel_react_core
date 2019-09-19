@@ -18,7 +18,7 @@ function SubmitButton(props) {
 }
 
 SubmitButton.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   navbar: PropTypes.bool,
   processing: PropTypes.bool,
   spinner: PropTypes.element,

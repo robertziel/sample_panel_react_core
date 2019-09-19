@@ -17,7 +17,7 @@ function FetchedContent(props) {
 }
 
 FetchedContent.propTypes = {
-  children: PropTypes.object.isRequired,
+  children: PropTypes.node.isRequired,
   processing: PropTypes.bool.isRequired,
   spinner: PropTypes.element,
 };

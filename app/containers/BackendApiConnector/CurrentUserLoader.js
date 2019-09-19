@@ -60,7 +60,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 CurrentUserLoader.propTypes = {
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   currentUser: PropTypes.object,
   onLoadSuccess: PropTypes.func.isRequired,
 };

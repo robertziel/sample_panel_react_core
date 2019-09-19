@@ -46,7 +46,7 @@ function mapStateToProps() {
 
 BackendApiConnector.propTypes = {
   authenticationToken: PropTypes.string,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.node.isRequired,
   store: PropTypes.object.isRequired,
 };
 
