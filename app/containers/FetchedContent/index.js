@@ -11,7 +11,15 @@ function FetchedContent(props) {
     <SelfBuildingSquareSpinner color={colors.main} size={40} />
   );
 
-  const wrappedSpinner = <Wrapper>{spinner}</Wrapper>;
+  const wrappedSpinner = props.tableRow ? (
+    <tr>
+      <td>
+        <Wrapper>{spinner}</Wrapper>
+      </td>
+    </tr>
+  ) : (
+    <Wrapper>{spinner}</Wrapper>
+  );
 
   return props.processing ? wrappedSpinner : props.children;
 }
@@ -20,6 +28,7 @@ FetchedContent.propTypes = {
   children: PropTypes.node.isRequired,
   processing: PropTypes.bool.isRequired,
   spinner: PropTypes.element,
+  tableRow: PropTypes.bool, // spinner will be rendered inside `tr > td`
 };
 
 export default FetchedContent;

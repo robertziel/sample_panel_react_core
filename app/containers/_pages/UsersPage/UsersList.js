@@ -91,7 +91,7 @@ class UsersList extends Component {
               </TableRow>
             </TableHead>
             <TableBody>
-              <FetchedContent processing={this.state.processing}>
+              <FetchedContent tableRow processing={this.state.processing}>
                 {this.state.users.map(user => (
                   <TableRow hover key={user.id}>
                     <TableCell>{user.username}</TableCell>
