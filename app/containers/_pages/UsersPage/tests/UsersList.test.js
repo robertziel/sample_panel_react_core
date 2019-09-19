@@ -22,7 +22,7 @@ const users = [
     username,
   },
 ];
-const responseBody = { count: 1, users };
+const responseBody = { count: 100, users };
 
 let store;
 let wrapper;
@@ -87,8 +87,8 @@ describe('<UsersList />', () => {
     });
 
     it('should set page', async () => {
-      wrapper.find('TablePagination').prop('onChangePage')(null, 20);
-      expect(wrapper.find('UsersList').instance().state.page).toBe(20);
+      wrapper.find('TablePagination').prop('onChangePage')(null, 8);
+      expect(wrapper.find('UsersList').instance().state.page).toBe(8);
     });
   });
 });
