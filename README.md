@@ -88,7 +88,7 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
   * Each element should be accessible in `app/components/_ui-elements/index.js` as `import { Element1, Element2 } from components/_ui-elements` by exporting its styled version
   * Styled version is defined in `app/components/_ui-elements/*.js` file. For example `app/components/_ui-elements/Div.js`
     * Additional style version can be added like:
-    ```
+    ```javascript
       ${({ topLine }) =>
         topLine &&
         css`
@@ -97,6 +97,22 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
       }
     ```
     So that style version (in that case named `topLine`) can be used in element by adding it to props `<Div topLine />`
+    * If https://material-ui.com element is styled please use the following convention (https://github.com/styled-components/styled-components/issues/1198#issuecomment-425650423)
+    ```javascript
+    /* eslint-disable react/jsx-props-no-spreading */
+    import React from 'react';
+    // then define additional style called here as topLine
+    const Button = styled(({ topLine, ...props }) => <ButtonCore {...props} />)`
+      // some code
+      // then define additional style as mentioned above
+      ${({ topLine }) =>
+        topLine &&
+        css`
+          border-top: 4px solid ${colors.main}
+        `
+      }
+    `;
+    ```
 
 
 ##### TO DO:

@@ -1,8 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+
 import GridCore from '@material-ui/core/Grid';
 
 import styled, { css } from 'styled-components';
 
-const Grid = styled(GridCore)`
+const Grid = styled(({ fullHeight, fullHeightMinusHeader, ...props }) => (
+  <GridCore {...props} />
+))`
   padding: 10px;
 
   ${({ fullHeight }) =>

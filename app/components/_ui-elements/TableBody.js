@@ -1,7 +1,10 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+
 import TableBodyCore from '@material-ui/core/TableBody';
 
 import styled from 'styled-components';
 
-const TableBody = styled(TableBodyCore)``;
+const TableBody = styled(({ ...props }) => <TableBodyCore {...props} />)``;
 
 export { TableBody };

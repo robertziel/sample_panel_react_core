@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+
 import ButtonCore from '@material-ui/core/Button';
 
 import styled, { css } from 'styled-components';
 
 import { colors } from 'styles/constants';
 
-const Button = styled(ButtonCore)`
+const Button = styled(({ navbar, ...props }) => <ButtonCore {...props} />)`
   &.MuiButton-root {
     border-radius: 0%;
     width: 100%;

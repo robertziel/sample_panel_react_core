@@ -1,10 +1,13 @@
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
+
 import TextFieldCore from '@material-ui/core/TextField';
 
 import styled from 'styled-components';
 
 import { colors } from 'styles/constants';
 
-const TextField = styled(TextFieldCore)`
+const TextField = styled(({ ...props }) => <TextFieldCore {...props} />)`
   width: 100%;
 
   .MuiFormLabel-root.Mui-focused {
