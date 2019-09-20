@@ -9,20 +9,16 @@ import messages from './messages';
 
 function SignInPage() {
   return (
-    <div>
-      <Container maxWidth="sm">
-        <div>
-          <Paper topLine>
-            <H1>
-              <FormattedMessage {...messages.title} />
-            </H1>
-            <Divider />
-            <Form />
-          </Paper>
-        </div>
-      </Container>
+    <Container fullHeight centerContent>
+      <Paper topLine>
+        <H1>
+          <FormattedMessage {...messages.title} />
+        </H1>
+        <Divider />
+        <Form />
+      </Paper>
       <Footer />
-    </div>
+    </Container>
   );
 }
 
