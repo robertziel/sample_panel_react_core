@@ -30,13 +30,13 @@ Just sign in implemented. Other authentication features like registrations, pass
 * **Available fetchers:**
   * `apiGet(options: { form, path, afterSuccess })`
   * `apiPost(options: { form, path, body, afterSuccess })`
-* **Processing** - in order to have access to fetching processing status use following rules:
+* **Processing state** - in order to have access to fetching processing status use following rules:
   * define `state.processing` in component
   * you should pass `component: this` to fetcher
   * fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
   * processing state can be used to render spinner, disable submit form etc.
 * **Testing:**
-  * testing common examples using **_processing_** state:
+  * testing common examples using **_processing state_**:
     * `shouldDisableFormWhileProcessing(formComponentName, methods: { configureWrapper, fillInAndSubmitForm })`
       * Include `import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';` and call in your tests
       * parameters
@@ -70,6 +70,10 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
 * **Tests:**
   * Keep tests DRY and use shared examples:
     * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section
+
+#### Internet connection detection
+* Location `containers/InternetConnectionDetector`
+* `import { isOnline }` function to get current online/offline boolean value
 
 #### NOTIFICATIONS
 * Based on https://github.com/igorprado/react-notification-system
