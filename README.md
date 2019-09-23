@@ -28,8 +28,14 @@ Just sign in implemented. Other authentication features like registrations, pass
 #### API FETCHERS
 * I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 * **Available fetchers:**
-  * `apiGet(options: { form, path, afterSuccess })`
-  * `apiPost(options: { form, path, body, afterSuccess })`
+  * `apiGet(options: { component, disableRetry, path, afterSuccess })`
+  * `apiPost(options: { component, disableRetry, path, body, afterSuccess })`
+* **Options:**
+  * component: used to pass processed component
+  * disableRetry:
+    * always used in forms
+    * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
+    * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
 * **Processing state** - in order to have access to fetching processing status use following rules:
   * define `state.processing` in component
   * you should pass `component: this` to fetcher
@@ -67,6 +73,7 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
   * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch [(check section API fetchers)](#api-fetchers)
   * when using API fetcher:
     * Please check [**_API fetchers / Processing_**](#api-fetchers) section
+    * pass `disableRetry: true` as config to fetcher so that form will not be submitted without user's knowledge
 * **Tests:**
   * Keep tests DRY and use shared examples:
     * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section

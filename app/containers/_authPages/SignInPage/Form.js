@@ -38,6 +38,7 @@ class Form extends Component {
 
     apiPost({
       component: this,
+      disableRetry: true,
       signIn: true,
       path: '/auth/sign_in',
       body: {

@@ -37,6 +37,7 @@ class SignOutButton extends Component {
 
     apiDelete({
       component: this,
+      disableRetry: true,
       path: '/auth/sign_out',
       afterSuccess: () => {
         this.props.onSignOutSuccess();

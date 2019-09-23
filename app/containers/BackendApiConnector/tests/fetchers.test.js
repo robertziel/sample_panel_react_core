@@ -14,8 +14,12 @@ import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import { setAuthenticationToken } from '../actions';
+import * as connectionRefusedHandler from '../connectionRefusedHandler';
 import { apiGet } from '../fetchers';
 import messages from '../messages';
+
+jest.spyOn(connectionRefusedHandler, 'reportConnectionRefused');
+jest.spyOn(connectionRefusedHandler, 'reportConnectionSucceeded');
 
 const locale = 'en';
 const path = '/';
@@ -31,6 +35,10 @@ function mountWrapper() {
   );
 }
 
+function subject(options = {}) {
+  apiGet(Object.assign({ path }, options));
+}
+
 let store;
 let wrapper;
 
@@ -44,7 +52,7 @@ describe('apiFetch()', () => {
     fetchMock.mock((url, opts) => opts.headers['Language-Locale'] === locale, {
       status: 200,
     });
-    apiGet({ path });
+    subject();
     fetchMock.restore();
   });
 
@@ -58,8 +66,30 @@ describe('apiFetch()', () => {
         status: 200,
       },
     );
-    apiGet({ path });
+    subject();
     fetchMock.restore();
+  });
+
+  context('when fetch succeeded', () => {
+    loadApiFetchMock({
+      method: 'GET',
+      path,
+      responseBody: {},
+      status: 200,
+    });
+
+    it('should call reportConnectionSucceeded not reportConnectionRefused', async () => {
+      jest.clearAllMocks();
+      subject();
+      await waitForExpect(() => {
+        expect(
+          connectionRefusedHandler.reportConnectionSucceeded,
+        ).toHaveBeenCalled();
+        expect(
+          connectionRefusedHandler.reportConnectionRefused,
+        ).not.toHaveBeenCalled();
+      });
+    });
   });
 
   context('when fetch not succeeded', () => {
@@ -70,14 +100,58 @@ describe('apiFetch()', () => {
     });
 
     beforeEach(() => {
-      apiGet({ path });
+      connectionRefusedHandler.reportConnectionSucceeded();
     });
 
-    it('should notify that cannot connect to the server', async () => {
-      await waitForExpect(() => {
-        expect(wrapper.text()).toContain(
-          messages.connectionRefusedNotify.defaultMessage,
-        );
+    context('disableRetry is false', () => {
+      beforeEach(() => {
+        jest.clearAllMocks();
+        subject({ disableRetry: false });
+      });
+
+      it('should notify that cannot connect to the server', async () => {
+        await waitForExpect(() => {
+          expect(wrapper.text()).toContain(
+            messages.connectionRefusedNotify.defaultMessage,
+          );
+        });
+      });
+
+      it('should call reportConnectionRefused not reportConnectionSucceeded', async () => {
+        await waitForExpect(() => {
+          expect(
+            connectionRefusedHandler.reportConnectionRefused,
+          ).toHaveBeenCalledWith(expect.any(Function));
+          expect(
+            connectionRefusedHandler.reportConnectionSucceeded,
+          ).not.toHaveBeenCalled();
+        });
+      });
+    });
+
+    context('disableRetry is true', () => {
+      beforeEach(() => {
+        jest.clearAllMocks();
+        subject({ disableRetry: true });
+      });
+
+      it('should notify that cannot connect to the server', async () => {
+        await waitForExpect(() => {
+          expect(wrapper.text()).toContain(
+            messages.connectionRefusedNotify.defaultMessage,
+          );
+        });
+      });
+
+      it('should call reportConnectionRefused not reportConnectionSucceeded', async () => {
+        await waitForExpect(() => {
+          expect(
+            connectionRefusedHandler.reportConnectionRefused,
+          ).toHaveBeenCalledWith();
+          expect(
+            connectionRefusedHandler.reportConnectionSucceeded,
+          ).not.toHaveBeenCalled();
+        });
       });
     });
   });
@@ -88,7 +162,7 @@ describe('apiFetch()', () => {
     });
 
     beforeEach(() => {
-      apiGet({ path });
+      subject();
     });
 
     it('should nullify backendApiConnector credentials', async () => {

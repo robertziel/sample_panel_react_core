@@ -12,8 +12,12 @@ import queryString from 'query-string';
 
 import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
 
-import { connectionRefusedNotify, unauthorizedNotify } from './notifications';
+import { unauthorizedNotify } from './notifications';
 
+import {
+  reportConnectionRefused,
+  reportConnectionSucceeded,
+} from './connectionRefusedHandler';
 import StoreAccessor from './StoreAccessor';
 import { BACKEND_API_URL } from './constants';
 
@@ -35,6 +39,10 @@ export function fullUrl(path, params) {
 
 function stringifyParams(params) {
   return params ? `?${queryString.stringify(params)}` : '';
+}
+
+function stopProcessing(component) {
+  component && component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 }
 
 /* eslint-disable default-case */
@@ -65,22 +73,21 @@ function apiFetch(method, config) {
     })
     .then(
       result => {
-        config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
+        reportConnectionSucceeded();
+        stopProcessing(config.component);
 
-        // TO DO: Internet connection error (set noInternet: false)
         if (typeof config.afterSuccess === 'function') {
           config.afterSuccess(result);
         }
-      },
-      error => {
-        config.component && config.component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
-
-        // TO DO: Internet connection error (set noInternet: true)
-        connectionRefusedNotify();
-        if (typeof config.afterError === 'function') {
-          config.afterError(error);
+      }, // handle success
+      () => {
+        if (config.disableRetry) {
+          reportConnectionRefused();
+          stopProcessing(config.component);
+        } else {
+          reportConnectionRefused(() => apiFetch(method, config));
         }
-      },
+      }, // handle error
     );
 }
 
