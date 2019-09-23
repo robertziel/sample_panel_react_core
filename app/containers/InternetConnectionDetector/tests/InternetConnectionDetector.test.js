@@ -10,6 +10,9 @@ import NotificationSystem from 'containers/NotificationsSystem';
 import InternetConnectionDetector, { isOnline } from '../index';
 import messages from '../messages';
 
+const internetConnectionBackNotifySelector = `.notification:not(.notification-hidden) .notification-message span[children="${messages.internetConnectionBackNotify.defaultMessage}"]`;
+const noInternetConnectionNotifySelector = `.notification:not(.notification-hidden) .notification-message span[children="${messages.noInternetConnectionNotify.defaultMessage}"]`;
+
 const eventListeners = {};
 window.addEventListener = jest.fn((event, cb) => {
   eventListeners[event] = cb;
@@ -51,9 +54,7 @@ describe('<InternetConnectionDetector />', () => {
     });
 
     it('should render not render internetConnectionBackNotify', () => {
-      expect(wrapper.text()).not.toContain(
-        messages.internetConnectionBackNotify.defaultMessage,
-      );
+      expect(wrapper.exists(internetConnectionBackNotifySelector)).toBe(false);
     });
 
     context('and internet disconnected', () => {
@@ -67,9 +68,8 @@ describe('<InternetConnectionDetector />', () => {
       });
 
       it('should render noInternetConnectionNotify', () => {
-        expect(wrapper.text()).toContain(
-          messages.noInternetConnectionNotify.defaultMessage,
-        );
+        wrapper.update();
+        expect(wrapper.exists(noInternetConnectionNotifySelector)).toBe(true);
       });
     });
   });
@@ -85,9 +85,7 @@ describe('<InternetConnectionDetector />', () => {
     });
 
     it('should render noInternetConnectionNotify', () => {
-      expect(wrapper.text()).toContain(
-        messages.noInternetConnectionNotify.defaultMessage,
-      );
+      expect(wrapper.exists(noInternetConnectionNotifySelector)).toBe(true);
     });
 
     context('and connected back to internet', () => {
@@ -101,18 +99,13 @@ describe('<InternetConnectionDetector />', () => {
       });
 
       it('should render internetConnectionBackNotify', () => {
-        expect(wrapper.text()).toContain(
-          messages.internetConnectionBackNotify.defaultMessage,
-        );
+        wrapper.update();
+        expect(wrapper.exists(internetConnectionBackNotifySelector)).toBe(true);
       });
 
       it('should remove noInternetConnectionNotify', () => {
         wrapper.update();
-        expect(
-          wrapper.exists(
-            `.notification-hidden .notification-message span[children="${messages.noInternetConnectionNotify.defaultMessage}"]`,
-          ),
-        ).toBe(true);
+        expect(wrapper.exists(noInternetConnectionNotifySelector)).toBe(false);
       });
     });
   });
