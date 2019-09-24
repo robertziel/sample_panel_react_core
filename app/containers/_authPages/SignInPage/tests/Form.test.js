@@ -13,6 +13,7 @@ import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
 import backendApiConnectorMessages from 'containers/BackendApiConnector/messages';
+import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import Form from '../Form';
 import messages from '../messages';
 
@@ -28,10 +29,12 @@ let wrapper;
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
-      <Provider store={store}>
-        <NotificationSystem />
-        <Form />
-      </Provider>
+      <IntlCatcher>
+        <Provider store={store}>
+          <NotificationSystem />
+          <Form />
+        </Provider>
+      </IntlCatcher>
     </IntlProvider>,
   );
 }

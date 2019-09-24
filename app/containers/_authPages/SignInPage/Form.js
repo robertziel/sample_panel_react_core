@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -14,6 +14,8 @@ import { signedInNotify } from './notifications';
 class Form extends Component {
   constructor(props) {
     super(props);
+
+    this.intl = props.intl;
 
     this.state = {
       errorMessage: null,
@@ -64,7 +66,7 @@ class Form extends Component {
         </Grid>
         <Grid>
           <TextField
-            label={<FormattedMessage {...messages.formEmail} />}
+            label={this.intl.formatMessage(messages.formEmail)}
             type="email"
             name="email"
             onChange={event => this.setState({ email: event.target.value })}
@@ -73,7 +75,7 @@ class Form extends Component {
         </Grid>
         <Grid>
           <TextField
-            label={<FormattedMessage {...messages.formPassword} />}
+            label={this.intl.formatMessage(messages.formPassword)}
             type="password"
             name="password"
             onChange={event => this.setState({ password: event.target.value })}
@@ -98,10 +100,13 @@ function mapDispatchToProps(dispatch) {
 }
 
 Form.propTypes = {
+  intl: intlShape.isRequired,
   onSignInSuccess: PropTypes.func,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Form);
+export default injectIntl(
+  connect(
+    null,
+    mapDispatchToProps,
+  )(Form),
+);

@@ -83,9 +83,9 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
 * `import { isOnline }` function to get current online/offline boolean value
 
 #### NOTIFICATIONS
-* Based on https://github.com/igorprado/react-notification-system
-* `notificationSystem` reference can be accessed from `app/containers/NotificationsSystem`
-* notification functions should be defined in `notifications.js` files, with following name format `function *Notify()` like `function randomNameNotify()`
+* Based on https://www.npmjs.com/package/react-notifications-component
+* path `app/containers/NotificationsSystem`
+* notification functions should be defined in `notifications.js` files for each component they belong to separately, with following name format `function *Notify()` like `function randomNameNotify()`
 
 #### UI
 * CSS based on https://www.styled-components.com/

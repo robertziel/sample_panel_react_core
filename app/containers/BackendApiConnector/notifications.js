@@ -1,31 +1,35 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { notificationSystem } from 'containers/NotificationsSystem';
+import { store } from 'react-notifications-component';
+
+import { getIntl } from 'containers/LanguageProvider/IntlCatcher';
+import defaultSettings from 'containers/NotificationsSystem/defaultSettings';
 
 import messages from './messages';
 
 export function connectionRefusedNotify(refetchMethod) {
-  const notification = notificationSystem.current.addNotification({
-    autoDismiss: 0,
-    dismissible: 'none',
-    title: <FormattedMessage {...messages.connectionRefusedNotifyTitle} />,
-    message: <FormattedMessage {...messages.connectionRefusedNotify} />,
-    level: 'error',
-    action: {
-      label: <FormattedMessage {...messages.connectionRefusedNotifyTryAgain} />,
-      callback: refetchMethod,
+  const notification = store.addNotification({
+    ...defaultSettings,
+    title: getIntl().formatMessage(messages.connectionRefusedNotifyTitle),
+    message: getIntl().formatMessage(messages.connectionRefusedNotify),
+    type: 'danger',
+    dismiss: {
+      duration: 20000,
+      pauseOnHover: true,
+      showIcon: true,
+      onScreen: true,
     },
+    onRemoval: refetchMethod,
   });
 
   return {
-    remove: () => notificationSystem.current.removeNotification(notification),
+    remove: () => store.removeNotification(notification),
   };
 }
 
 export function unauthorizedNotify() {
-  notificationSystem.current.addNotification({
-    title: <FormattedMessage {...messages.unauthorizedNotifyTitle} />,
-    message: <FormattedMessage {...messages.unauthorizedNotify} />,
-    level: 'info',
+  store.addNotification({
+    ...defaultSettings,
+    title: getIntl().formatMessage(messages.unauthorizedNotifyTitle),
+    message: getIntl().formatMessage(messages.unauthorizedNotify),
+    type: 'info',
   });
 }

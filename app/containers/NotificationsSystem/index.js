@@ -1,11 +1,9 @@
 import React from 'react';
 
-import NotificationSystem from 'react-notification-system';
+import NotificationSystem from 'react-notifications-component';
 
-export const notificationSystem = React.createRef();
+import 'react-notifications-component/dist/theme.css';
 
-export function NotificationsSystem() {
-  return <NotificationSystem ref={notificationSystem} />;
+export default function NotificationsSystem() {
+  return <NotificationSystem />;
 }
-
-export default NotificationsSystem;

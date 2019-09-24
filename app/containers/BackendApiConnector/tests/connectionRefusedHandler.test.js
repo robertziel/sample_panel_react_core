@@ -5,7 +5,10 @@ import { IntlProvider } from 'react-intl';
 
 import { mount } from 'enzyme';
 
+import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import NotificationSystem from 'containers/NotificationsSystem';
+
+import { notificationMessageSelector } from 'testsHelpers/notifications';
 
 import {
   reportConnectionRefused,
@@ -14,13 +17,17 @@ import {
 
 import messages from '../messages';
 
-const errorRefusedNotifySelector = `.notification:not(.notification-hidden) .notification-message span[children="${messages.connectionRefusedNotify.defaultMessage}"]`;
+const errorRefusedNotifySelector = notificationMessageSelector(
+  messages.connectionRefusedNotify.defaultMessage,
+);
 const mockFunction = jest.fn(() => {});
 
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
-      <NotificationSystem />
+      <IntlCatcher>
+        <NotificationSystem />
+      </IntlCatcher>
     </IntlProvider>,
   );
 }

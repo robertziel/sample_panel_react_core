@@ -1,12 +1,15 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { notificationSystem } from 'containers/NotificationsSystem';
+import { store } from 'react-notifications-component';
+
+import { getIntl } from 'containers/LanguageProvider/IntlCatcher';
+import defaultSettings from 'containers/NotificationsSystem/defaultSettings';
 
 import messages from './messages';
 
 export function signedOutNotify() {
-  notificationSystem.current.addNotification({
-    message: <FormattedMessage {...messages.signedOutNotify} />,
-    level: 'success',
+  store.addNotification({
+    ...defaultSettings,
+    message: getIntl().formatMessage(messages.signedOutNotify),
+    type: 'success',
+    container: 'top-right',
   });
 }

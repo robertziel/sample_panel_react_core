@@ -10,8 +10,10 @@ import fetchMock from 'fetch-mock';
 import waitForExpect from 'wait-for-expect';
 
 import NotificationSystem from 'containers/NotificationsSystem';
+import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
+import { notificationMessageSelector } from 'testsHelpers/notifications';
 
 import { setAuthenticationToken } from '../actions';
 import * as connectionRefusedHandler from '../connectionRefusedHandler';
@@ -21,6 +23,13 @@ import messages from '../messages';
 jest.spyOn(connectionRefusedHandler, 'reportConnectionRefused');
 jest.spyOn(connectionRefusedHandler, 'reportConnectionSucceeded');
 
+const unauthorizedNotifySelector = notificationMessageSelector(
+  messages.unauthorizedNotify.defaultMessage,
+);
+const connectionRefusedNotifySelector = notificationMessageSelector(
+  messages.connectionRefusedNotify.defaultMessage,
+);
+
 const locale = 'en';
 const path = '/';
 const token = 'a token';
@@ -28,9 +37,11 @@ const token = 'a token';
 function mountWrapper() {
   return mount(
     <IntlProvider locale={locale}>
-      <Provider store={store}>
-        <NotificationSystem />
-      </Provider>
+      <IntlCatcher>
+        <Provider store={store}>
+          <NotificationSystem />
+        </Provider>
+      </IntlCatcher>
     </IntlProvider>,
   );
 }
@@ -111,9 +122,8 @@ describe('apiFetch()', () => {
 
       it('should notify that cannot connect to the server', async () => {
         await waitForExpect(() => {
-          expect(wrapper.text()).toContain(
-            messages.connectionRefusedNotify.defaultMessage,
-          );
+          wrapper.update();
+          expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(true);
         });
       });
 
@@ -137,9 +147,8 @@ describe('apiFetch()', () => {
 
       it('should notify that cannot connect to the server', async () => {
         await waitForExpect(() => {
-          expect(wrapper.text()).toContain(
-            messages.connectionRefusedNotify.defaultMessage,
-          );
+          wrapper.update();
+          expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(true);
         });
       });
 
@@ -176,9 +185,8 @@ describe('apiFetch()', () => {
 
     it('should notify', async () => {
       await waitForExpect(() => {
-        expect(wrapper.text()).toContain(
-          messages.unauthorizedNotify.defaultMessage,
-        );
+        wrapper.update();
+        expect(wrapper.exists(unauthorizedNotifySelector)).toBe(true);
       });
     });
   });

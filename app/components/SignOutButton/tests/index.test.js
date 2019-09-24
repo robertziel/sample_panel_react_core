@@ -9,6 +9,7 @@ import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
 
 import NotificationSystem from 'containers/NotificationsSystem';
+import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
@@ -31,10 +32,12 @@ let wrapper;
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
-      <Provider store={store}>
-        <NotificationSystem />
-        <SignOutButton />
-      </Provider>
+      <IntlCatcher>
+        <Provider store={store}>
+          <NotificationSystem />
+          <SignOutButton />
+        </Provider>
+      </IntlCatcher>
     </IntlProvider>,
   );
 }

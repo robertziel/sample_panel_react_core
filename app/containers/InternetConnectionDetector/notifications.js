@@ -1,27 +1,33 @@
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { notificationSystem } from 'containers/NotificationsSystem';
+import { store } from 'react-notifications-component';
+
+import { getIntl } from 'containers/LanguageProvider/IntlCatcher';
+import defaultSettings from 'containers/NotificationsSystem/defaultSettings';
 
 import messages from './messages';
 
 export function internetConnectionBackNotify() {
-  notificationSystem.current.addNotification({
-    title: <FormattedMessage {...messages.internetConnectionBackNotifyTitle} />,
-    message: <FormattedMessage {...messages.internetConnectionBackNotify} />,
-    level: 'success',
+  store.addNotification({
+    ...defaultSettings,
+    title: getIntl().formatMessage(messages.internetConnectionBackNotifyTitle),
+    message: getIntl().formatMessage(messages.internetConnectionBackNotify),
+    type: 'success',
   });
 }
 
 export function noInternetConnectionNotify() {
-  const notification = notificationSystem.current.addNotification({
-    dismissible: 'none',
-    autoDismiss: 0,
-    title: <FormattedMessage {...messages.noInternetConnectionNotifyTitle} />,
-    message: <FormattedMessage {...messages.noInternetConnectionNotify} />,
-    level: 'error',
+  const notification = store.addNotification({
+    ...defaultSettings,
+    title: getIntl().formatMessage(messages.noInternetConnectionNotifyTitle),
+    message: getIntl().formatMessage(messages.noInternetConnectionNotify),
+    type: 'danger',
+    dismiss: {
+      click: false,
+      duration: 0,
+      touch: false,
+    },
   });
 
   return {
-    remove: () => notificationSystem.current.removeNotification(notification),
+    remove: () => store.removeNotification(notification),
   };
 }

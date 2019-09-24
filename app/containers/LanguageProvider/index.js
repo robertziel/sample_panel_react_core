@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { createSelector } from 'reselect';
 import { IntlProvider } from 'react-intl';
 
+import IntlCatcher from './IntlCatcher';
 import { makeSelectLocale } from './selectors';
 
 export function LanguageProvider(props) {
@@ -21,7 +22,7 @@ export function LanguageProvider(props) {
       key={props.locale}
       messages={props.messages[props.locale]}
     >
-      {React.Children.only(props.children)}
+      <IntlCatcher>{React.Children.only(props.children)}</IntlCatcher>
     </IntlProvider>
   );
 }

@@ -5,13 +5,20 @@ import { IntlProvider } from 'react-intl';
 
 import { mount } from 'enzyme';
 
+import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import NotificationSystem from 'containers/NotificationsSystem';
+
+import { notificationMessageSelector } from 'testsHelpers/notifications';
 
 import InternetConnectionDetector, { isOnline } from '../index';
 import messages from '../messages';
 
-const internetConnectionBackNotifySelector = `.notification:not(.notification-hidden) .notification-message span[children="${messages.internetConnectionBackNotify.defaultMessage}"]`;
-const noInternetConnectionNotifySelector = `.notification:not(.notification-hidden) .notification-message span[children="${messages.noInternetConnectionNotify.defaultMessage}"]`;
+const internetConnectionBackNotifySelector = notificationMessageSelector(
+  messages.internetConnectionBackNotify.defaultMessage,
+);
+const noInternetConnectionNotifySelector = notificationMessageSelector(
+  messages.noInternetConnectionNotify.defaultMessage,
+);
 
 const eventListeners = {};
 window.addEventListener = jest.fn((event, cb) => {
@@ -21,12 +28,12 @@ window.addEventListener = jest.fn((event, cb) => {
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
-      <div>
+      <IntlCatcher>
         <NotificationSystem />
         <InternetConnectionDetector>
           <div className="content"></div>
         </InternetConnectionDetector>
-      </div>
+      </IntlCatcher>
     </IntlProvider>,
   );
 }
