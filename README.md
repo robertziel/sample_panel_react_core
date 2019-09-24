@@ -127,6 +127,9 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
 
 
 ##### TO DO:
+* BUG - `app/containers/BackendApiConnector/connectionRefusedHandler.js`:
+  * should refetch on click or after time, only if refetch queue is not empty (currently refetch is handled when notification disappears)
+  * Fix issue with queued refetch related to unmounted components, should be ignored
 * fix styles, make sure mobile UI is working well
 * Add Users page with actions (show, new, edit, delete)
 * Implement User roles system
