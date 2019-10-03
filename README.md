@@ -25,34 +25,38 @@ Sample user:
 
 Just sign in implemented. Other authentication features like registrations, password remind, lockable can be quickly added but I omitted them as someone may accidentally block sample account on staging :)
 
-#### API FETCHERS
-* I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
-* **Available fetchers:**
-  * `apiGet(options: { component, disableRetry, path, afterSuccess })`
-  * `apiPost(options: { component, disableRetry, path, body, afterSuccess })`
-* **Options:**
-  * component: used to pass processed component
-  * disableRetry:
-    * always used in forms
-    * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
-    * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
-* **Processing state** - in order to have access to fetching processing status use following rules:
-  * define `state.processing` in component
-  * you should pass `component: this` to fetcher
-  * fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
-  * processing state can be used to render spinner, disable submit form etc.
-* **Testing:**
-  * testing common examples using **_processing state_**:
-    * `shouldDisableFormWhileProcessing(formComponentName, methods: { configureWrapper, fillInAndSubmitForm })`
-      * Include `import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';` and call in your tests
-      * parameters
-        * `formComponentName` - component name as css selector, is used to find component in wrapper
-        * `spinnerSelector` - spinner name css selector, is used to identify spinner
-        * `methods: { configureWrapper }` - function which should call enzyme mock and return wrapper containing tested form component
-        * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
+## API FETCHERS
+ I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
+#### **Available fetchers:**
+* `apiGet(options: { component, disableRetry, path, afterSuccess })`
+* `apiPost(options: { component, disableRetry, path, body, afterSuccess })`
+
+#### **Options:**
+* component: used to pass processed component
+* disableRetry:
+  * always used in forms
+  * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
+  * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
+
+#### **Processing state**
+In order to have access to fetching processing status use following rules:
+* define `state.processing` in component
+* you should pass `component: this` to fetcher
+* fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
+* processing state can be used to render spinner, disable submit form etc.
+
+#### **Testing:**
+* testing common examples using **_processing state_**:
+  * `shouldDisableFormWhileProcessing(formComponentName, methods: { configureWrapper, fillInAndSubmitForm })`
+    * Include `import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';` and call in your tests
+    * parameters
+      * `formComponentName` - component name as css selector, is used to find component in wrapper
+      * `spinnerSelector` - spinner name css selector, is used to identify spinner
+      * `methods: { configureWrapper }` - function which should call enzyme mock and return wrapper containing tested form component
+      * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
 
 
-#### AUTHENTICATION
+## AUTHENTICATION
 * all authentication related containers are kept in `app/containers/_authPages`
 * `app/containers/BackendApiConnector` is responsible for:
   * handling all requests to API
@@ -65,29 +69,30 @@ Just sign in implemented. Other authentication features like registrations, pass
       * currentUser is set to null
       * when authenticationToken is null SignInPage is rendered ( handled in `app/containers/BackendApiConnector/index.js` )
 
-#### FORMS
+## FORMS
 It's hard to make forms DRY, but we can adopt some conventions.
 Example form can be found in `containers/_authPages/SignInPage/Form.js`
-* **Component:**
-  * keeps all form params in state and updates them on input's onChange event
-  * `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch [(check section API fetchers)](#api-fetchers)
-  * when using API fetcher:
-    * Please check [**_API fetchers / Processing_**](#api-fetchers) section
-    * pass `disableRetry: true` as config to fetcher so that form will not be submitted without user's knowledge
-* **Tests:**
-  * Keep tests DRY and use shared examples:
-    * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section
+#### **Component:**
+* keeps all form params in state and updates them on input's onChange event
+* `onSubmit()` function should be responsible for any actions made after form is submitted, in most cases it will be API fetch [(check section API fetchers)](#api-fetchers)
+* when using API fetcher:
+  * Please check [**_API fetchers / Processing_**](#api-fetchers) section
+  * pass `disableRetry: true` as config to fetcher so that form will not be submitted without user's knowledge
 
-#### Internet connection detection
+#### **Tests:**
+* Keep tests DRY and use shared examples:
+  * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section
+
+## Internet connection detection
 * Location `containers/InternetConnectionDetector`
 * `import { isOnline }` function to get current online/offline boolean value
 
-#### NOTIFICATIONS
+## NOTIFICATIONS
 * Based on https://www.npmjs.com/package/react-notifications-component
 * path `app/containers/NotificationsSystem`
 * notification functions should be defined in `notifications.js` files for each component they belong to separately, with following name format `function *Notify()` like `function randomNameNotify()`
 
-#### UI
+## UI
 * CSS based on https://www.styled-components.com/
   * Global style is defined in `app/styles/global-styles.js`
   * Constants with common variables like colors etc. are defined in `app/styles/constants.js`
@@ -126,7 +131,7 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
     ```
 
 
-##### TO DO:
+## TO DO:
 * BUG - `app/containers/BackendApiConnector/connectionRefusedHandler.js`:
   * should refetch on click or after time, only if refetch queue is not empty (currently refetch is handled when notification disappears)
   * Fix issue with queued refetch related to unmounted components, should be ignored
