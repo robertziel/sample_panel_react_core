@@ -42,7 +42,9 @@ class SidebarCollapseLinks extends Component {
         className="sidebar-link sidebar-collapse-link"
       >
         <div className="line"></div>
-        <div className="evaporating">{<FormattedMessage {...link.text} />}</div>
+        <div className="evaporating">
+          <FormattedMessage {...link.text} />
+        </div>
       </NavLink>
     );
   }
