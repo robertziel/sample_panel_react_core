@@ -69,6 +69,27 @@ In order to have access to fetching processing status use following rules:
       * currentUser is set to null
       * when authenticationToken is null SignInPage is rendered ( handled in `app/containers/BackendApiConnector/index.js` )
 
+## Docker
+
+Repository contains basic docker setup. Depending on needs you can run app locally using both traditional `npm start` or `docker-compose`.
+
+Docker compose is set up as default to run locally in **development** environment but can be easily changed for production needs.
+
+1. Build:
+```
+docker-compose build
+```
+
+2. Start containers and check `localhost:3000`:
+```
+docker-compose up
+```
+
+3. Shut down containers:
+```
+docker-compose down
+```
+
 ## FORMS
 It's hard to make forms DRY, but we can adopt some conventions.
 Example form can be found in `containers/_authPages/SignInPage/Form.js`
