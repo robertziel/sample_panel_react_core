@@ -12,13 +12,20 @@ function reset() {
 function retryFetches() {
   reset();
 
+  let shiftedFetch;
+
   while (fetchesQueue.length > 0) {
-    fetchesQueue.shift().refetchMethod();
+    shiftedFetch = fetchesQueue.shift();
+
+    if (shiftedFetchHasMountedComponent(shiftedFetch)) {
+      shiftedFetch.refetchMethod();
+    }
   }
 }
 
-export function reportConnectionRefused(refetchMethod) {
-  refetchMethod && fetchesQueue.push({ refetchMethod }); // eslint-disable-line no-unused-expressions
+export function reportConnectionRefused(component, refetchMethod) {
+  refetchMethod && fetchesQueue.push({ component, refetchMethod }); // eslint-disable-line no-unused-expressions
+
   if (!notification) {
     notification = connectionRefusedNotify(retryFetches);
   }
@@ -26,4 +33,8 @@ export function reportConnectionRefused(refetchMethod) {
 
 export function reportConnectionSucceeded() {
   retryFetches();
+}
+
+function shiftedFetchHasMountedComponent(shiftedFetch) {
+  return shiftedFetch.component.updater.isMounted(shiftedFetch.component);
 }

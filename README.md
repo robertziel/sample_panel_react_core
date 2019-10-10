@@ -28,20 +28,25 @@ Just sign in implemented. Other authentication features like registrations, pass
 ## API FETCHERS
  I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 #### **Available fetchers:**
-* `apiGet(options: { component, disableRetry, path, afterSuccess })`
-* `apiPost(options: { component, disableRetry, path, body, afterSuccess })`
+* `apiDelete(component, options: { disableRetry, path, body, afterSuccess })`
+* `apiGet(component, options: { disableRetry, path, afterSuccess })`
+* `apiPost(component, options: { disableRetry, path, body, afterSuccess })`
 
-#### **Options:**
-* component: used to pass processed component
-* disableRetry:
-  * always used in forms
-  * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
-  * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
+#### **Params:**
+* **component (required)** - used to pass processed component
+* **options:**
+  * **disableRetry**
+    * always used in forms
+    * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
+    * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
+  * **path (required)**
+  * **body**
+  * **afterSuccess**
 
 #### **Processing state**
 In order to have access to fetching processing status use following rules:
 * define `state.processing` in component
-* you should pass `component: this` to fetcher
+* you should pass `component` to fetcher
 * fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
 * processing state can be used to render spinner, disable submit form etc.
 
@@ -155,7 +160,7 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
 ## TO DO:
 * BUG - `app/containers/BackendApiConnector/connectionRefusedHandler.js`:
   * should refetch on click or after time, only if refetch queue is not empty (currently refetch is handled when notification disappears)
-  * Fix issue with queued refetch related to unmounted components, should be ignored
+  * ~~Fix issue with queued refetch related to unmounted components, should be ignored~~
 * fix styles, make sure mobile UI is working well
 * Add Users page with actions (show, new, edit, delete)
 * Implement User roles system

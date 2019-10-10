@@ -59,8 +59,7 @@ class UsersList extends Component {
   }
 
   fetchData() {
-    apiGet({
-      component: this,
+    apiGet(this, {
       path: '/users',
       params: {
         page: this.state.page + 1,

@@ -46,8 +46,14 @@ function mountWrapper() {
   );
 }
 
+const mockedComponent = {
+  updater: {
+    isMounted: () => true,
+  },
+};
+
 function subject(options = {}) {
-  apiGet(Object.assign({ path }, options));
+  apiGet(mockedComponent, Object.assign({ path }, options));
 }
 
 let store;
@@ -131,7 +137,7 @@ describe('apiFetch()', () => {
         await waitForExpect(() => {
           expect(
             connectionRefusedHandler.reportConnectionRefused,
-          ).toHaveBeenCalledWith(expect.any(Function));
+          ).toHaveBeenCalledWith(mockedComponent, expect.any(Function));
           expect(
             connectionRefusedHandler.reportConnectionSucceeded,
           ).not.toHaveBeenCalled();

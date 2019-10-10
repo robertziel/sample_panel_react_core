@@ -22,6 +22,26 @@ const errorRefusedNotifySelector = notificationMessageSelector(
 );
 const mockFunction = jest.fn(() => {});
 
+class MockedComponent {
+  constructor() {
+    this.isMounted = true;
+
+    this.updater = {
+      isMounted: () => this.isMounted,
+    };
+  }
+
+  mount() {
+    this.isMounted = true;
+  }
+
+  unmount() {
+    this.isMounted = false;
+  }
+}
+
+const component = new MockedComponent();
+
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
@@ -31,6 +51,7 @@ function mountWrapper() {
     </IntlProvider>,
   );
 }
+
 let wrapper;
 
 beforeAll(() => {
@@ -84,17 +105,39 @@ describe('<connectionRefusedHandler />', () => {
       context('when queued fetches added', () => {
         beforeEach(() => {
           jest.clearAllMocks();
-          reportConnectionRefused(mockFunction());
-          reportConnectionRefused(mockFunction());
+          reportConnectionRefused(component, mockFunction);
+          reportConnectionRefused(component, mockFunction);
         });
 
-        it('should shift and call all queued fetches', () => {
-          reportConnectionSucceeded();
-          expect(mockFunction).toHaveBeenCalledTimes(2);
+        context('when container is mounted', () => {
+          beforeEach(() => {
+            component.mount();
+          });
 
-          reportConnectionRefused();
-          reportConnectionSucceeded();
-          expect(mockFunction).toHaveBeenCalledTimes(2);
+          it('should shift and call all queued fetches', () => {
+            reportConnectionSucceeded();
+            expect(mockFunction).toHaveBeenCalledTimes(2);
+
+            reportConnectionRefused();
+            reportConnectionSucceeded();
+            expect(mockFunction).toHaveBeenCalledTimes(2);
+          });
+        });
+
+        context('when container is unmounted', () => {
+          beforeEach(() => {
+            component.unmount();
+          });
+
+          it('should shift all queued fetches without calling them', () => {
+            reportConnectionSucceeded();
+            expect(mockFunction).toHaveBeenCalledTimes(0);
+
+            component.mount();
+            reportConnectionRefused();
+            reportConnectionSucceeded();
+            expect(mockFunction).toHaveBeenCalledTimes(0);
+          });
         });
       });
     });

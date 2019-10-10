@@ -2,9 +2,7 @@
  * BackendApiConnector's fetchers provide functions used to connect to API backend
  * All settings like BACKEND_API_URL, authenticationToken, error response handling etc.
  * are handled under the hood here so that anywhere else in the project can be
- * used one of simple functions requiring path, params, and afterSuccess callback.
- * config: { component } is used to pass component with defined
- * setStateProcessing and unsetStateProcessing functions to call them when start and stop fetching
+ * used one of few simple exported functions requiring component, path, params, and afterSuccess callback.
  *
  */
 
@@ -41,13 +39,17 @@ function stringifyParams(params) {
   return params ? `?${queryString.stringify(params)}` : '';
 }
 
+function startProcessing(component) {
+  component.setStateProcessing && component.setStateProcessing(); // eslint-disable-line no-unused-expressions
+}
+
 function stopProcessing(component) {
-  component && component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
+  component.unsetStateProcessing && component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
 }
 
 /* eslint-disable default-case */
-function apiFetch(method, config) {
-  config.component && config.component.setStateProcessing(); // eslint-disable-line no-unused-expressions
+function apiFetch(method, component, config) {
+  startProcessing(component);
 
   fetch(fullUrl(config.path, config.params), {
     method,
@@ -74,7 +76,7 @@ function apiFetch(method, config) {
     .then(
       result => {
         reportConnectionSucceeded();
-        stopProcessing(config.component);
+        stopProcessing(component);
 
         if (typeof config.afterSuccess === 'function') {
           config.afterSuccess(result);
@@ -83,22 +85,24 @@ function apiFetch(method, config) {
       () => {
         if (config.disableRetry) {
           reportConnectionRefused();
-          stopProcessing(config.component);
+          stopProcessing(component);
         } else {
-          reportConnectionRefused(() => apiFetch(method, config));
+          reportConnectionRefused(component, () =>
+            apiFetch(method, component, config),
+          );
         }
       }, // handle error
     );
 }
 
-export function apiDelete(config) {
-  apiFetch('DELETE', config);
+export function apiDelete(component, config) {
+  apiFetch('DELETE', component, config);
 }
 
-export function apiGet(config) {
-  apiFetch('GET', config);
+export function apiGet(component, config) {
+  apiFetch('GET', component, config);
 }
 
-export function apiPost(config) {
-  apiFetch('POST', config);
+export function apiPost(component, config) {
+  apiFetch('POST', component, config);
 }

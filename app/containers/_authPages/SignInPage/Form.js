@@ -38,8 +38,7 @@ class Form extends Component {
   onSubmit(event) {
     event.preventDefault();
 
-    apiPost({
-      component: this,
+    apiPost(this, {
       disableRetry: true,
       signIn: true,
       path: '/auth/sign_in',

@@ -21,7 +21,7 @@ class CurrentUserLoader extends Component {
   }
 
   loadCurrentUser() {
-    apiGet({
+    apiGet(this, {
       path: '/current_user',
       afterSuccess: result => {
         this.props.onLoadSuccess(result);
