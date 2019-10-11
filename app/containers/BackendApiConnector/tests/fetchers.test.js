@@ -26,8 +26,8 @@ jest.spyOn(connectionRefusedHandler, 'reportConnectionSucceeded');
 const unauthorizedNotifySelector = notificationMessageSelector(
   messages.unauthorizedNotify.defaultMessage,
 );
-const connectionRefusedNotifySelector = notificationMessageSelector(
-  messages.connectionRefusedNotify.defaultMessage,
+const connectionRefusedAutodismissableNotifySelector = notificationMessageSelector(
+  messages.connectionRefusedAutodismissableNotify.defaultMessage,
 );
 
 const locale = 'en';
@@ -129,7 +129,9 @@ describe('apiFetch()', () => {
       it('should notify that cannot connect to the server', async () => {
         await waitForExpect(() => {
           wrapper.update();
-          expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(true);
+          expect(
+            wrapper.exists(connectionRefusedAutodismissableNotifySelector),
+          ).toBe(true);
         });
       });
 
@@ -154,7 +156,9 @@ describe('apiFetch()', () => {
       it('should notify that cannot connect to the server', async () => {
         await waitForExpect(() => {
           wrapper.update();
-          expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(true);
+          expect(
+            wrapper.exists(connectionRefusedAutodismissableNotifySelector),
+          ).toBe(true);
         });
       });
 

@@ -15,10 +15,10 @@ const messages = defineMessages({
       Connection error
     `,
   },
-  connectionRefusedNotifyTryAgain: {
-    id: `${scope}.fetchers.notifications.connectionRefusedNotifyTryAgain`,
+  connectionRefusedAutodismissableNotify: {
+    id: `${scope}.fetchers.notifications.connectionRefusedAutodismissableNotify`,
     defaultMessage: `
-      Try again
+      Cannot connect to the server. Click here to try again.
     `,
   },
   unauthorizedNotify: {

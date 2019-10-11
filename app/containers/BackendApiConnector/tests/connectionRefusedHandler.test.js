@@ -17,9 +17,14 @@ import {
 
 import messages from '../messages';
 
-const errorRefusedNotifySelector = notificationMessageSelector(
+const connectionRefusedNotifySelector = notificationMessageSelector(
   messages.connectionRefusedNotify.defaultMessage,
 );
+
+const connectionRefusedAutodismissableNotifySelector = notificationMessageSelector(
+  messages.connectionRefusedAutodismissableNotify.defaultMessage,
+);
+
 const mockFunction = jest.fn(() => {});
 
 class MockedComponent {
@@ -58,6 +63,10 @@ beforeAll(() => {
   wrapper = mountWrapper();
 });
 
+afterEach(() => {
+  reportConnectionSucceeded();
+});
+
 describe('<connectionRefusedHandler />', () => {
   context('reportConnectionRefused()', () => {
     context('notification without queued fetches exists', () => {
@@ -68,17 +77,34 @@ describe('<connectionRefusedHandler />', () => {
       it('should not add new notification', () => {
         reportConnectionRefused();
         wrapper.update();
-        expect(wrapper.find(errorRefusedNotifySelector).length).toBe(1);
+        expect(wrapper.find(connectionRefusedNotifySelector).length).toBe(1);
+        expect(
+          wrapper.find(connectionRefusedAutodismissableNotifySelector).length,
+        ).toBe(0);
       });
 
-      // TODO: Should render retry button only if refetch queue not empty
+      it('should update notification if fetch added to queue', () => {
+        reportConnectionRefused(component, mockFunction);
+        wrapper.update();
+        expect(wrapper.find(connectionRefusedNotifySelector).length).toBe(0);
+        expect(
+          wrapper.find(connectionRefusedAutodismissableNotifySelector).length,
+        ).toBe(1);
+      });
     });
 
-    context('notification does not exist', () => {
-      it('should render notification', () => {
-        reportConnectionRefused();
+    context('notification with queued fetches exists', () => {
+      beforeEach(() => {
+        reportConnectionRefused(component, mockFunction);
+      });
+
+      it('should not add new notification', () => {
+        reportConnectionRefused(component, mockFunction);
         wrapper.update();
-        expect(wrapper.exists(errorRefusedNotifySelector)).toBe(true);
+        expect(wrapper.find(connectionRefusedNotifySelector).length).toBe(0);
+        expect(
+          wrapper.find(connectionRefusedAutodismissableNotifySelector).length,
+        ).toBe(1);
       });
     });
   });
@@ -92,14 +118,20 @@ describe('<connectionRefusedHandler />', () => {
       it('should remove error notification', () => {
         reportConnectionSucceeded();
         wrapper.update();
-        expect(wrapper.exists(errorRefusedNotifySelector)).toBe(false);
+        expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(false);
+        expect(
+          wrapper.exists(connectionRefusedAutodismissableNotifySelector),
+        ).toBe(false);
       });
 
       it('should make possible to rerender notification on next connection refused', () => {
         reportConnectionSucceeded();
         reportConnectionRefused();
         wrapper.update();
-        expect(wrapper.exists(errorRefusedNotifySelector)).toBe(true);
+        expect(wrapper.exists(connectionRefusedNotifySelector)).toBe(true);
+        expect(
+          wrapper.exists(connectionRefusedAutodismissableNotifySelector),
+        ).toBe(false);
       });
 
       context('when queued fetches added', () => {

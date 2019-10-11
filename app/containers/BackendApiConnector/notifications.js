@@ -5,14 +5,19 @@ import defaultSettings from 'containers/NotificationsSystem/defaultSettings';
 
 import messages from './messages';
 
-export function connectionRefusedNotify(refetchMethod) {
+export function connectionRefusedAutodismissableNotify(
+  refetchMethod,
+  retryTime,
+) {
   const notification = store.addNotification({
     ...defaultSettings,
     title: getIntl().formatMessage(messages.connectionRefusedNotifyTitle),
-    message: getIntl().formatMessage(messages.connectionRefusedNotify),
+    message: getIntl().formatMessage(
+      messages.connectionRefusedAutodismissableNotify,
+    ),
     type: 'danger',
     dismiss: {
-      duration: 20000,
+      duration: retryTime,
       pauseOnHover: true,
       showIcon: true,
       onScreen: true,
@@ -21,6 +26,28 @@ export function connectionRefusedNotify(refetchMethod) {
   });
 
   return {
+    id: notification,
+    remove: () => store.removeNotification(notification),
+  };
+}
+
+export function connectionRefusedNotify(removeNotificationMethod) {
+  const notification = store.addNotification({
+    ...defaultSettings,
+    title: getIntl().formatMessage(messages.connectionRefusedNotifyTitle),
+    message: getIntl().formatMessage(messages.connectionRefusedNotify),
+    type: 'danger',
+    dismiss: {
+      duration: 0,
+      showIcon: true,
+    },
+    onRemoval: id => {
+      removeNotificationMethod(id);
+    },
+  });
+
+  return {
+    id: notification,
     remove: () => store.removeNotification(notification),
   };
 }
