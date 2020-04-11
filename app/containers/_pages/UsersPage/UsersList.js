@@ -65,7 +65,7 @@ class UsersList extends Component {
         page: this.state.page + 1,
         per_page: this.state.rowsPerPage,
       },
-      afterSuccess: result => {
+      afterSuccess: (result) => {
         this.setState({
           count: result.count,
           users: result.users,
@@ -91,7 +91,7 @@ class UsersList extends Component {
             </TableHead>
             <TableBody>
               <FetchedContent tableRow processing={this.state.processing}>
-                {this.state.users.map(user => (
+                {this.state.users.map((user) => (
                   <TableRow hover key={user.id}>
                     <TableCell>{user.username}</TableCell>
                     <TableCell>{user.email}</TableCell>

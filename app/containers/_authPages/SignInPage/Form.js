@@ -46,7 +46,7 @@ class Form extends Component {
         email: this.state.email,
         password: this.state.password,
       },
-      afterSuccess: result => {
+      afterSuccess: (result) => {
         this.setState({ errorMessage: result.error_message });
 
         if (result.authentication_token) {
@@ -68,7 +68,7 @@ class Form extends Component {
             label={this.intl.formatMessage(messages.formEmail)}
             type="email"
             name="email"
-            onChange={event => this.setState({ email: event.target.value })}
+            onChange={(event) => this.setState({ email: event.target.value })}
             variant="outlined"
           />
         </Grid>
@@ -77,7 +77,9 @@ class Form extends Component {
             label={this.intl.formatMessage(messages.formPassword)}
             type="password"
             name="password"
-            onChange={event => this.setState({ password: event.target.value })}
+            onChange={(event) =>
+              this.setState({ password: event.target.value })
+            }
             variant="outlined"
           />
         </Grid>
@@ -93,7 +95,7 @@ class Form extends Component {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSignInSuccess: token => dispatch(setAuthenticationToken(token)),
+    onSignInSuccess: (token) => dispatch(setAuthenticationToken(token)),
     dispatch,
   };
 }
@@ -103,9 +105,4 @@ Form.propTypes = {
   onSignInSuccess: PropTypes.func,
 };
 
-export default injectIntl(
-  connect(
-    null,
-    mapDispatchToProps,
-  )(Form),
-);
+export default injectIntl(connect(null, mapDispatchToProps)(Form));

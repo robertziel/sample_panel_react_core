@@ -8,7 +8,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const sidebarReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case TOGGLE_SIDEBAR:
         draft.collapse = !state.collapse;

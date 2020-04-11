@@ -39,6 +39,7 @@ module.exports = {
       2,
       {
         SwitchCase: 1,
+        ignoredNodes: ['TemplateLiteral'],
       },
     ],
     'jsx-a11y/aria-props': 2,

@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading, indent */
 import React from 'react';
 
 import TableRowCore from '@material-ui/core/TableRow';

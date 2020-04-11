@@ -1,4 +1,4 @@
-/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/jsx-props-no-spreading, indent */
 import React from 'react';
 
 import DividerCore from '@material-ui/core/Divider';

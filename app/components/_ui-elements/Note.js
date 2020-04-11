@@ -1,3 +1,5 @@
+/* eslint-disable indent */
+
 import styled, { css } from 'styled-components';
 
 import NoteCore from './NoteCore';

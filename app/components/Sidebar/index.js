@@ -62,12 +62,9 @@ Sidebar.propTypes = {
 };
 
 function mapStateToProps() {
-  return createSelector(
-    sidebarToggleSelector(),
-    collapse => ({
-      collapse,
-    }),
-  );
+  return createSelector(sidebarToggleSelector(), (collapse) => ({
+    collapse,
+  }));
 }
 
 export default connect(mapStateToProps)(Sidebar);

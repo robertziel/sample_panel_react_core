@@ -26,11 +26,11 @@ class SidebarCollapseLinks extends Component {
   }
 
   isSectionActive() {
-    return this.props.links.some(link => this.linkMatchPath(link));
+    return this.props.links.some((link) => this.linkMatchPath(link));
   }
 
   toggle() {
-    this.setState(state => ({ collapsed: !state.collapsed }));
+    this.setState((state) => ({ collapsed: !state.collapsed }));
   }
 
   renderLink(link, index) {

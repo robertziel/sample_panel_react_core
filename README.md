@@ -141,7 +141,7 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
     So that style version (in that case named `topLine`) can be used in element by adding it to props `<Div topLine />`
     * If https://material-ui.com element is styled please use the following convention (https://github.com/styled-components/styled-components/issues/1198#issuecomment-425650423)
     ```javascript
-    /* eslint-disable react/jsx-props-no-spreading */
+    /* eslint-disable react/jsx-props-no-spreading, indent */
     import React from 'react';
     // then define additional style called here as topLine
     const Button = styled(({ topLine, ...props }) => <ButtonCore {...props} />)`

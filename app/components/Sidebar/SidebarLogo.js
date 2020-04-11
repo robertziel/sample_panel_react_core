@@ -81,15 +81,9 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps() {
-  return createSelector(
-    sidebarToggleSelector(),
-    isHamburgerOpen => ({
-      isHamburgerOpen,
-    }),
-  );
+  return createSelector(sidebarToggleSelector(), (isHamburgerOpen) => ({
+    isHamburgerOpen,
+  }));
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(SidebarLogo);
+export default connect(mapStateToProps, mapDispatchToProps)(SidebarLogo);

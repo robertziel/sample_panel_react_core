@@ -74,7 +74,4 @@ SignOutButton.propTypes = {
   onSignOutSuccess: PropTypes.func,
 };
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(SignOutButton);
+export default connect(null, mapDispatchToProps)(SignOutButton);

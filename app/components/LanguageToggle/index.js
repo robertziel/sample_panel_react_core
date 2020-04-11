@@ -29,21 +29,15 @@ LanguageToggle.propTypes = {
   locale: PropTypes.string,
 };
 
-const mapStateToProps = createSelector(
-  makeSelectLocale(),
-  locale => ({
-    locale,
-  }),
-);
+const mapStateToProps = createSelector(makeSelectLocale(), (locale) => ({
+  locale,
+}));
 
 export function mapDispatchToProps(dispatch) {
   return {
-    onLanguageToggle: evt => dispatch(changeLocale(evt.target.value)),
+    onLanguageToggle: (evt) => dispatch(changeLocale(evt.target.value)),
     dispatch,
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(LanguageToggle);
+export default connect(mapStateToProps, mapDispatchToProps)(LanguageToggle);

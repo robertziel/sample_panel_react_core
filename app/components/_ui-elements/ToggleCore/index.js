@@ -7,7 +7,7 @@ function Toggle(props) {
   let options = [];
 
   if (props.values) {
-    options = props.values.map(value => (
+    options = props.values.map((value) => (
       <MenuItem key={value} value={value}>
         {(props.messages && props.messages[value]) || value}
       </MenuItem>

@@ -51,7 +51,7 @@ export class BackendApiConnector extends Component {
 function mapStateToProps() {
   return createSelector(
     authenticationTokenSelector(),
-    authenticationToken => ({
+    (authenticationToken) => ({
       authenticationToken,
     }),
   );

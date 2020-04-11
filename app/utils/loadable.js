@@ -9,7 +9,7 @@ const loadable = (
 
   const fallback = customFallback || <LinearProgress />;
 
-  return props => (
+  return (props) => (
     <Suspense fallback={fallback}>
       <LazyComponent {...props} />
     </Suspense>

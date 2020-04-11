@@ -41,7 +41,7 @@ export function connectionRefusedNotify(removeNotificationMethod) {
       duration: 0,
       showIcon: true,
     },
-    onRemoval: id => {
+    onRemoval: (id) => {
       removeNotificationMethod(id);
     },
   });

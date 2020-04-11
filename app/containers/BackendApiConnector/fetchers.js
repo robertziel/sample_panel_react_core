@@ -61,7 +61,7 @@ function apiFetch(method, component, config) {
       'Language-Locale': getLanguageLocale(),
     },
   })
-    .then(result => {
+    .then((result) => {
       switch (result.status) {
         case 401:
           if (config.signIn) {
@@ -74,7 +74,7 @@ function apiFetch(method, component, config) {
       return result.json();
     })
     .then(
-      result => {
+      (result) => {
         reportConnectionSucceeded();
         stopProcessing(component);
 

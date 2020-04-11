@@ -23,7 +23,7 @@ class CurrentUserLoader extends Component {
   loadCurrentUser() {
     apiGet(this, {
       path: '/current_user',
-      afterSuccess: result => {
+      afterSuccess: (result) => {
         this.props.onLoadSuccess(result);
       },
     });
@@ -44,17 +44,14 @@ class CurrentUserLoader extends Component {
 }
 
 function mapStateToProps() {
-  return createSelector(
-    currentUserSelector(),
-    currentUser => ({
-      currentUser,
-    }),
-  );
+  return createSelector(currentUserSelector(), (currentUser) => ({
+    currentUser,
+  }));
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onLoadSuccess: currentUser => dispatch(setCurrentUser(currentUser)),
+    onLoadSuccess: (currentUser) => dispatch(setCurrentUser(currentUser)),
     dispatch,
   };
 }
@@ -65,7 +62,4 @@ CurrentUserLoader.propTypes = {
   onLoadSuccess: PropTypes.func.isRequired,
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(CurrentUserLoader);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserLoader);

@@ -52,12 +52,9 @@ App.propTypes = {
 };
 
 function mapStateToProps() {
-  return createSelector(
-    sidebarToggleSelector(),
-    sidebarCollapsed => ({
-      sidebarCollapsed,
-    }),
-  );
+  return createSelector(sidebarToggleSelector(), (sidebarCollapsed) => ({
+    sidebarCollapsed,
+  }));
 }
 
 export default connect(mapStateToProps)(App);

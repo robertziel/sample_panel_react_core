@@ -14,7 +14,7 @@ import { setAuthenticationToken } from '../actions';
 
 // Mock CurrentUserLoader required by BackendApiConnector
 /* eslint-disable react/prop-types */
-jest.mock('containers/BackendApiConnector/CurrentUserLoader', () => props => (
+jest.mock('containers/BackendApiConnector/CurrentUserLoader', () => (props) => (
   <div>{props.children}</div>
 ));
 /* eslint-enable */

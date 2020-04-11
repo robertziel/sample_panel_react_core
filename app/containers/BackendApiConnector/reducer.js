@@ -13,7 +13,7 @@ export const initialState = {
 
 /* eslint-disable default-case, no-param-reassign */
 const backendApiConnectorReducer = (state = initialState, action) =>
-  produce(state, draft => {
+  produce(state, (draft) => {
     switch (action.type) {
       case NULLIFY_AUTHENTICATION_CREDENTIALS:
         draft.authenticationToken = null;
