@@ -11,13 +11,15 @@ const Container = styled(({ centerContent, fullHeight, ...props }) => (
   ${({ centerContent }) =>
     centerContent &&
     css`
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      &.MuiContainer-root {
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
-      .MuiPaper-root {
-        max-width: 100%;
-        width: 500px;
+        .MuiPaper-root {
+          max-width: 100%;
+          width: 500px;
+        }
       }
     `}
 
