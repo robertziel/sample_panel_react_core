@@ -40,10 +40,6 @@ function mountWrapper() {
 async function configureWrapper() {
   store = new ConfigureTestStore().store;
   wrapper = mountWrapper();
-  await waitForExpect(() => {
-    wrapper.update();
-    expect(wrapper.find('UsersList').instance().state.processing).toBe(false);
-  });
 }
 
 describe('<UsersList />', () => {
@@ -59,36 +55,16 @@ describe('<UsersList />', () => {
       status: 200,
     });
 
-    beforeEach(async () => {
-      await configureWrapper();
+    beforeEach(() => {
+      configureWrapper();
     });
 
-    it('should list users', () => {
-      expect(wrapper.text()).toContain(email);
-      expect(wrapper.text()).toContain(username);
-    });
-  });
-
-  describe('pagination', () => {
-    loadApiFetchMock({
-      responseBody,
-      status: 200,
-    });
-
-    beforeEach(async () => {
-      await configureWrapper();
-    });
-
-    it('should set rowsPerPage', async () => {
-      wrapper.find('TablePagination').prop('onChangeRowsPerPage')({
-        target: { value: 25 },
+    it('should list users', async () => {
+      await waitForExpect(() => {
+        wrapper.update();
+        expect(wrapper.text()).toContain(email);
+        expect(wrapper.text()).toContain(username);
       });
-      expect(wrapper.find('UsersList').instance().state.rowsPerPage).toBe(25);
-    });
-
-    it('should set page', async () => {
-      wrapper.find('TablePagination').prop('onChangePage')(null, 8);
-      expect(wrapper.find('UsersList').instance().state.page).toBe(8);
     });
   });
 });

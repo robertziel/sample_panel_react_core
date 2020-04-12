@@ -2,6 +2,7 @@
 
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import waitForExpect from 'wait-for-expect';
+import { act } from 'react-dom/test-utils';
 
 export default function shouldDisableFormWhileProcessing(
   formComponentName,
@@ -18,6 +19,7 @@ export default function shouldDisableFormWhileProcessing(
     expect(wrapper.exists(spinnerSelector)).toBe(value);
   }
 
+  let component;
   let wrapper;
 
   describe('should have submit disable implemented for fetching form', () => {
@@ -30,9 +32,11 @@ export default function shouldDisableFormWhileProcessing(
       context('when waiting for response', () => {
         beforeEach(() => {
           wrapper = methods.configureWrapper();
-          wrapper
-            .find(formComponentName)
-            .instance().unsetStateProcessing = () => {};
+          component = wrapper.find(formComponentName);
+          act(() => {
+            component.setProcessing = () => {};
+            component.state.processing = true;
+          });
           methods.fillInAndSubmitForm();
         });
 

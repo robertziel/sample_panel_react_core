@@ -30,10 +30,7 @@ const mockFunction = jest.fn(() => {});
 class MockedComponent {
   constructor() {
     this.isMounted = true;
-
-    this.updater = {
-      isMounted: () => this.isMounted,
-    };
+    this.isMounted = () => this.isMounted;
   }
 
   mount() {

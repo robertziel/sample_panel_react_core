@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
+import useIsMounted from 'react-is-mounted-hook';
 
 import {
   Paper,
@@ -17,108 +18,85 @@ import FetchedContent from 'containers/FetchedContent';
 
 import messages from './messages';
 
-class UsersList extends Component {
-  constructor(props) {
-    super(props);
+function UsersList() {
+  const isMounted = useIsMounted();
+  const [processing, setProcessing] = useState(false);
+  const [users, setUsers] = useState([]);
+  const [count, setCount] = useState(0);
 
-    this.state = {
-      processing: true,
-      users: [],
+  // Pagination
+  const [pagination, setPagination] = useState({ page: 0, rowsPerPage: 10 });
 
-      count: 0,
-      page: 0,
-      rowsPerPage: 10,
-    };
+  const changePage = (event, newPage) => {
+    setPagination({ page: newPage, rowsPerPage: pagination.rowsPerPage });
+  };
 
-    this.changePage = this.changePage.bind(this);
-    this.changeRowsPerPage = this.changeRowsPerPage.bind(this);
-  }
+  const changeRowsPerPage = (event) => {
+    setPagination({ page: 0, rowsPerPage: event.target.value });
+  };
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  setStateProcessing() {
-    this.setState({ processing: true });
-  }
-
-  unsetStateProcessing() {
-    this.setState({ processing: false });
-  }
-
-  changePage(event, newPage) {
-    this.setState({ page: newPage }, () => {
-      this.fetchData();
-    });
-  }
-
-  changeRowsPerPage(event) {
-    this.setState({ page: 0, rowsPerPage: event.target.value }, () => {
-      this.fetchData();
-    });
-  }
-
-  fetchData() {
-    apiGet(this, {
-      path: '/users',
-      params: {
-        page: this.state.page + 1,
-        per_page: this.state.rowsPerPage,
+  const fetchData = () => {
+    apiGet(
+      { isMounted, setProcessing },
+      {
+        path: '/users',
+        params: {
+          page: pagination.page + 1,
+          per_page: pagination.rowsPerPage,
+        },
+        afterSuccess: (result) => {
+          setCount(result.count);
+          setUsers(result.users);
+        },
       },
-      afterSuccess: (result) => {
-        this.setState({
-          count: result.count,
-          users: result.users,
-        });
-      },
-    });
-  }
-
-  render() {
-    return (
-      <Paper fullHeight noPadding pagination>
-        <Scroll>
-          <Table stickyHeader>
-            <TableHead>
-              <TableRow>
-                <TableCell width="200px">
-                  <FormattedMessage {...messages.labelUsername} />
-                </TableCell>
-                <TableCell>
-                  <FormattedMessage {...messages.labelEmail} />
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <FetchedContent tableRow processing={this.state.processing}>
-                {this.state.users.map((user) => (
-                  <TableRow hover key={user.id}>
-                    <TableCell>{user.username}</TableCell>
-                    <TableCell>{user.email}</TableCell>
-                  </TableRow>
-                ))}
-              </FetchedContent>
-            </TableBody>
-          </Table>
-        </Scroll>
-        <TablePagination
-          rowsPerPageOptions={[10, 15, 25]}
-          component="div"
-          count={this.state.count}
-          rowsPerPage={this.state.rowsPerPage}
-          page={this.state.page}
-          backIconButtonProps={{
-            'aria-label': 'previous page',
-          }}
-          nextIconButtonProps={{
-            'aria-label': 'next page',
-          }}
-          onChangePage={this.changePage}
-          onChangeRowsPerPage={this.changeRowsPerPage}
-        />
-      </Paper>
     );
-  }
+  };
+
+  useEffect(() => fetchData(), [pagination]);
+
+  return (
+    <Paper fullHeight noPadding pagination>
+      <Scroll>
+        <Table stickyHeader>
+          <TableHead>
+            <TableRow>
+              <TableCell width="200px">
+                <FormattedMessage {...messages.labelUsername} />
+              </TableCell>
+              <TableCell>
+                <FormattedMessage {...messages.labelEmail} />
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <FetchedContent tableRow processing={processing}>
+              {users.map((user) => (
+                <TableRow hover key={user.id}>
+                  <TableCell>{user.username}</TableCell>
+                  <TableCell>{user.email}</TableCell>
+                </TableRow>
+              ))}
+            </FetchedContent>
+          </TableBody>
+        </Table>
+      </Scroll>
+      <TablePagination
+        rowsPerPageOptions={[10, 15, 25]}
+        component="div"
+        count={count}
+        rowsPerPage={pagination.rowsPerPage}
+        page={pagination.page}
+        backIconButtonProps={{
+          'aria-label': 'previous page',
+        }}
+        nextIconButtonProps={{
+          'aria-label': 'next page',
+        }}
+        onChangePage={changePage}
+        onChangeRowsPerPage={changeRowsPerPage}
+      />
+    </Paper>
+  );
 }
 
 export default UsersList;

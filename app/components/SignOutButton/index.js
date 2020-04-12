@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import useIsMounted from 'react-is-mounted-hook';
 import PropTypes from 'prop-types';
 import { SwappingSquaresSpinner } from 'react-epic-spinners';
 import FontAwesome from 'react-fontawesome';
@@ -13,59 +14,44 @@ import { apiDelete } from 'containers/BackendApiConnector/fetchers';
 import { signedOutNotify } from './notifications';
 import Wrapper from './Wrapper';
 
-class SignOutButton extends Component {
-  constructor(props) {
-    super(props);
+function SignOutButton({ onSignOutSuccess }) {
+  const isMounted = useIsMounted();
+  const [processing, setProcessing] = useState(false);
 
-    this.state = {
-      processing: false,
-    };
-
-    this.signOut = this.signOut.bind(this);
-  }
-
-  setStateProcessing() {
-    this.setState({ processing: true });
-  }
-
-  unsetStateProcessing() {
-    this.setState({ processing: false });
-  }
-
-  signOut(event) {
+  const signOut = (event) => {
     event.preventDefault();
 
-    apiDelete(this, {
-      disableRetry: true,
-      path: '/auth/sign_out',
-      afterSuccess: () => {
-        this.props.onSignOutSuccess();
-        signedOutNotify();
+    apiDelete(
+      { isMounted, setProcessing },
+      {
+        disableRetry: true,
+        path: '/auth/sign_out',
+        afterSuccess: () => onSignOutSuccess(),
       },
-    });
-  }
-
-  render() {
-    return (
-      <Wrapper>
-        <form onSubmit={this.signOut}>
-          <SubmitButton
-            navbar
-            onSubmit={this.signOut}
-            processing={this.state.processing}
-            spinner={<SwappingSquaresSpinner color={colors.main} size={40} />}
-          >
-            <FontAwesome name="power-off" />
-          </SubmitButton>
-        </form>
-      </Wrapper>
     );
-  }
+  };
+
+  return (
+    <Wrapper>
+      <form onSubmit={signOut}>
+        <SubmitButton
+          navbar
+          processing={processing}
+          spinner={<SwappingSquaresSpinner color={colors.main} size={40} />}
+        >
+          <FontAwesome name="power-off" />
+        </SubmitButton>
+      </form>
+    </Wrapper>
+  );
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    onSignOutSuccess: () => dispatch(nullifyAuthenticationCredentials()),
+    onSignOutSuccess: () => {
+      dispatch(nullifyAuthenticationCredentials());
+      signedOutNotify();
+    },
     dispatch,
   };
 }

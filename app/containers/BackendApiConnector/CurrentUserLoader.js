@@ -21,12 +21,15 @@ class CurrentUserLoader extends Component {
   }
 
   loadCurrentUser() {
-    apiGet(this, {
-      path: '/current_user',
-      afterSuccess: (result) => {
-        this.props.onLoadSuccess(result);
+    apiGet(
+      {},
+      {
+        path: '/current_user',
+        afterSuccess: (result) => {
+          this.props.onLoadSuccess(result);
+        },
       },
-    });
+    );
   }
 
   render() {

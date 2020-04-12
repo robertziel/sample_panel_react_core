@@ -40,11 +40,11 @@ function stringifyParams(params) {
 }
 
 function startProcessing(component) {
-  component.setStateProcessing && component.setStateProcessing(); // eslint-disable-line no-unused-expressions
+  component.setProcessing && component.setProcessing(true); // eslint-disable-line no-unused-expressions
 }
 
 function stopProcessing(component) {
-  component.unsetStateProcessing && component.unsetStateProcessing(); // eslint-disable-line no-unused-expressions
+  component.setProcessing && component.setProcessing(false); // eslint-disable-line no-unused-expressions
 }
 
 /* eslint-disable default-case */

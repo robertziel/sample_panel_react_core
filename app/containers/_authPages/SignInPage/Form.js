@@ -1,4 +1,5 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import useIsMounted from 'react-is-mounted-hook';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -11,86 +12,70 @@ import { apiPost } from 'containers/BackendApiConnector/fetchers';
 import messages from './messages';
 import { signedInNotify } from './notifications';
 
-class Form extends Component {
-  constructor(props) {
-    super(props);
+function Form({ intl, onSignInSuccess }) {
+  const isMounted = useIsMounted();
+  const [processing, setProcessing] = useState(false);
 
-    this.intl = props.intl;
+  // Form state
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [password, setPassword] = useState(null);
 
-    this.state = {
-      errorMessage: null,
-      email: null,
-      password: null,
-      processing: false,
-    };
-
-    this.onSubmit = this.onSubmit.bind(this);
-  }
-
-  setStateProcessing() {
-    this.setState({ processing: true });
-  }
-
-  unsetStateProcessing() {
-    this.setState({ processing: false });
-  }
-
-  onSubmit(event) {
+  const onSubmit = (event) => {
     event.preventDefault();
 
-    apiPost(this, {
-      disableRetry: true,
-      signIn: true,
-      path: '/auth/sign_in',
-      body: {
-        email: this.state.email,
-        password: this.state.password,
-      },
-      afterSuccess: (result) => {
-        this.setState({ errorMessage: result.error_message });
+    apiPost(
+      { isMounted, setProcessing },
+      {
+        disableRetry: true,
+        signIn: true,
+        path: '/auth/sign_in',
+        body: {
+          email,
+          password,
+        },
+        afterSuccess: (result) => {
+          setErrorMessage(result.error_message);
 
-        if (result.authentication_token) {
-          this.props.onSignInSuccess(result.authentication_token);
-          signedInNotify();
-        }
+          if (result.authentication_token) {
+            onSignInSuccess(result.authentication_token);
+            signedInNotify();
+          }
+        },
       },
-    });
-  }
-
-  render() {
-    return (
-      <form onSubmit={this.onSubmit}>
-        <Grid>
-          <Note error message={this.state.errorMessage} />
-        </Grid>
-        <Grid>
-          <TextField
-            label={this.intl.formatMessage(messages.formEmail)}
-            type="email"
-            name="email"
-            onChange={(event) => this.setState({ email: event.target.value })}
-            variant="outlined"
-          />
-        </Grid>
-        <Grid>
-          <TextField
-            label={this.intl.formatMessage(messages.formPassword)}
-            type="password"
-            name="password"
-            onChange={(event) =>
-              this.setState({ password: event.target.value })
-            }
-            variant="outlined"
-          />
-        </Grid>
-        <Grid>
-          <SubmitButton processing={this.state.processing}>
-            <FormattedMessage {...messages.formButton} />
-          </SubmitButton>
-        </Grid>
-      </form>
     );
-  }
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Grid>
+        <Note error message={errorMessage} />
+      </Grid>
+      <Grid>
+        <TextField
+          label={intl.formatMessage(messages.formEmail)}
+          type="email"
+          name="email"
+          onChange={(event) => setEmail(event.target.value)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <TextField
+          label={intl.formatMessage(messages.formPassword)}
+          type="password"
+          name="password"
+          onChange={(event) => setPassword(event.target.value)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <SubmitButton processing={processing}>
+          <FormattedMessage {...messages.formButton} />
+        </SubmitButton>
+      </Grid>
+    </form>
+  );
 }
 
 function mapDispatchToProps(dispatch) {
