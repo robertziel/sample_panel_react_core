@@ -1,4 +1,4 @@
 export const colors = {
-  main: '#00a9ff',
-  lightMain: '#e0f3ff',
+  main: '#003286',
+  lightMain: '#c1d8ff',
 };
