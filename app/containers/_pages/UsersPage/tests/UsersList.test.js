@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 
 import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
+import { act } from 'react-dom/test-utils';
 
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
@@ -39,7 +40,9 @@ function mountWrapper() {
 
 async function configureWrapper() {
   store = new ConfigureTestStore().store;
-  wrapper = mountWrapper();
+  await act(async () => {
+    wrapper = mountWrapper();
+  });
 }
 
 describe('<UsersList />', () => {

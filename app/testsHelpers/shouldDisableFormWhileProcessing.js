@@ -2,21 +2,26 @@
 
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import waitForExpect from 'wait-for-expect';
-import { act } from 'react-dom/test-utils';
 
 export default function shouldDisableFormWhileProcessing(
   formComponentName,
   spinnerSelector,
   methods,
 ) {
-  function checkButtonDisabled(wrapper, value) {
-    wrapper.update();
-    expect(wrapper.find('button[type="submit"]').props().disabled).toBe(value);
+  async function checkButtonDisabled(wrapper, value) {
+    await waitForExpect(() => {
+      component.update();
+      expect(component.find('button[type="submit"]').props().disabled).toBe(
+        value,
+      );
+    });
   }
 
-  function checkSpinnerPresence(wrapper, value) {
-    wrapper.update();
-    expect(wrapper.exists(spinnerSelector)).toBe(value);
+  async function checkSpinnerPresence(wrapper, value) {
+    await waitForExpect(() => {
+      component.update();
+      expect(component.exists(spinnerSelector)).toBe(value);
+    });
   }
 
   let component;
@@ -30,13 +35,9 @@ export default function shouldDisableFormWhileProcessing(
       loadApiFetchMock(response);
 
       context('when waiting for response', () => {
-        beforeEach(() => {
-          wrapper = methods.configureWrapper();
+        beforeEach(async () => {
+          wrapper = await methods.configureWrapper();
           component = wrapper.find(formComponentName);
-          act(() => {
-            component.setProcessing = () => {};
-            component.state.processing = true;
-          });
           methods.fillInAndSubmitForm();
         });
 
@@ -50,8 +51,8 @@ export default function shouldDisableFormWhileProcessing(
       });
 
       context('after response received', () => {
-        beforeEach(() => {
-          wrapper = methods.configureWrapper();
+        beforeEach(async () => {
+          wrapper = await methods.configureWrapper();
           methods.fillInAndSubmitForm();
         });
 
