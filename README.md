@@ -28,12 +28,22 @@ Just sign in implemented. Other authentication features like registrations, pass
 ## API FETCHERS
  I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
 #### **Available fetchers:**
-* `apiDelete(component, options: { disableRetry, path, body, afterSuccess })`
-* `apiGet(component, options: { disableRetry, path, afterSuccess })`
-* `apiPost(component, options: { disableRetry, path, body, afterSuccess })`
+* `apiDelete(component: { isMounted, setProcessing }, options: { disableRetry, path, body, afterSuccess })`
+* `apiGet(component: { isMounted, setProcessing }, options: { disableRetry, path, afterSuccess })`
+* `apiPost(component: { isMounted, setProcessing }, options: { disableRetry, path, body, afterSuccess })`
 
 #### **Params:**
-* **component (required)** - used to pass processed component
+* **component:**
+  * **isMounted (required)** - simply in your react hook component add:
+    ```js
+    import useIsMounted from 'react-is-mounted-hook';
+    const isMounted = useIsMounted();
+    ```
+  * **setProcessing** - simply in your react hook component add:
+    ```js
+    import { useState } from 'react';
+    const [processing, setProcessing] = useState(false);
+    ```
 * **options:**
   * **disableRetry**
     * always used in forms

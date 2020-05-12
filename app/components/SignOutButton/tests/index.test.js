@@ -3,10 +3,10 @@
 import React from 'react';
 import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
-import { act } from 'react-dom/test-utils';
 
 import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
+import { act } from 'react-dom/test-utils';
 
 import NotificationSystem from 'containers/NotificationsSystem';
 import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
@@ -42,9 +42,11 @@ function mountWrapper() {
   );
 }
 
-function configureWrapper() {
+async function configureWrapper() {
   store = new ConfigureTestStore().store;
-  wrapper = mountWrapper();
+  await act(async () => {
+    wrapper = mountWrapper();
+  });
   return wrapper;
 }
 

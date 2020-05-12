@@ -8,16 +8,23 @@ export default function shouldDisableFormWhileProcessing(
   spinnerSelector,
   methods,
 ) {
-  function checkButtonDisabled(wrapper, value) {
-    wrapper.update();
-    expect(wrapper.find('button[type="submit"]').props().disabled).toBe(value);
+  async function checkButtonDisabled(wrapper, value) {
+    await waitForExpect(() => {
+      component.update();
+      expect(component.find('button[type="submit"]').props().disabled).toBe(
+        value,
+      );
+    });
   }
 
-  function checkSpinnerPresence(wrapper, value) {
-    wrapper.update();
-    expect(wrapper.exists(spinnerSelector)).toBe(value);
+  async function checkSpinnerPresence(wrapper, value) {
+    await waitForExpect(() => {
+      component.update();
+      expect(component.exists(spinnerSelector)).toBe(value);
+    });
   }
 
+  let component;
   let wrapper;
 
   describe('should have submit disable implemented for fetching form', () => {
@@ -28,11 +35,9 @@ export default function shouldDisableFormWhileProcessing(
       loadApiFetchMock(response);
 
       context('when waiting for response', () => {
-        beforeEach(() => {
-          wrapper = methods.configureWrapper();
-          wrapper
-            .find(formComponentName)
-            .instance().unsetStateProcessing = () => {};
+        beforeEach(async () => {
+          wrapper = await methods.configureWrapper();
+          component = wrapper.find(formComponentName);
           methods.fillInAndSubmitForm();
         });
 
@@ -46,8 +51,8 @@ export default function shouldDisableFormWhileProcessing(
       });
 
       context('after response received', () => {
-        beforeEach(() => {
-          wrapper = methods.configureWrapper();
+        beforeEach(async () => {
+          wrapper = await methods.configureWrapper();
           methods.fillInAndSubmitForm();
         });
 

@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
+import useIsMounted from 'react-is-mounted-hook';
 
 import { colors } from 'styles/constants';
 import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
@@ -13,34 +14,31 @@ import FetchedContent from 'containers/FetchedContent';
 
 import { currentUserSelector } from './selectors';
 
-class CurrentUserLoader extends Component {
-  constructor(props) {
-    super(props);
+function CurrentUserLoader({ children, currentUser, onLoadSuccess }) {
+  const isMounted = useIsMounted();
 
-    this.loadCurrentUser();
-  }
-
-  loadCurrentUser() {
-    apiGet(this, {
-      path: '/current_user',
-      afterSuccess: (result) => {
-        this.props.onLoadSuccess(result);
+  const loadCurrentUser = () => {
+    apiGet(
+      { isMounted },
+      {
+        path: '/current_user',
+        afterSuccess: (result) => onLoadSuccess(result),
       },
-    });
-  }
-
-  render() {
-    return (
-      <FetchedContent
-        processing={!this.props.currentUser}
-        spinner={
-          <FulfillingBouncingCircleSpinner color={colors.main} size={80} />
-        }
-      >
-        {React.Children.only(this.props.children)}
-      </FetchedContent>
     );
-  }
+  };
+
+  useEffect(() => loadCurrentUser(), []);
+
+  return (
+    <FetchedContent
+      processing={!currentUser}
+      spinner={
+        <FulfillingBouncingCircleSpinner color={colors.main} size={80} />
+      }
+    >
+      {React.Children.only(children)}
+    </FetchedContent>
+  );
 }
 
 function mapStateToProps() {

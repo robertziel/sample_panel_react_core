@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Wrapper from './Wrapper';
 
-export default function Hamburger(props) {
+function Hamburger(props) {
   const openClassName = props.isOpen ? 'open' : '';
   const className = `hamburger ${openClassName}`;
 
@@ -21,3 +21,5 @@ Hamburger.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 };
+
+export default Hamburger;

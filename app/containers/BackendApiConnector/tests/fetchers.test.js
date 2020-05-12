@@ -47,9 +47,7 @@ function mountWrapper() {
 }
 
 const mockedComponent = {
-  updater: {
-    isMounted: () => true,
-  },
+  isMounted: () => true,
 };
 
 function subject(options = {}) {

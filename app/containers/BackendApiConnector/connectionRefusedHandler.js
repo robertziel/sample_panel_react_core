@@ -64,5 +64,5 @@ export function reportConnectionSucceeded() {
 }
 
 function shiftedFetchHasMountedComponent(shiftedFetch) {
-  return shiftedFetch.component.updater.isMounted(shiftedFetch.component);
+  return shiftedFetch.component.isMounted;
 }

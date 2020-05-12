@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 
 import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
+import { act } from 'react-dom/test-utils';
 
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
@@ -39,10 +40,8 @@ function mountWrapper() {
 
 async function configureWrapper() {
   store = new ConfigureTestStore().store;
-  wrapper = mountWrapper();
-  await waitForExpect(() => {
-    wrapper.update();
-    expect(wrapper.find('UsersList').instance().state.processing).toBe(false);
+  await act(async () => {
+    wrapper = mountWrapper();
   });
 }
 
@@ -59,36 +58,16 @@ describe('<UsersList />', () => {
       status: 200,
     });
 
-    beforeEach(async () => {
-      await configureWrapper();
+    beforeEach(() => {
+      configureWrapper();
     });
 
-    it('should list users', () => {
-      expect(wrapper.text()).toContain(email);
-      expect(wrapper.text()).toContain(username);
-    });
-  });
-
-  describe('pagination', () => {
-    loadApiFetchMock({
-      responseBody,
-      status: 200,
-    });
-
-    beforeEach(async () => {
-      await configureWrapper();
-    });
-
-    it('should set rowsPerPage', async () => {
-      wrapper.find('TablePagination').prop('onChangeRowsPerPage')({
-        target: { value: 25 },
+    it('should list users', async () => {
+      await waitForExpect(() => {
+        wrapper.update();
+        expect(wrapper.text()).toContain(email);
+        expect(wrapper.text()).toContain(username);
       });
-      expect(wrapper.find('UsersList').instance().state.rowsPerPage).toBe(25);
-    });
-
-    it('should set page', async () => {
-      wrapper.find('TablePagination').prop('onChangePage')(null, 8);
-      expect(wrapper.find('UsersList').instance().state.page).toBe(8);
     });
   });
 });
