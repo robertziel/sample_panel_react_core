@@ -37,8 +37,8 @@ function retryFetches() {
   }
 }
 
-export function reportConnectionRefused(setProcessing, refetchMethod) {
-  refetchMethod && fetchesQueue.push({ setProcessing, refetchMethod }); // eslint-disable-line no-unused-expressions
+export function reportConnectionRefused(component, refetchMethod) {
+  refetchMethod && fetchesQueue.push({ component, refetchMethod }); // eslint-disable-line no-unused-expressions
 
   if (fetchesQueue.length) {
     if (retryTime === 0) {
@@ -64,5 +64,5 @@ export function reportConnectionSucceeded() {
 }
 
 function shiftedFetchHasMountedComponent(shiftedFetch) {
-  return true || shiftedFetch.component.isMounted();
+  return shiftedFetch.component.isMounted;
 }
