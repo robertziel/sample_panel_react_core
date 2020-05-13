@@ -4,7 +4,7 @@
  */
 
 import fetchMock from 'fetch-mock';
-import { fullUrl } from 'containers/BackendApiConnector/fetchers';
+import { fullUrl } from 'containers/BackendApiConnector/fetcher/apiFetch';
 
 export default function loadApiFetchMock(config) {
   beforeAll(() => {

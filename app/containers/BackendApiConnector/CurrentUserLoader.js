@@ -3,28 +3,24 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 import { createSelector } from 'reselect';
-import useIsMounted from 'react-is-mounted-hook';
 
 import { colors } from 'styles/constants';
 import { FulfillingBouncingCircleSpinner } from 'react-epic-spinners';
 
 import { setCurrentUser } from 'containers/BackendApiConnector/actions';
-import { apiGet } from 'containers/BackendApiConnector/fetchers';
+import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 import FetchedContent from 'containers/FetchedContent';
 
 import { currentUserSelector } from './selectors';
 
 function CurrentUserLoader({ children, currentUser, onLoadSuccess }) {
-  const isMounted = useIsMounted();
+  const fetcher = useApiFetcher();
 
   const loadCurrentUser = () => {
-    apiGet(
-      { isMounted },
-      {
-        path: '/current_user',
-        afterSuccess: (result) => onLoadSuccess(result),
-      },
-    );
+    fetcher.get({
+      path: '/current_user',
+      afterSuccess: (result) => onLoadSuccess(result),
+    });
   };
 
   useEffect(() => loadCurrentUser(), []);

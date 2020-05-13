@@ -49,8 +49,10 @@ describe('<CurrentUserLoader />', () => {
       status: 200,
     });
 
-    beforeEach(() => {
-      wrapper = mountWrapper();
+    beforeEach(async () => {
+      await act(async () => {
+        wrapper = mountWrapper();
+      });
     });
 
     it('should save new currentUser in redux store', async () => {

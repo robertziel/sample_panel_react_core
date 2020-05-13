@@ -10,14 +10,14 @@ import queryString from 'query-string';
 
 import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
 
-import { unauthorizedNotify } from './notifications';
+import { unauthorizedNotify } from '../notifications';
 
 import {
   reportConnectionRefused,
   reportConnectionSucceeded,
 } from './connectionRefusedHandler';
-import StoreAccessor from './StoreAccessor';
-import { BACKEND_API_URL } from './constants';
+import StoreAccessor from '../StoreAccessor';
+import { BACKEND_API_URL } from '../constants';
 
 function getAuthenticationToken() {
   return StoreAccessor.store.getState().backendApiConnector.authenticationToken;
@@ -48,7 +48,7 @@ function stopProcessing(component) {
 }
 
 /* eslint-disable default-case */
-function apiFetch(method, component, config) {
+export default function apiFetch(method, component, config) {
   startProcessing(component);
 
   fetch(fullUrl(config.path, config.params), {
@@ -93,16 +93,4 @@ function apiFetch(method, component, config) {
         }
       }, // handle error
     );
-}
-
-export function apiDelete(component, config) {
-  apiFetch('DELETE', component, config);
-}
-
-export function apiGet(component, config) {
-  apiFetch('GET', component, config);
-}
-
-export function apiPost(component, config) {
-  apiFetch('POST', component, config);
 }

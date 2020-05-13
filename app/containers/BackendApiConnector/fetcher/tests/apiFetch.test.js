@@ -15,10 +15,10 @@ import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import { notificationMessageSelector } from 'testsHelpers/notifications';
 
-import { setAuthenticationToken } from '../actions';
+import { setAuthenticationToken } from '../../actions';
 import * as connectionRefusedHandler from '../connectionRefusedHandler';
-import { apiGet } from '../fetchers';
-import messages from '../messages';
+import apiFetch from '../apiFetch';
+import messages from '../../messages';
 
 jest.spyOn(connectionRefusedHandler, 'reportConnectionRefused');
 jest.spyOn(connectionRefusedHandler, 'reportConnectionSucceeded');
@@ -51,7 +51,7 @@ const mockedComponent = {
 };
 
 function subject(options = {}) {
-  apiGet(mockedComponent, Object.assign({ path }, options));
+  apiFetch('GET', mockedComponent, Object.assign({ path }, options));
 }
 
 let store;

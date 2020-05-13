@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import useIsMounted from 'react-is-mounted-hook';
 
 import {
   Paper,
@@ -13,14 +12,13 @@ import {
   TableRow,
 } from 'components/_ui-elements';
 
-import { apiGet } from 'containers/BackendApiConnector/fetchers';
+import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 import FetchedContent from 'containers/FetchedContent';
 
 import messages from './messages';
 
 function UsersList() {
-  const isMounted = useIsMounted();
-  const [processing, setProcessing] = useState(false);
+  const fetcher = useApiFetcher();
   const [users, setUsers] = useState([]);
   const [count, setCount] = useState(0);
 
@@ -36,20 +34,17 @@ function UsersList() {
   };
 
   const fetchData = () => {
-    apiGet(
-      { isMounted, setProcessing },
-      {
-        path: '/users',
-        params: {
-          page: pagination.page + 1,
-          per_page: pagination.rowsPerPage,
-        },
-        afterSuccess: (result) => {
-          setCount(result.count);
-          setUsers(result.users);
-        },
+    fetcher.get({
+      path: '/users',
+      params: {
+        page: pagination.page + 1,
+        per_page: pagination.rowsPerPage,
       },
-    );
+      afterSuccess: (result) => {
+        setCount(result.count);
+        setUsers(result.users);
+      },
+    });
   };
 
   useEffect(() => fetchData(), [pagination]);
@@ -69,7 +64,7 @@ function UsersList() {
             </TableRow>
           </TableHead>
           <TableBody>
-            <FetchedContent tableRow processing={processing}>
+            <FetchedContent tableRow processing={fetcher.processing}>
               {users.map((user) => (
                 <TableRow hover key={user.id}>
                   <TableCell>{user.username}</TableCell>

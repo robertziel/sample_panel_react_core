@@ -26,44 +26,64 @@ Sample user:
 Just sign in implemented. Other authentication features like registrations, password remind, lockable can be quickly added but I omitted them as someone may accidentally block sample account on staging :)
 
 ## API FETCHERS
- I made a simple fetching methods so that only path, body and afterSuccess callback are required to make a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one component. Check: `app/containers/BackendApiConnector/fetchers.js`
-#### **Available fetchers:**
-* `apiDelete(component: { isMounted, setProcessing }, options: { disableRetry, path, body, afterSuccess })`
-* `apiGet(component: { isMounted, setProcessing }, options: { disableRetry, path, afterSuccess })`
-* `apiPost(component: { isMounted, setProcessing }, options: { disableRetry, path, body, afterSuccess })`
+ A simple fetching hook allows you to focus on what is the most important. Only path, body and afterSuccess callback are required to define a request to API anywhere in the project. All necessary settings and errors handling are handled under the hood and kept DRY in one place. Check folder: `app/containers/BackendApiConnector/fetcher`
 
-#### **Params:**
-* **component:**
-  * **isMounted (required)** - simply in your react hook component add:
+1. Use fetcher hook in your component:
+```js
+import useApiFetcher from 'containers/BackendApiConnector/fetcher';
+const fetcher = useApiFetcher();
+```
+To make code clean it is better to use ***one fetcher per component***.
+
+2. Now you can call fetch function in your component. **Available fetchers:**
+  * `fetcher.delete(options: { disableRetry, path, body, afterSuccess() })`
+  * `fetcher.get(options: { disableRetry, path, afterSuccess() })`
+  * `fetcher.post(options: { disableRetry, path, body, afterSuccess() })`
+
+  ---
+
+  More about passed params:
+
+  * **options:**
+    * **disableRetry**
+      * it's better to ***set it true in forms***
+      * ***false as default*** - if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` where ***it waits in queue to retry*** (check how it works by cutting your internet connection)
+      * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` but it is ***not added to retry queue***
+    * **path (required)**
+    * **body**
+    * **afterSuccess()**
+
+
+3. You can check if ***fetcher is processing*** by the following code
+  ```js
+  fetcher.processing
+  ```
+
+  * You can use ready spinner component:
+
     ```js
-    import useIsMounted from 'react-is-mounted-hook';
-    const isMounted = useIsMounted();
+    import FetchedContent from 'containers/FetchedContent';
+
+    <FetchedContent
+      processing={fetcher.processing}
+      spinner={<CustomSpinner />}
+    >
+      <VisibleAfterProcessingSucceeded />
+    </FetchedContent>
     ```
-  * **setProcessing** - simply in your react hook component add:
+
+  * To make sure your form is properly disabled after submit use the following test:
+
     ```js
-    import { useState } from 'react';
-    const [processing, setProcessing] = useState(false);
+    import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
+
+    // shouldDisableFormWhileProcessing(formComponentName, spinnerSelector, methods)
+    shouldDisableFormWhileProcessing('AnyComponentName', '.spinner-class-or-id', {
+      configureWrapper,
+      fillInAndSubmitForm,
+    });
     ```
-* **options:**
-  * **disableRetry**
-    * always used in forms
-    * __false__ as default then if fetching error occurs the processing does not stop and fetch is reported to `connectionRefusedHandler.js` **with** intention of adding to retry queue
-    * if set to __true__ the processing stops and fetch is reported to `connectionRefusedHandler.js` **without** intention of adding to retry queue
-  * **path (required)**
-  * **body**
-  * **afterSuccess**
 
-#### **Processing state**
-In order to have access to fetching processing status use following rules:
-* define `state.processing` in component
-* you should pass `component` to fetcher
-* fetcher will call `component.setStateProcessing()` before and `component.unsetStateProcessing()` after AJAX call changing `state.processing` value between false and true
-* processing state can be used to render spinner, disable submit form etc.
-
-#### **Testing:**
-* testing common examples using **_processing state_**:
-  * `shouldDisableFormWhileProcessing(formComponentName, methods: { configureWrapper, fillInAndSubmitForm })`
-    * Include `import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';` and call in your tests
     * parameters
       * `formComponentName` - component name as css selector, is used to find component in wrapper
       * `spinnerSelector` - spinner name css selector, is used to identify spinner

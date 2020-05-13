@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import useIsMounted from 'react-is-mounted-hook';
 import PropTypes from 'prop-types';
 import { SwappingSquaresSpinner } from 'react-epic-spinners';
 import FontAwesome from 'react-fontawesome';
@@ -9,26 +8,22 @@ import { colors } from 'styles/constants';
 import { SubmitButton } from 'components/_ui-elements';
 
 import { nullifyAuthenticationCredentials } from 'containers/BackendApiConnector/actions';
-import { apiDelete } from 'containers/BackendApiConnector/fetchers';
+import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 
 import { signedOutNotify } from './notifications';
 import Wrapper from './Wrapper';
 
 function SignOutButton({ onSignOutSuccess }) {
-  const isMounted = useIsMounted();
-  const [processing, setProcessing] = useState(false);
+  const fetcher = useApiFetcher();
 
   const signOut = (event) => {
     event.preventDefault();
 
-    apiDelete(
-      { isMounted, setProcessing },
-      {
-        disableRetry: true,
-        path: '/auth/sign_out',
-        afterSuccess: () => onSignOutSuccess(),
-      },
-    );
+    fetcher.delete({
+      disableRetry: true,
+      path: '/auth/sign_out',
+      afterSuccess: () => onSignOutSuccess(),
+    });
   };
 
   return (
@@ -36,7 +31,7 @@ function SignOutButton({ onSignOutSuccess }) {
       <form onSubmit={signOut}>
         <SubmitButton
           navbar
-          processing={processing}
+          processing={fetcher.processing}
           spinner={<SwappingSquaresSpinner color={colors.main} size={40} />}
         >
           <FontAwesome name="power-off" />
