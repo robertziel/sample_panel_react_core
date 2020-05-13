@@ -2,6 +2,10 @@
 <a href="https://travis-ci.org/robertziel/simple_panel_react_client">
   <img src="https://travis-ci.org/robertziel/simple_panel_react_client.svg" alt="Build Status" />
 </a>
+<!-- Test Coverage -->
+<a href="https://coveralls.io/r/robertziel/simple_panel_react_client">
+  <img src="https://coveralls.io/repos/github/robertziel/simple_panel_react_client/badge.svg" alt="Test Coverage" />
+</a>
 
 # SIMPLE PANEL REACT CLIENT
 
