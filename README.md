@@ -76,24 +76,6 @@ To make code clean it is better to use ***one fetcher per component***.
     </FetchedContent>
     ```
 
-  * To make sure your form is properly disabled after submit use the following test:
-
-    ```js
-    import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
-
-    // shouldDisableFormWhileProcessing(formComponentName, spinnerSelector, methods)
-    shouldDisableFormWhileProcessing('AnyComponentName', '.spinner-class-or-id', {
-      configureWrapper,
-      fillInAndSubmitForm,
-    });
-    ```
-
-    * parameters
-      * `formComponentName` - component name as css selector, is used to find component in wrapper
-      * `spinnerSelector` - spinner name css selector, is used to identify spinner
-      * `methods: { configureWrapper }` - function which should call enzyme mock and return wrapper containing tested form component
-      * `methods: { fillInAndSubmitForm }` - function which fills in and submit form with valid data
-
 
 ## AUTHENTICATION
 * all authentication related containers are kept in `app/containers/_authPages`
@@ -138,10 +120,6 @@ Example form can be found in `containers/_authPages/SignInPage/Form.js`
 * when using API fetcher:
   * Please check [**_API fetchers / Processing_**](#api-fetchers) section
   * pass `disableRetry: true` as config to fetcher so that form will not be submitted without user's knowledge
-
-#### **Tests:**
-* Keep tests DRY and use shared examples:
-  * `shouldDisableFormWhileProcessing()` - check in [**_API fetchers / Testing_**](#api-fetchers) section
 
 ## Internet connection detection
 * Location `containers/InternetConnectionDetector`

@@ -11,7 +11,6 @@ import { act } from 'react-dom/test-utils';
 import NotificationSystem from 'containers/NotificationsSystem';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
-import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
 import backendApiConnectorMessages from 'containers/BackendApiConnector/messages';
 import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
@@ -64,11 +63,6 @@ beforeEach(() => {
 });
 
 describe('<Form />', () => {
-  shouldDisableFormWhileProcessing('Form', '.hollow-dots-spinner', {
-    configureWrapper,
-    fillInAndSubmitForm,
-  });
-
   context('when sign in succeeded', () => {
     loadApiFetchMock({
       method: 'POST',

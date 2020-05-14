@@ -12,7 +12,6 @@ import NotificationSystem from 'containers/NotificationsSystem';
 import IntlCatcher from 'containers/LanguageProvider/IntlCatcher';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
-import shouldDisableFormWhileProcessing from 'testsHelpers/shouldDisableFormWhileProcessing';
 
 import {
   setAuthenticationToken,
@@ -64,15 +63,6 @@ beforeEach(() => {
 
 describe('<SignOutButton />', () => {
   context('onClick', () => {
-    shouldDisableFormWhileProcessing(
-      'SignOutButton',
-      '.swapping-squares-spinner',
-      {
-        configureWrapper,
-        fillInAndSubmitForm: clickButton,
-      },
-    );
-
     context('when fetch succeeded', () => {
       loadApiFetchMock({
         method: 'DELETE',
