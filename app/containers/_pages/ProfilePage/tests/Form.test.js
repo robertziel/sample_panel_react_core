@@ -3,27 +3,37 @@ import { IntlProvider } from 'react-intl';
 import { Provider } from 'react-redux';
 
 import { mount } from 'enzyme';
-import waitForExpect from 'wait-for-expect';
 import { act } from 'react-dom/test-utils';
 
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
-import ProfilePage from '../Loadable';
+import Form from '../Form';
 
 const indexPath = '/profile';
+const updatePath = indexPath;
 const email = 'test@gmail.com';
 const username = 'username';
-const responseBody = { profile: { email, username } };
+const userObject = { email, username };
 
 let store;
 let wrapper;
+
+const fetchMock = (responseBody) => {
+  loadApiFetchMock({
+    method: 'POST',
+    path: updatePath,
+    requestBody: { email, password: null, username },
+    responseBody,
+    status: 200,
+  });
+};
 
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
       <Provider store={store}>
-        <ProfilePage />
+        <Form user={userObject} />
       </Provider>
     </IntlProvider>,
   );
@@ -34,24 +44,13 @@ async function configureWrapper() {
   await act(async () => {
     wrapper = mountWrapper();
   });
+  return wrapper;
 }
 
-describe('<ProfilePage />', () => {
-  loadApiFetchMock({
-    method: 'GET',
-    path: indexPath,
-    responseBody,
-    status: 200,
+async function submitForm() {
+  await act(async () => {
+    wrapper.find('button[type="submit"]').simulate('submit');
   });
+}
 
-  beforeEach(() => {
-    configureWrapper();
-  });
-
-  it('should render and match the snapshot', async () => {
-    await waitForExpect(() => {
-      wrapper.update();
-      expect(wrapper.html()).toMatchSnapshot();
-    });
-  });
-});
+describe('<Form />', () => {});

@@ -1,0 +1,85 @@
+import React, { useState } from 'react';
+import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
+import PropTypes from 'prop-types';
+
+import { SubmitButton, Note, Grid, TextField } from 'components/_ui-elements';
+
+import useApiFetcher from 'containers/BackendApiConnector/fetcher';
+
+import messages from './messages';
+function Form({ intl, user }) {
+  const fetcher = useApiFetcher();
+
+  // Form state
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [username, setUsername] = useState(user.username);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState(null);
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+
+    fetcher.post({
+      disableRetry: true,
+      signIn: true,
+      path: '/profile',
+      body: {
+        email,
+        password,
+        username,
+      },
+      afterSuccess: (result) => {
+        setErrorMessage(result.error_message);
+      },
+    });
+  };
+
+  return (
+    <form onSubmit={onSubmit}>
+      <Grid>
+        <Note error message={errorMessage} />
+      </Grid>
+      <Grid>
+        <TextField
+          defaultValue={username}
+          label={intl.formatMessage(messages.formUsername)}
+          type="text"
+          name="username"
+          onChange={(event) => setUsername(event.target.value)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <TextField
+          defaultValue={email}
+          label={intl.formatMessage(messages.formEmail)}
+          type="email"
+          name="email"
+          onChange={(event) => setEmail(event.target.value)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <TextField
+          label={intl.formatMessage(messages.formPassword)}
+          type="password"
+          name="password"
+          onChange={(event) => setPassword(event.target.value)}
+          variant="outlined"
+        />
+      </Grid>
+      <Grid>
+        <SubmitButton processing={fetcher.processing}>
+          <FormattedMessage {...messages.formButton} />
+        </SubmitButton>
+      </Grid>
+    </form>
+  );
+}
+
+Form.propTypes = {
+  intl: intlShape.isRequired,
+  user: PropTypes.object.isRequired,
+};
+
+export default injectIntl(Form);
