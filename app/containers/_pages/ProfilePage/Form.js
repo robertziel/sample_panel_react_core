@@ -7,6 +7,11 @@ import { SubmitButton, Note, Grid, TextField } from 'components/_ui-elements';
 import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 
 import messages from './messages';
+import {
+  profileUpdateFailedNotify,
+  profileUpdateSucceededNotify,
+} from './notifications';
+
 function Form({ intl, user }) {
   const fetcher = useApiFetcher();
 
@@ -30,6 +35,12 @@ function Form({ intl, user }) {
       },
       afterSuccess: (result) => {
         setErrorMessage(result.error_message);
+
+        if (result.profile) {
+          profileUpdateSucceededNotify();
+        } else {
+          profileUpdateFailedNotify();
+        }
       },
     });
   };
