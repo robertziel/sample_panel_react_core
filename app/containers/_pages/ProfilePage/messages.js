@@ -28,4 +28,12 @@ export default defineMessages({
     id: `${scope}.form.button`,
     defaultMessage: 'Update',
   },
+  profileUpdateSucceededNotify: {
+    id: `${scope}.form.profileUpdateSucceededNotify`,
+    defaultMessage: 'Profile updated successfully',
+  },
+  profileUpdateFailedNotify: {
+    id: `${scope}.form.profileUpdateFailedNotify`,
+    defaultMessage: 'Your profile could not be updated',
+  },
 });
