@@ -10,7 +10,7 @@
   "app.containers.BackendApiConnector.fetchers.notifications.connectionRefusedNotify": "Cannot connect to the server.",
   "app.containers.HomePage.header": "This is the HomePage container!",
   "app.containers.NotFoundPage.header": "404 Not found!",
-  "app.containers.ProfilePage.header": "Profile page!",
+  "app.containers.ProfilePage.header": "Your profile",
   "app.containers.auth.SignInPage.form.button": "Sign in",
   "app.containers.auth.SignInPage.form.email": "E-mail",
   "app.containers.auth.SignInPage.form.password": "Password",

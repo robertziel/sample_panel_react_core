@@ -26,6 +26,16 @@ const submitPath = '/auth/sign_in';
 let store;
 let wrapper;
 
+const fetchMock = () => {
+  loadApiFetchMock({
+    method: 'POST',
+    path: submitPath,
+    requestBody: { email, password },
+    responseBody: { authentication_token: authenticationToken },
+    status: 200,
+  });
+};
+
 function mountWrapper() {
   return mount(
     <IntlProvider locale="en">
@@ -64,13 +74,7 @@ beforeEach(() => {
 
 describe('<Form />', () => {
   context('when sign in succeeded', () => {
-    loadApiFetchMock({
-      method: 'POST',
-      path: submitPath,
-      requestBody: { email, password },
-      responseBody: { authentication_token: authenticationToken },
-      status: 200,
-    });
+    fetchMock();
 
     it('should save new authenticationToken in redux store', async () => {
       fillInAndSubmitForm();

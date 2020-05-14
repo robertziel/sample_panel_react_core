@@ -53,6 +53,15 @@ function clickButton() {
   wrapper.find('button[type="submit"]').simulate('submit');
 }
 
+const fetchMock = () => {
+  loadApiFetchMock({
+    method: 'DELETE',
+    path: submitPath,
+    responseBody: {},
+    status: 200,
+  });
+};
+
 beforeEach(() => {
   configureWrapper();
   act(() => {
@@ -64,12 +73,7 @@ beforeEach(() => {
 describe('<SignOutButton />', () => {
   context('onClick', () => {
     context('when fetch succeeded', () => {
-      loadApiFetchMock({
-        method: 'DELETE',
-        path: submitPath,
-        responseBody: {},
-        status: 200,
-      });
+      fetchMock();
 
       it('should nullify backendApiConnector credentials', async () => {
         clickButton();
