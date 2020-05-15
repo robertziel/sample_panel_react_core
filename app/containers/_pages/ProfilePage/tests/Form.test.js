@@ -17,7 +17,6 @@ import Form from '../Form';
 import messages from '../messages';
 
 const updatePath = '/profile';
-const errorMessage = 'Error message';
 const email = 'test@gmail.com';
 const username = 'username';
 const userObject = { email, username };
@@ -31,6 +30,13 @@ const userObjectUpdated = {
   password: passwordUpdated,
   password_confirmation: passwordConfirmationUpdated,
   username: usernameUpdated,
+};
+
+const errorMessages = {
+  username: 'Username error',
+  email: 'Email error',
+  password: 'Password error',
+  password_confirmation: 'Password confirmation error',
 };
 
 let store;
@@ -102,15 +108,17 @@ describe('<Form />', () => {
       method: 'POST',
       path: updatePath,
       requestBody: userObjectUpdated,
-      responseBody: { error_message: errorMessage },
+      responseBody: { error_messages: errorMessages },
       status: 401,
     });
 
-    it('should render an error message with notification', async () => {
+    it('should render an error messages with notification', async () => {
       fillInAndSubmitForm();
-      await waitForExpect(() => {
+      waitForExpect(() => {
         wrapper.update();
-        expect(wrapper.contains(errorMessage)).toEqual(true);
+        Object.keys(errorMessages).each((key) => {
+          expect(wrapper.contains(errorMessages[key])).toEqual(true);
+        });
         expect(
           wrapper.contains(messages.profileUpdateFailedNotify.defaultMessage),
         ).toEqual(true);

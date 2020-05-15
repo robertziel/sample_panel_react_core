@@ -5,7 +5,6 @@ import PropTypes from 'prop-types';
 import {
   Divider,
   Grid,
-  Note,
   SubmitButton,
   TextField,
 } from 'components/_ui-elements';
@@ -22,7 +21,7 @@ function Form({ intl, user }) {
   const fetcher = useApiFetcher();
 
   // Form state
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [errorMessages, setErrorMessages] = useState({});
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(null);
@@ -42,22 +41,24 @@ function Form({ intl, user }) {
         username,
       },
       afterSuccess: (result) => {
-        setErrorMessage(result.error_message);
-
         if (result.profile) {
           profileUpdateSucceededNotify();
+          setErrorMessages({});
         } else {
+          setErrorMessages(result.error_messages);
           profileUpdateFailedNotify();
         }
       },
     });
   };
 
+  const passwordErrorMessage = () => {
+    const message = errorMessages.password ? `${errorMessages.password}. ` : '';
+    return message + intl.formatMessage(messages.formPasswordLeaveBlank);
+  };
+
   return (
     <form onSubmit={onSubmit}>
-      <Grid>
-        <Note error message={errorMessage} />
-      </Grid>
       <Grid>
         <TextField
           defaultValue={username}
@@ -66,6 +67,8 @@ function Form({ intl, user }) {
           name="username"
           onChange={(event) => setUsername(event.target.value)}
           variant="outlined"
+          helperText={errorMessages.username}
+          error={!!errorMessages.username}
         />
       </Grid>
       <Grid>
@@ -76,6 +79,8 @@ function Form({ intl, user }) {
           name="email"
           onChange={(event) => setEmail(event.target.value)}
           variant="outlined"
+          helperText={errorMessages.email}
+          error={!!errorMessages.email}
         />
       </Grid>
       <br />
@@ -88,7 +93,8 @@ function Form({ intl, user }) {
           name="password"
           onChange={(event) => setPassword(event.target.value)}
           variant="outlined"
-          helperText={intl.formatMessage(messages.formPasswordLeaveBlank)}
+          helperText={passwordErrorMessage()}
+          error={!!errorMessages.password}
         />
       </Grid>
       <Grid>
@@ -98,6 +104,8 @@ function Form({ intl, user }) {
           name="password_confirmation"
           onChange={(event) => setPasswordConfirmation(event.target.value)}
           variant="outlined"
+          helperText={errorMessages.password_confirmation}
+          error={!!errorMessages.password_confirmation}
         />
       </Grid>
       <Grid>
