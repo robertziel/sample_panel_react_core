@@ -24,9 +24,12 @@ const userObject = { email, username };
 const emailUpdated = 'test2@gmail.com';
 const usernameUpdated = 'username2';
 const passwordUpdated = 'newPassword';
+const passwordConfirmationUpdated = passwordUpdated;
+
 const userObjectUpdated = {
   email: emailUpdated,
   password: passwordUpdated,
+  password_confirmation: passwordConfirmationUpdated,
   username: usernameUpdated,
 };
 
@@ -63,6 +66,9 @@ function fillInAndSubmitForm() {
   wrapper
     .find('input[name="password"]')
     .simulate('change', { target: { value: passwordUpdated } });
+  wrapper
+    .find('input[name="password_confirmation"]')
+    .simulate('change', { target: { value: passwordConfirmationUpdated } });
 
   wrapper.find('button[type="submit"]').simulate('submit');
 }
