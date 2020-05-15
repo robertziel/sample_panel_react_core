@@ -39,10 +39,7 @@ export default function ProfilePage() {
         <Divider />
       </Grid>
       <FetchedContent processing={user === undefined || fetcher.processing}>
-        <Grid item xs={12} md={3}>
-          <Paper></Paper>
-        </Grid>
-        <Grid item xs={12} md={9}>
+        <Grid item xs={12} md={12}>
           <Paper>
             <Form user={user} />
           </Paper>
