@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { injectIntl, intlShape, FormattedMessage } from 'react-intl';
 import PropTypes from 'prop-types';
 
-import { SubmitButton, Note, Grid, TextField } from 'components/_ui-elements';
+import {
+  Divider,
+  Grid,
+  Note,
+  SubmitButton,
+  TextField,
+} from 'components/_ui-elements';
 
 import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 
@@ -20,6 +26,7 @@ function Form({ intl, user }) {
   const [username, setUsername] = useState(user.username);
   const [email, setEmail] = useState(user.email);
   const [password, setPassword] = useState(null);
+  const [passwordConfirmation, setPasswordConfirmation] = useState(null);
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -31,6 +38,7 @@ function Form({ intl, user }) {
       body: {
         email,
         password,
+        password_confirmation: passwordConfirmation,
         username,
       },
       afterSuccess: (result) => {
@@ -70,12 +78,25 @@ function Form({ intl, user }) {
           variant="outlined"
         />
       </Grid>
+      <br />
+      <Divider />
+      <br />
       <Grid>
         <TextField
           label={intl.formatMessage(messages.formPassword)}
           type="password"
           name="password"
           onChange={(event) => setPassword(event.target.value)}
+          variant="outlined"
+          helperText={intl.formatMessage(messages.formPasswordLeaveBlank)}
+        />
+      </Grid>
+      <Grid>
+        <TextField
+          label={intl.formatMessage(messages.formPasswordConfirmation)}
+          type="password"
+          name="password_confirmation"
+          onChange={(event) => setPasswordConfirmation(event.target.value)}
           variant="outlined"
         />
       </Grid>

@@ -20,9 +20,17 @@ export default defineMessages({
     id: `${scope}.form.email`,
     defaultMessage: 'E-mail',
   },
+  formPasswordLeaveBlank: {
+    id: `${scope}.form.PasswordLeaveBlank`,
+    defaultMessage: 'Leave blank if you do not want to change your password',
+  },
   formPassword: {
     id: `${scope}.form.password`,
-    defaultMessage: 'Password',
+    defaultMessage: 'New password',
+  },
+  formPasswordConfirmation: {
+    id: `${scope}.form.passwordConfirmation`,
+    defaultMessage: 'Confirm new password',
   },
   formButton: {
     id: `${scope}.form.button`,

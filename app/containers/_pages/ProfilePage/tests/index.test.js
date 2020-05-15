@@ -10,6 +10,7 @@ import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
 import ProfilePage from '../Loadable';
+import Form from '../Form';
 
 const indexPath = '/profile';
 const email = 'test@gmail.com';
@@ -51,7 +52,7 @@ describe('<ProfilePage />', () => {
   it('should render and match the snapshot', async () => {
     await waitForExpect(() => {
       wrapper.update();
-      expect(wrapper.html()).toMatchSnapshot();
+      expect(wrapper.find(Form).props().user).toEqual(responseBody.profile);
     });
   });
 });
