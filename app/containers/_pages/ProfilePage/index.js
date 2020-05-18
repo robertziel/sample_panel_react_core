@@ -1,10 +1,3 @@
-/*
- * ProfilePage
- *
- * This is the first thing users see of our App, at the '/' route
- *
- */
-
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 
@@ -12,8 +5,8 @@ import { Divider, Grid, H1, Paper } from 'components/_ui-elements';
 import useApiFetcher from 'containers/BackendApiConnector/fetcher';
 import FetchedContent from 'containers/FetchedContent';
 
+import AvatarForm from './AvatarForm';
 import Form from './Form';
-
 import messages from './messages';
 
 export default function ProfilePage() {
@@ -39,7 +32,10 @@ export default function ProfilePage() {
         <Divider />
       </Grid>
       <FetchedContent processing={user === undefined || fetcher.processing}>
-        <Grid item xs={12} md={12}>
+        <Grid item xs={12} md={5}>
+          <AvatarForm />
+        </Grid>
+        <Grid item xs={12} md={7}>
           <Paper>
             <Form user={user} />
           </Paper>

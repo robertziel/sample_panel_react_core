@@ -1,5 +1,6 @@
 export * from './Button';
 export * from './Container';
+export * from './Dialog';
 export * from './Divider';
 export * from './LinearProgress';
 export * from './Note';
