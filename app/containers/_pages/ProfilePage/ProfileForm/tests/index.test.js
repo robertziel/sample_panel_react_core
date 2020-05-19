@@ -130,7 +130,7 @@ describe('<Form />', () => {
           messages.profileUpdateSucceededNotify.defaultMessage,
         );
       });
-    }, 30000);
+    });
   });
 
   context('when update not succeeded', () => {
@@ -161,6 +161,6 @@ describe('<Form />', () => {
           wrapper.contains(messages.profileUpdateFailedNotify.defaultMessage),
         ).toEqual(true);
       });
-    }, 30000);
+    });
   });
 });

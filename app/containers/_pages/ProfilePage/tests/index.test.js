@@ -11,10 +11,15 @@ import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 import ProfileForm from '../ProfileForm';
 import ProfilePage from '../Loadable';
 
-// Mock LanguageToggle required by ProfileForm
 /* eslint-disable react/prop-types */
+// Mock ProfileForm required by Profile
 jest.mock('containers/_pages/ProfilePage/ProfileForm/index', () => () => (
   <div>ProfileForm</div>
+));
+
+// Mock AvatarForm required by Profile
+jest.mock('containers/_pages/ProfilePage/AvatarForm/index', () => () => (
+  <div>AvatarForm</div>
 ));
 /* eslint-enable react/prop-types */
 

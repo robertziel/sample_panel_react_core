@@ -5,29 +5,34 @@ import styled from 'styled-components';
 import { colors } from 'styles/constants';
 
 const Wrapper = styled.div`
-  .MuiButton-root {
-    padding: 0px;
+  .MuiPaper-root {
+    position: relative;
+    min-height: 400px;
 
-    .avatar {
-      width: 100%;
-    }
+    .MuiButton-root {
+      padding: 0px;
 
-    .set-avatar-message {
-      position: absolute;
-      top: 0px;
-      background: #00000082;
-      color: white;
-      padding: 5px;
-      width: 100%;
-      text-align: center;
-    }
+      .avatar {
+        width: 100%;
+      }
 
-    .file-input {
-      display: none;
-    }
+      .set-avatar-message {
+        position: absolute;
+        top: 0px;
+        background: #00000082;
+        color: white;
+        padding: 5px;
+        width: 100%;
+        text-align: center;
+      }
 
-    &:hover {
-      background: ${colors.main};
+      .file-input {
+        display: none;
+      }
+
+      &:hover {
+        background: ${colors.main};
+      }
     }
   }
 `;
