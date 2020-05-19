@@ -1,28 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-import { Divider, Grid, H1, Paper } from 'components/_ui-elements';
-import useApiFetcher from 'containers/BackendApiConnector/fetcher';
-import FetchedContent from 'containers/FetchedContent';
+import { Divider, Grid, H1 } from 'components/_ui-elements';
 
 import AvatarForm from './AvatarForm';
-import Form from './Form';
+import ProfileForm from './ProfileForm';
 import messages from './messages';
 
 export default function ProfilePage() {
-  const fetcher = useApiFetcher();
-
-  const [user, setUser] = useState();
-
-  const fetchData = () => {
-    fetcher.get({
-      path: '/profile',
-      afterSuccess: (result) => setUser(result.profile),
-    });
-  };
-
-  useEffect(() => fetchData(), []);
-
   return (
     <Grid container>
       <Grid item xs={12}>
@@ -31,16 +16,12 @@ export default function ProfilePage() {
         </H1>
         <Divider />
       </Grid>
-      <FetchedContent processing={user === undefined || fetcher.processing}>
-        <Grid item xs={12} md={5}>
-          <AvatarForm />
-        </Grid>
-        <Grid item xs={12} md={7}>
-          <Paper>
-            <Form user={user} />
-          </Paper>
-        </Grid>
-      </FetchedContent>
+      <Grid item xs={12} md={5}>
+        <AvatarForm />
+      </Grid>
+      <Grid item xs={12} md={7}>
+        <ProfileForm />
+      </Grid>
     </Grid>
   );
 }

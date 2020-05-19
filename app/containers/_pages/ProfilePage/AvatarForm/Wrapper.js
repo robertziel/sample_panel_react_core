@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { colors } from 'styles/constants';
 
-const Wrapper = styled.footer`
+const Wrapper = styled.div`
   .MuiButton-root {
     padding: 0px;
 
