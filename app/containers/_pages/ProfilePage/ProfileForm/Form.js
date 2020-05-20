@@ -32,7 +32,6 @@ function Form({ intl, user }) {
 
     fetcher.post({
       disableRetry: true,
-      signIn: true,
       path: '/profile',
       body: {
         email,

@@ -146,7 +146,7 @@ describe('<Form />', () => {
       path: updatePath,
       requestBody: userObjectUpdated,
       responseBody: { error_messages: errorMessages },
-      status: 401,
+      status: 200,
     });
 
     it('should render an error messages with notification', async () => {

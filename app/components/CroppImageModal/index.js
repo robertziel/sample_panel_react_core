@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import getCroppedImg from './cropImage';
 import Wrapper from './Wrapper';
 
-function CroppedImageModal({ imageBase64, onSubmit }) {
+function CroppImageModal({ imageBase64, onSubmit }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
@@ -20,13 +20,14 @@ function CroppedImageModal({ imageBase64, onSubmit }) {
     setCroppedAreaPixels(areaPixels);
   }, []);
 
-  const showCroppedImage = useCallback(async () => {
-    const croppedImage = await getCroppedImg(
+  const submitCroppedImage = useCallback(async () => {
+    const croppedImageBase64 = await getCroppedImg(
       imageBase64,
       croppedAreaPixels,
       rotation,
     );
-    onSubmit(croppedImage);
+
+    onSubmit(croppedImageBase64);
   }, [croppedAreaPixels, rotation]);
 
   return (
@@ -68,7 +69,7 @@ function CroppedImageModal({ imageBase64, onSubmit }) {
               onChange={(e, value) => setRotation(value)}
             />
           </Grid>
-          <Button onClick={showCroppedImage} color="primary">
+          <Button onClick={submitCroppedImage} color="primary">
             Show Result
           </Button>
         </Grid>
@@ -77,9 +78,9 @@ function CroppedImageModal({ imageBase64, onSubmit }) {
   );
 }
 
-CroppedImageModal.propTypes = {
+CroppImageModal.propTypes = {
   imageBase64: PropTypes.string,
   onSubmit: PropTypes.func.isRequired,
 };
 
-export default CroppedImageModal;
+export default CroppImageModal;

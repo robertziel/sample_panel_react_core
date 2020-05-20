@@ -16,6 +16,7 @@ import {
   reportConnectionRefused,
   reportConnectionSucceeded,
 } from './connectionRefusedHandler';
+import formDataFromJson from './formDataFromJson';
 import StoreAccessor from '../StoreAccessor';
 import { BACKEND_API_URL } from '../constants';
 
@@ -53,9 +54,8 @@ export default function apiFetch(method, component, config) {
 
   fetch(fullUrl(config.path, config.params), {
     method,
-    body: JSON.stringify(config.body),
+    body: formDataFromJson(config.body),
     headers: {
-      'Content-Type': 'application/json',
       Accept: 'application/json',
       'Authentication-Token': getAuthenticationToken(),
       'Language-Locale': getLanguageLocale(),
