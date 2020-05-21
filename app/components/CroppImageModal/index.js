@@ -5,13 +5,16 @@ import { FormattedMessage } from 'react-intl';
 
 import { Slider, SubmitButton, Dialog, Grid } from 'components/_ui-elements';
 
+import DialogTitle from '@material-ui/core/DialogTitle';
 import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
 
 import getCroppedImg from './cropImage';
 import messages from './messages';
 import Wrapper from './Wrapper';
 
-function CroppImageModal({ imageBase64, onSubmit }) {
+function CroppImageModal({ imageBase64, onClose, onSubmit }) {
   const [processing, setProcessing] = useState(false);
 
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -34,6 +37,11 @@ function CroppImageModal({ imageBase64, onSubmit }) {
 
   return (
     <Dialog open={!!imageBase64}>
+      <DialogTitle disableTypography>
+        <IconButton aria-label="close" onClick={onClose}>
+          <CloseIcon />
+        </IconButton>
+      </DialogTitle>
       <Wrapper>
         <div className="crop-area">
           <Cropper
@@ -89,6 +97,7 @@ function CroppImageModal({ imageBase64, onSubmit }) {
 
 CroppImageModal.propTypes = {
   imageBase64: PropTypes.string,
+  onClose: PropTypes.func.isRequired,
   onSubmit: PropTypes.func.isRequired,
 };
 

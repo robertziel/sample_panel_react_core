@@ -50,6 +50,7 @@ export default function Form({ avatar, onAvatarUpdate }) {
       <CroppImageModal
         imageBase64={inputImageBase64}
         onSubmit={submitNewAvatar}
+        onClose={() => setInputImageBase64(undefined)}
       />
       <Button variant="contained" component="label">
         <img className="avatar" src={avatar} alt="Profile avatar" />
