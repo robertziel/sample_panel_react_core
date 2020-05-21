@@ -5,9 +5,12 @@ import styled from 'styled-components';
 import { colors } from 'styles/constants';
 
 const Wrapper = styled.div`
+  float: right;
+
   .MuiPaper-root {
     position: relative;
-    min-height: 400px;
+    height: 200px;
+    width: 200px;
 
     .MuiButton-root {
       padding: 0px;

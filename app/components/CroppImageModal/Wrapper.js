@@ -5,6 +5,8 @@ import styled from 'styled-components';
 const Wrapper = styled.footer`
   width: 600px;
   max-width: 100%;
+  min-height: 500px;
+  position: relative;
 
   .crop-area {
     position: relative;
@@ -15,7 +17,6 @@ const Wrapper = styled.footer`
 
   .controls-section {
     padding: 16;
-    display: flex;
   }
 `;
 

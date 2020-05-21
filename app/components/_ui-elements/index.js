@@ -8,6 +8,7 @@ export * from './Grid';
 export * from './H1';
 export * from './Paper';
 export * from './Scroll';
+export * from './Slider';
 export * from './SubmitButton';
 export * from './Table';
 export * from './TableBody';

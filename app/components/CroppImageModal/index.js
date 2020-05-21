@@ -1,34 +1,36 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Cropper from 'react-easy-crop';
+import { FormattedMessage } from 'react-intl';
 
-import { Button, Dialog, Grid } from 'components/_ui-elements';
+import { Slider, SubmitButton, Dialog, Grid } from 'components/_ui-elements';
 
-import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 
 import getCroppedImg from './cropImage';
+import messages from './messages';
 import Wrapper from './Wrapper';
 
 function CroppImageModal({ imageBase64, onSubmit }) {
+  const [processing, setProcessing] = useState(false);
+
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [rotation, setRotation] = useState(0);
   const [zoom, setZoom] = useState(1);
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
-  const onCropComplete = useCallback((croppedArea, areaPixels) => {
+  const onCropComplete = (croppedArea, areaPixels) => {
     setCroppedAreaPixels(areaPixels);
-  }, []);
+  };
 
-  const submitCroppedImage = useCallback(async () => {
-    const croppedImageBase64 = await getCroppedImg(
+  const proceedAndSubmitCroppedImage = () => {
+    setProcessing(true);
+    getCroppedImg(
       imageBase64,
       croppedAreaPixels,
       rotation,
-    );
-
-    onSubmit(croppedImageBase64);
-  }, [croppedAreaPixels, rotation]);
+    ).then((croppedImageBase64) => onSubmit(croppedImageBase64));
+  };
 
   return (
     <Dialog open={!!imageBase64}>
@@ -48,7 +50,9 @@ function CroppImageModal({ imageBase64, onSubmit }) {
         </div>
         <Grid className="controls-section">
           <Grid>
-            <Typography variant="overline">Zoom</Typography>
+            <Typography variant="overline">
+              <FormattedMessage {...messages.zoom} />
+            </Typography>
             <Slider
               value={zoom}
               min={1}
@@ -59,7 +63,9 @@ function CroppImageModal({ imageBase64, onSubmit }) {
             />
           </Grid>
           <Grid>
-            <Typography variant="overline">Rotation</Typography>
+            <Typography variant="overline">
+              <FormattedMessage {...messages.rotation} />
+            </Typography>
             <Slider
               value={rotation}
               min={0}
@@ -69,9 +75,12 @@ function CroppImageModal({ imageBase64, onSubmit }) {
               onChange={(e, value) => setRotation(value)}
             />
           </Grid>
-          <Button onClick={submitCroppedImage} color="primary">
-            Show Result
-          </Button>
+          <SubmitButton
+            processing={processing}
+            onClick={proceedAndSubmitCroppedImage}
+          >
+            <FormattedMessage {...messages.submit} />
+          </SubmitButton>
         </Grid>
       </Wrapper>
     </Dialog>
