@@ -7,12 +7,15 @@ module.exports = {
     '!app/SetupContent.js',
     '!app/styles/global-styles.js',
     '!app/*/*/Loadable.{js,jsx}',
+    '!app/utils/dataUrlToFile.js',
+    '!app/containers/BackendApiConnector/fetcher/formDataFromJson.js',
+    '!app/components/CroppImageModal/*.{js,jsx}',
   ],
   coverageThreshold: {
     global: {
       statements: 98,
       branches: 91,
-      functions: 98,
+      functions: 95,
       lines: 98,
     },
   },

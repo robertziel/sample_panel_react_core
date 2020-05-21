@@ -13,10 +13,11 @@ import NotificationSystem from 'containers/NotificationsSystem';
 import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
-import Form from '../Form';
+import ProfileForm from '../index';
 import messages from '../messages';
 
-const updatePath = '/profile';
+const indexPath = '/profile';
+const updatePath = indexPath;
 const email = 'test@gmail.com';
 const username = 'username';
 const userObject = { email, username };
@@ -24,6 +25,8 @@ const emailUpdated = 'test2@gmail.com';
 const usernameUpdated = 'username2';
 const passwordUpdated = 'newPassword';
 const passwordConfirmationUpdated = passwordUpdated;
+
+const responseBody = { profile: { email, username } };
 
 const userObjectUpdated = {
   email: emailUpdated,
@@ -48,7 +51,7 @@ function mountWrapper() {
       <IntlCatcher>
         <Provider store={store}>
           <NotificationSystem />
-          <Form user={userObject} />
+          <ProfileForm user={userObject} />
         </Provider>
       </IntlCatcher>
     </IntlProvider>,
@@ -62,7 +65,26 @@ async function configureWrapper() {
   });
 }
 
+async function waitTillStartDataFetched() {
+  await waitForExpect(() => {
+    wrapper.update();
+    expect(wrapper.find(`input[name="email"]`).props().defaultValue).toEqual(
+      email,
+    );
+    expect(wrapper.find(`input[name="username"]`).props().defaultValue).toEqual(
+      username,
+    );
+    expect(wrapper.find(`input[name="password"]`).props().defaultValue).toEqual(
+      undefined,
+    );
+    expect(
+      wrapper.find(`input[name="password_confirmation"]`).props().defaultValue,
+    ).toEqual(undefined);
+  });
+}
+
 function fillInAndSubmitForm() {
+  waitTillStartDataFetched();
   wrapper
     .find('input[name="email"]')
     .simulate('change', { target: { value: emailUpdated } });
@@ -86,6 +108,13 @@ beforeEach(() => {
 describe('<Form />', () => {
   context('when update succeeded', () => {
     loadApiFetchMock({
+      method: 'GET',
+      path: indexPath,
+      responseBody,
+      status: 200,
+    });
+
+    loadApiFetchMock({
       method: 'POST',
       path: updatePath,
       requestBody: userObjectUpdated,
@@ -94,6 +123,7 @@ describe('<Form />', () => {
     });
 
     it('should add success notification', async () => {
+      await waitTillStartDataFetched();
       fillInAndSubmitForm();
       await waitForExpect(() => {
         expect(wrapper.text()).toContain(
@@ -105,14 +135,22 @@ describe('<Form />', () => {
 
   context('when update not succeeded', () => {
     loadApiFetchMock({
+      method: 'GET',
+      path: indexPath,
+      responseBody,
+      status: 200,
+    });
+
+    loadApiFetchMock({
       method: 'POST',
       path: updatePath,
       requestBody: userObjectUpdated,
       responseBody: { error_messages: errorMessages },
-      status: 401,
+      status: 200,
     });
 
     it('should render an error messages with notification', async () => {
+      await waitTillStartDataFetched();
       fillInAndSubmitForm();
       waitForExpect(() => {
         wrapper.update();

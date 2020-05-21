@@ -6,16 +6,22 @@ import { mount } from 'enzyme';
 import waitForExpect from 'wait-for-expect';
 import { act } from 'react-dom/test-utils';
 
-import loadApiFetchMock from 'testsHelpers/loadApiFetchMock';
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
+import ProfileForm from '../ProfileForm';
 import ProfilePage from '../Loadable';
-import Form from '../Form';
 
-const indexPath = '/profile';
-const email = 'test@gmail.com';
-const username = 'username';
-const responseBody = { profile: { email, username } };
+/* eslint-disable react/prop-types */
+// Mock ProfileForm required by Profile
+jest.mock('containers/_pages/ProfilePage/ProfileForm/index', () => () => (
+  <div>ProfileForm</div>
+));
+
+// Mock AvatarForm required by Profile
+jest.mock('containers/_pages/ProfilePage/AvatarForm/index', () => () => (
+  <div>AvatarForm</div>
+));
+/* eslint-enable react/prop-types */
 
 let store;
 let wrapper;
@@ -38,21 +44,14 @@ async function configureWrapper() {
 }
 
 describe('<ProfilePage />', () => {
-  loadApiFetchMock({
-    method: 'GET',
-    path: indexPath,
-    responseBody,
-    status: 200,
-  });
-
   beforeEach(() => {
     configureWrapper();
   });
 
-  it('should render and match the snapshot', async () => {
+  it('should render ProfileForm', async () => {
     await waitForExpect(() => {
       wrapper.update();
-      expect(wrapper.find(Form).props().user).toEqual(responseBody.profile);
+      expect(wrapper.find(ProfileForm).length).toEqual(1);
     });
   });
 });

@@ -65,8 +65,10 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
+    "@ajoelp/json-to-formdata": "^1.1.0",
     "@babel/polyfill": "7.8.7",
-    "@material-ui/core": "^4.9.10",
+    "@material-ui/core": "^4.9.14",
+    "@material-ui/icons": "^4.9.1",
     "animate.css": "^3.7.2",
     "chalk": "^4.0.0",
     "compression": "1.7.4",
@@ -89,7 +91,9 @@
     "query-string": "^6.12.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
+    "react-easy-crop": "^3.0.0",
     "react-epic-spinners": "^0.4.1",
+    "react-file-input-previews-base64": "^1.0.8",
     "react-fontawesome": "^1.7.1",
     "react-helmet": "6.0.0",
     "react-intl": "2.8.0",
