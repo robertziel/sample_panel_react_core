@@ -6,22 +6,22 @@ import { colors } from 'styles/constants';
 
 import Wrapper from './Wrapper';
 
-function FetchedContent(props) {
-  const spinner = props.spinner || (
+function FetchedContent({ children, processing, spinner, tableRow }) {
+  const spinnerElement = spinner || (
     <SelfBuildingSquareSpinner color={colors.main} size={40} />
   );
 
-  const wrappedSpinner = props.tableRow ? (
+  const wrappedSpinner = tableRow ? (
     <tr>
-      <td>
-        <Wrapper>{spinner}</Wrapper>
+      <td colSpan="9999">
+        <Wrapper tableRow>{spinnerElement}</Wrapper>
       </td>
     </tr>
   ) : (
-    <Wrapper>{spinner}</Wrapper>
+    <Wrapper>{spinnerElement}</Wrapper>
   );
 
-  return props.processing ? wrappedSpinner : props.children;
+  return processing ? wrappedSpinner : children;
 }
 
 FetchedContent.propTypes = {

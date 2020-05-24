@@ -5,6 +5,8 @@ import TableBodyCore from '@material-ui/core/TableBody';
 
 import styled from 'styled-components';
 
-const TableBody = styled(({ ...props }) => <TableBodyCore {...props} />)``;
+const TableBody = styled(({ ...props }) => <TableBodyCore {...props} />)`
+  position: relative;
+`;
 
 export { TableBody };

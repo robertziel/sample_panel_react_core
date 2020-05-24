@@ -1,6 +1,9 @@
-import styled from 'styled-components';
+/* eslint-disable react/jsx-props-no-spreading, indent */
+import React from 'react';
 
-const Wrapper = styled.div`
+import styled, { css } from 'styled-components';
+
+const Wrapper = styled(({ tableRow, ...props }) => <div {...props} />)`
   width: 100%;
   height: 100%;
 
@@ -14,6 +17,13 @@ const Wrapper = styled.div`
     max-width: 100%;
     max-height: 100%;
   }
+
+  ${({ tableRow }) =>
+    tableRow &&
+    css`
+      position: relative;
+      min-height: 200px;
+    `}
 `;
 
 export default Wrapper;

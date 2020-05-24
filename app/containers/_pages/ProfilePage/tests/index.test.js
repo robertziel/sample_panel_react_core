@@ -8,6 +8,7 @@ import { act } from 'react-dom/test-utils';
 
 import ConfigureTestStore from 'testsHelpers/ConfigureTestStore';
 
+import AvatarForm from '../AvatarForm';
 import ProfileForm from '../ProfileForm';
 import ProfilePage from '../Loadable';
 
@@ -46,6 +47,13 @@ async function configureWrapper() {
 describe('<ProfilePage />', () => {
   beforeEach(() => {
     configureWrapper();
+  });
+
+  it('should render AvatarForm', async () => {
+    await waitForExpect(() => {
+      wrapper.update();
+      expect(wrapper.find(AvatarForm).length).toEqual(1);
+    });
   });
 
   it('should render ProfileForm', async () => {
